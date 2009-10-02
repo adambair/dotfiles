@@ -1,0 +1,2 @@
+netrw.vba: call delete('/Users/adam/.vim/plugin/netrwPlugin.vim')|call delete('/Users/adam/.vim/autoload/netrw.vim')|call delete('/Users/adam/.vim/autoload/netrwFileHandlers.vim')|call delete('/Users/adam/.vim/autoload/netrwSettings.vim')|call delete('/Users/adam/.vim/doc/pi_netrw.txt')|call delete('/Users/adam/.vim/syntax/netrw.vim')
+tComment.vba: call delete('/Users/adam/.vim/doc/tComment.txt')|call delete('/Users/adam/.vim/plugin/tComment.vim')|call delete('/Users/adam/.vim/autoload/tcomment.vim')
