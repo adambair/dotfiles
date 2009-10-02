@@ -2,8 +2,15 @@
 These are some of the files I use to configure my system.
 
 == installation
+See warning.
   git clone git://github.com/adambair/dotfiles ~/.dotfiles
 
 == environment
 I currently use Mac OS X (Snow Leopard - 10.6)
+
+== todo
+Write a rake task to create all of the necessary symbolic links.
+
+== warning
+My dotfiles are kind of a mess right now and should only be used as reference. I'll remove this warning once I refactor.
 
