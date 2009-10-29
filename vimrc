@@ -2,6 +2,10 @@ set nocompatible  " We don't want vi compatibility.
 set visualbell
 set wrap
 set linebreak
+set autoread
+set laststatus=2
+"let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
+set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
 
 syntax on
 syntax enable
@@ -9,6 +13,7 @@ filetype plugin indent on  " Automatically detect file types.
 colorscheme monokai
 
 setlocal spell spelllang=en_us
+autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc set spell
 
 map -a :call SyntaxAttr()<CR>
 map -r :ruby finder.rescan!<CR>
@@ -42,6 +47,7 @@ if has("gui_running")
   "Maximize gvim window.
   "set guifont=Monaco:h18
   set guifont=Inconsolata-dz:h18
+  "set guifont=Inconsolata-dz:h24
   "set guifont=Monofur:h22
   set lines=90 columns=130
 endif
