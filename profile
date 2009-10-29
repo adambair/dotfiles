@@ -11,13 +11,14 @@ export EDITOR='vim -f'
 export JPY=/Users/adam/bin/j2/j.py # tells j.sh where the python script is
 . /Users/adam/bin/j2/j.sh          # provides the j() function
 
+
 # Tomcat6 config
 export CATALINA_HOME=/Library/Tomcat6
 export JAVA_HOME=/Library/Java/Home
 
 # RSpec Autotest
 export RSPEC=true  
-#export AUTOFEATURE=true
+export AUTOFEATURE=true
 
 # twitter
 alias tw='/Users/adam/bin/twitter'
