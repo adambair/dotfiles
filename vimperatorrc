@@ -1,0 +1,2 @@
+javascript liberator.beep = function() { return false; }
+autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view/.test(buffer.URL)
