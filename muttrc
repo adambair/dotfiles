@@ -1,0 +1,201 @@
+### MUTT config file ###
+
+# Basic setup
+set mbox_type=Maildir
+set folder=$HOME/.maildb
+set spoolfile=+/GMAIL/INBOX
+
+# address book and aliases
+set alias_file=~/.mutt-alias
+source ~/.mutt-alias
+set query_command= "abook --mutt-query '%s'"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+
+macro index,pager y "<save-message>=GMAIL/[Gmail].All Mail<enter>" "All Mail"
+macro index,pager d "<save-message>=GMAIL/[Gmail].Trash<enter>" "Trash"
+
+# mailboxes
+source $HOME/.mutt/mailboxes
+
+# GPG
+# source $HOME/.mutt/crypto
+
+# smtp
+set use_from = yes
+set envelope_from = "yes"
+
+# I have to set these defaults because when you first startup mutt
+# it's not running folder hooks. It just starts in a folder
+set from="adambair@gmail.com"
+set realname="Adam Bair"
+#set record="+GMAIL/Sent"
+set postponed="+GMAIL/Drafts"
+my_hdr From: Adam Bair <adambair@gmail.com>
+set sendmail="/opt/local/bin/msmtp -a gmail"
+
+set signature=$HOME/.mutt/signature-gmail
+set sig_dashes  # A signature must always start with a "-- "
+
+#####                            #####
+##### Now a bunch of other setup #####
+#####                            #####
+
+set copy=yes             # Whether to save sent messages
+set delete=yes           # Do not ask when purging deleted message
+#set record=+Sent         # Where to save sent messages
+set beep_new=yes         # Beep when new messages arrive?
+set move=no              # Move read messages to another folder?
+set forward_quote=yes    # Quote the email body when forwarding?
+set include=yes          # Quote the email body when replying?
+
+ignore *        	 # this means "ignore all headers by default"
+unignore From:
+unignore To:
+unignore Reply-To:
+unignore Mail-Followup-To:
+unignore Subject:
+unignore Date:
+unignore CC:
+unignore BCC:
+hdr_order From: Return-Path: \
+Reply-To: \
+Date: Subject: Importance:
+
+set editor="vim -f"
+set header_cache="~/.mutt/headers"
+
+set mail_check=120       # check for new mail every 90 seconds
+set timeout=15           # after 15 secs of no keypresses, start checking for new mail
+set reverse_name         # Reply with the address used in the TO/CC header
+set ascii_chars=yes      # Use ASCII arrows
+set reverse_realname=yes # Reply with the name used in FROM
+set reverse_alias=yes
+set fast_reply="yes"
+set confirmappend=no     # Confirm when appending messages to an existing mailbox?
+set pager_index_lines=15  # Show 5 message headers from your message index above an email you are reading
+set markers          # mark wrapped lines of text in the pager with a +
+set smart_wrap       # Don't wrap mid-word
+set pager_context=5  # Retain 5 lines of previous page when scrolling.
+set pager_stop = yes
+set status_on_top    # Status bar on top.
+
+set sort = 'threads'
+set sort_aux = 'last-date-received'
+set tilde
+unset collapse_unread
+unset mark_old
+unset ignore_list_reply_to
+alternative_order text/plain text/html      # Show the text mime firstly
+
+# Sidebar Settings
+# set sidebar_visible  
+# set sidebar_width	= 30
+# set sidebar_delim    	= "|"
+
+# Formating
+set compose_format="-- %v-- Compose  [Approximate Message Size: %l   Attachments: %a]%>-"
+set attach_format="%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
+set alias_format="%4n %2f %t %-12a  %r"
+set status_format="-%r-%v--[%?M?%M/?%m msgs%?n?, %n new?%?d?, %d del?%?F?, %F flag?%?t?, %t tag?%?p?, %p postp?%?b?, %b inc?%?l?, %l?]--(%f)--%s-%>-%P-"
+set folder_format="%3C %t%N %F %-8.8u %-8.8g %8s %d %f"
+set message_format="%-.16n: %s"
+set pager_format="~~~~~~~~~ On %{%a, %d %b %Y} at [%[%H:%M]]: %s %|~"
+set attribution='On %{%a, %d %b %Y}, %n wrote:\n'
+set forward_format = "[%s]"
+
+#### Macros and such
+
+# url viewing
+macro index,pager cb |urlview 'call urlview to extract URLs out of a message'
+
+# h will take you to the folder list in the index
+# macro index h "c?t"
+
+# ctrl-n, ctrl-p to select next, prev folder
+# ctrl-o to open selected folder 
+# bind index \CP sidebar-prev 
+# bind index \CN sidebar-next 
+# bind index \CO sidebar-open 
+# bind pager \CP sidebar-prev 
+# bind pager \CN sidebar-next 
+# bind pager \CO sidebar-open 
+
+# color of sidebar folders with new mail
+# color sidebar_new yellow default 
+
+# Dump all headers
+macro index p "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
+macro pager p "<display-toggle-weed> <print-message> <display-toggle-weed>"
+
+
+# SHORTCUTS for each of the main inboxes
+macro index ig "<change-folder>=GMAIL/INBOX<enter>" "Go to GMAIL inbox"
+macro index ii "<change-folder>=INTRIDEA/INBOX<enter>" "Go to INTRIDEA inbox"
+
+# allow space characters in macros
+bind editor <space> noop
+
+# hooks for entering any folder in my GMAIL account
+folder-hook +GMAIL.* set from="adambair@gmail.com" 
+#folder-hook +GMAIL.* set record=+GMAIL/Sent
+folder-hook +GMAIL.* set postponed=+GMAIL/Drafts
+folder-hook +GMAIL.* my_hdr From: Adam Bair <adambair@gmail.com>
+folder-hook +GMAIL.* set signature=$HOME/.mutt/signature-gmail
+folder-hook +GMAIL.* set sendmail='"/opt/local/bin/msmtp -a gmail"'
+folder-hook +GMAIL.* 'macro index,pager y "<save-message>=GMAIL/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +GMAIL.* macro index,pager d "<save-message>=GMAIL/[Gmail].Trash<enter>" "Trash"
+
+# hooks for entering any folder in my INTRIDEA account
+folder-hook +INTRIDEA.* set from="adam@intridea.com"
+#folder-hook +INTRIDEA.* set record=+INTRIDEA/Sent
+folder-hook +INTRIDEA.* set postponed=+INTRIDEA/Drafts
+folder-hook +INTRIDEA.* my_hdr From: Adam Bair <adam@intridea.com>
+folder-hook +INTRIDEA.* set sendmail='"/opt/local/bin/msmtp -a intridea"'
+folder-hook +INTRIDEA.* set signature=$HOME/.mutt/signature-intridea
+folder-hook +INTRIDEA.* 'macro index,pager y "<save-message>=INTRIDEA/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +INTRIDEA.* macro index,pager d "<save-message>=INTRIDEA/[Gmail].Trash<enter>" "Trash"
+
+folder-hook . "push \eV"
+
+#####        #####
+##### Colors
+#####        #####
+
+color header cyan default .
+color header yellow default ^From
+color header yellow default ^Subject
+color body yellow default [_a-z\.\$A-Z0-9-]+@[a-zA-Z0-9\./\-]+
+color body yellow default (http|ftp)://[_a-zA-Z0-9\?\=\&\@\%\#\:\,\./~\-]+
+color quoted green default
+color quoted1 cyan default
+color quoted2 magenta default
+color signature cyan black
+color attachment magenta default
+color tree white default
+color indicator black yellow
+color status blue black
+color tilde blue default
+color normal white default
+
+color index      white          default "~p"
+color index      green          default "! ~p"
+
+color header     yellow         default    "importance: "
+color header     blue           default    "importance: normal"
+color header     brightred      default    "importance: high"
+color index      brightyellow   default    "~h 'importance: high'"
+color header     yellow         default    "precedence: "
+color header     blue           default    "priority: "
+color header     brightred      default    "priority: high"
+color header     red            default    "priority: urgent"
+color index      brightyellow   default    "~h 'priority: high'"
+color index      brightyellow   default    "~h 'priority: urgent'"
+color header     blue           default    "priority: normal"
+color header     brightred      default    "x-priority: "
+color header     yellow         default    "X-MSMail-Priority: "
+color index      brightred      default    "~F"
+color index      yellow         default    "~N"
+color index      brightyellow   default    "~N ~p"
+color index      brightblue     default    "~T"    # Tagged
+color index      red            default    "~D"       # Delete
+
