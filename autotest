@@ -1,0 +1,26 @@
+require 'autotest/fsevent'
+
+# Tip from http://wincent.com/knowledge-base/Setting_up_autotest_to_use_Growl
+module Autotest::Growl
+  
+  def self.growl title, msg, img, pri=0, sticky=""
+    system "osascript ~/scripts/growlnotify.scpt '#{title}' '#{msg.inspect}' '#{img}'"
+    # system "growlnotify -n autotest --image #{img} -p #{pri} -m #{msg.inspect} #{title} #{sticky}"
+  end
+
+  Autotest.add_hook :ran_command do |at|
+    image_root = "~/.autotest_images"
+    results = [at.results].flatten.join("\n")
+    output = results.slice(/(\d+)\s+examples?,\s*(\d+)\s+failures?(,\s*(\d+)\s+not implemented)?/)
+    if output
+      if $~[2].to_i > 0
+        growl "Fail", "#{output}", "#{image_root}/fail.png", 2
+      else
+        growl "Pass", "#{output}", "#{image_root}/pass.png"
+      end
+    end
+  end
+    
+end
+
+
