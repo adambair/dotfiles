@@ -85,6 +85,7 @@ set tilde
 unset collapse_unread
 unset mark_old
 unset ignore_list_reply_to
+unset record
 alternative_order text/plain text/html      # Show the text mime firstly
 
 # Sidebar Settings
