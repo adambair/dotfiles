@@ -6,6 +6,7 @@ set autoread
 set laststatus=2
 "let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
 set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
+set grepprg=ack
 
 syntax on
 syntax enable
@@ -63,7 +64,6 @@ map <leader>t :FuzzyFinderTextMate<CR>
 map <leader>nn :NERDTreeToggle<CR>
 map <leader>mm :TlistToggle<CR>
  
-map ,f :find<space>
 set path+=**
 map <silent> <F5> :source ~/.vimrc<CR>
 
