@@ -39,6 +39,7 @@ alias gla='git log --author=adam --color --stat'
 alias glp="git log --pretty=format:'(%h) %s'"
 alias glpa="git log --pretty=format:'(%h) %s - %an'"
 alias gpp='git pull && git push'
+alias gph='git push heroku'
 alias gcnv='git commit -v --no-verify'
 
 function gcnvm
