@@ -20,6 +20,7 @@ map -a :call SyntaxAttr()<CR>
 map -r :ruby finder.rescan!<CR>
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set nobackup
 set expandtab
 set number
