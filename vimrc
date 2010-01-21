@@ -38,7 +38,6 @@ set guioptions-=R " remove right scrollbar
 set guioptions-=b " remove bottom scrollbar
 set guioptions-=h " remove bottom scrollbar
 
-
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
@@ -58,7 +57,7 @@ endif
 set linespace=1
 
 let g:fuzzy_ignore = "*.log;*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**"
-let g:fuzzy_matching_limit = 100
+let g:fuzzy_matching_limit = 20
 
 let mapleader = ","
 map <leader>t :FuzzyFinderTextMate<CR>
