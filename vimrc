@@ -7,7 +7,6 @@ set laststatus=2
 "let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
 set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
 set grepprg=ack
-set cursorline
 
 syntax on
 syntax enable
@@ -53,6 +52,7 @@ if has("gui_running")
   "set guifont=Inconsolata-dz:h24
   "set guifont=Monofur:h22
   set lines=90 columns=130
+  set cursorline
 endif
 
 set linespace=1
