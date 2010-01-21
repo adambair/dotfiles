@@ -1,0 +1,11 @@
+multiuser on
+startup_message off
+shell -$SHELL
+
+#hardstatus on
+hardstatus alwayslastline
+#hardstatus string "%w%=%m/%d %c" 
+
+# Display $USER and screen titles in a neat way :P
+caption always "%{=b dy}{ %{= dm}${USER} %{=b dy}}%={ %?%{= dc}%-Lw%?%{+b dy}(%{-b r}%n:%t%{+b dy})%?(%u)%?%{-dc}%?%{= dc}%+Lw%? %{=b dy}}" 
+
