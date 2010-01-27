@@ -8,6 +8,8 @@ set laststatus=2
 set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
 set grepprg=ack
 
+let NERDSpaceDelims=1
+
 syntax on
 syntax enable
 filetype plugin indent on  " Automatically detect file types.
