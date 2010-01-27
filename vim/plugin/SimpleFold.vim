@@ -2,86 +2,26 @@
 " Plugin for simple search-based folding
 " Ships with support for Ruby, Perl, Java, PHP, Objective Caml, but can be
 " easily tailored to other filetypes.
-"     Version:    0.5.0 2007-04-16
-"      Author:    Mauricio Fernandez <mfp@acm.org>
-"  Maintainer:    Mauricio Fernandez <mfp@acm.org> http://eigenclass.org
-"     License:    GPL
+"       Version:    0.6.0 2009-09-18
+"        Author:    Mauricio Fernandez <mfp@acm.org>
+"    Maintainer:    Mauricio Fernandez <mfp@acm.org> http://eigenclass.org
+"   Contributor:    Darrick Wiebe <darrick@innatesoftware.com>
+"       License:    GPL
 "
 " Changelog
 " ---------
+"
+" 0.6.0
+"  * Added Objective-C and Javascript support
+"  * Moved the fold info to the right edge of the window to preserve the
+"    indentation of the lines that are folded.
+"
 " 0.5.0 (tested on vim 7.0)
 "  * changed configuration system: use g:xxx_simplefold_* variables instead of
 "    autocmd (you can also use w:xxx_simplefold_* or b:xxx_simplefold_* for
 "    window/buffer-specific settings)
 "  * added Perl, PHP, Objective Caml support
 " 
-" Mappings and commands
-" ---------------------
-" Defines the :Fold command; use it as 
-"   :Fold \v^function
-" You can try it with this very file to see what happens (note that the fold
-" corresponding to the current cursor position is left open).
-" The default mapping to fold the current file using the default fold
-" expression (more on this below) is
-"    map <unique> <silent> <Leader>f <Plug>SimpleFold_Foldsearch
-"                          =========
-" i.e. \f unless you changed mapleader. You can copy the above mapping to your
-" .vimrc and modify it as desired.
-"
-" Options
-" -------
-" By default, secondary, nestable subfolds will be created for the supported
-" filetypes (read below to see how this is controlled by the associated fold
-" expressions). You can turn that off with:
-"   let g:SimpleFold_use_subfolds = 0
-"
-" Fold expressions
-" ----------------
-" The default fold expression for most filetypes is
-"   let g:simplefold_expr = '\v^\s*[#%"0-9]{0,4}\s*\{(\{\{|!!)'
-" The expressions for the extra marker-based folding phase are:
-"   let g:simplefold_marker_start = '\v\{\{\{\{'
-"   let g:simplefold_marker_end = '\v\}\}\}\}'
-"
-" You can tailor the fold expressions to other filetypes by defining variables
-" named after the filetype (scroll to the bottom of this file for further,
-" actual examples):
-"
-" " folds start with the xxx_simplefold_expr; a line matching this expression
-" " marks the end of the previous fold (if any) and the start of a new one
-"    let g:ruby_simplefold_expr = 
-"	    \'\v(^\s*(def|class|module|attr_reader|attr_accessor|alias_method|' .
-"                 \   'attr|module_function' . ')\s' . 
-"           \ '\v^\s*(public|private|protected)>' .
-"	    \ '|^\s*\w+attr_(reader|accessor)\s|^\s*[#%"0-9]{0,4}\s*\{\{\{[^{])' .
-"	    \ '|^\s*[A-Z]\w+\s*\=[^=]'
-"
-" g:xxx_simplefold_end_expr (not used in the default definitions in this file)
-" can be used to mark the end of a fold without starting a new one (leaving
-" all the lines between the end of the fold and the start of the next one
-" unfolded).
-"
-" " once a line matches xxx_simplefold_expr, lines immediately before it
-" " matching the following expression are also included in the fold (but not
-" " shown when the fold is closed). Useful to place comments in the same fold as 
-" " the definition they apply to
-"    let g:ruby_simplefold_prefix = '\v^\s*(#([^{]+|\{[^{]|\{\{[^{])*)?$'
-"
-" " xxx_simplefold_nestable_{start,end}_expr define nestable folds (always
-" " inside a top-level fold)
-"
-"    let g:ruby_simplefold_nestable_start_expr = 
-"		\ '\v^\s*(def>|if>|unless>|while>.*(<do>)?|' . 
-"                \         'until>.*(<do>)?|case>|for>|begin>)' .
-"                \ '|^[^#]*.*<do>\s*(\|.*\|)?'
-"    let g:ruby_simplefold_nestable_end_expr = 
-"		\ '\v^\s*end'
-"
-" Here's the (simpler) setup for Java:
-" Java support
-"    let g:java_simplefold_expr = 
-"			 \ '\(^\s*\(\(private\|public\|protected\|class\)\>\)\)'
-"
 
 if exists("loaded_simplefold")
     finish
@@ -153,7 +93,14 @@ function! s:SimpleFold_FoldText()
     endif
     let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
     let diff = v:foldend - v:foldstart + 1
-    return  '+' . v:folddashes . '[' . s:Num2S(diff,3) . ']' . sub
+    let numspaces = winwidth(0) - 10 - strlen(sub)
+    if numspaces > 0
+      let spaces = strpart('                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ',
+            \ 0, numspaces)
+    else
+      let spaces = ' '
+    endif
+    return  sub . spaces . '+' . v:folddashes . '[' . s:Num2S(diff,3) . ']'
 endfunction
 
 "{{{~ Foldsearch originally based on t77: Fold on search result
@@ -398,6 +345,17 @@ let g:ruby_simplefold_prefix = '\v^\s*(#([^{]+|\{[^{]|\{\{[^{])*)?$'
 let g:java_simplefold_expr = 
 	    \ '\(^\s*\(\(private\|public\|protected\|class\)\s\)\)'
 
+let g:objc_simplefold_expr = '\v(^\s*(\@implementation|\@interface|' .
+      \ '#import|#pragma\smark|#include|#define|' .
+      \ '\@synthesize|\@property|\@dynamic|' .
+      \ 'static|typedef|enum))|' .
+      \ '(^(-|\+)\_[^{]*\{)'
+let g:objc_simplefold_end_expr = '\v(^\s*(\@end))'
+" let g:objc_simplefold_nestable_start_expr = '\v(^\s*(\@implementation|\@interface|' .
+"       \ '(-|\+|case|if|else|for|switch|enum)\_[^{]*\{|' .
+"       \ '\@synthesize|\@property|\@dynamic|static))'
+" let g:objc_simplefold_nestable_end_expr = '\v(^\s*(\}|\@end))'
+let g:objc_simplefold_prefix = '\v^\s*((/\*\_.*\*/)|((//).*))?$'
 
 " Perl support
 let g:perl_simplefold_expr =
@@ -443,5 +401,7 @@ let g:omlet_simplefold_nestable_start_expr = g:ocaml_simplefold_nestable_start_e
 let g:omlet_simplefold_nestable_end_expr = g:ocaml_simplefold_nestable_end_expr
 let g:omlet_simplefold_prefix = g:ocaml_simplefold_prefix
 
+let g:javascript_simplefold_prefix = '\v^((^\s{0,4}\S*\s*:.*\S+.*([,\{]$|\_\s*\}))|(^\w.*[\{=])|(^\s*\}))@!.*$'
+let g:javascript_simplefold_expr =     '\v(^\s{0,4}\S*\s*:.*\S+.*([,\{]$|\_\s*\}))|(^\w.*[\{=])'
 
 let &cpo = s:save_cpo

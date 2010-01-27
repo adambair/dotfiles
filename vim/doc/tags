@@ -187,6 +187,11 @@ NERD_tree.txt	NERD_tree.txt	/*NERD_tree.txt*
 Nread	pi_netrw.txt	/*Nread*
 Nsource	pi_netrw.txt	/*Nsource*
 Nwrite	pi_netrw.txt	/*Nwrite*
+SimpleFold-contents	SimpleFold.txt	/*SimpleFold-contents*
+SimpleFold.txt	SimpleFold.txt	/*SimpleFold.txt*
+SimpleFoldFoldExpressions	SimpleFold.txt	/*SimpleFoldFoldExpressions*
+SimpleFoldMappings	SimpleFold.txt	/*SimpleFoldMappings*
+SimpleFoldOptions	SimpleFold.txt	/*SimpleFoldOptions*
 TCommentDefineType()	tComment.txt	/*TCommentDefineType()*
 Tlist_Get_Tag_Prototype_By_Line()	taglist.txt	/*Tlist_Get_Tag_Prototype_By_Line()*
 Tlist_Get_Tagname_By_Line()	taglist.txt	/*Tlist_Get_Tagname_By_Line()*

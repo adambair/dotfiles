@@ -1,0 +1,79 @@
+*SimpleFold.txt*
+
+==============================================================================
+CONTENTS                                                 *SimpleFold-contents*
+
+    1.Mappings and commands...................|SimpleFoldMappings|
+    2.Options.................................|SimpleFoldOptions|
+    2.Fold expressions........................|SimpleFoldFoldExpressions|
+
+==============================================================================
+1. Mappings and commands                                  *SimpleFoldMappings*
+
+Defines the :Fold command; use it as 
+  :Fold \v^function
+You can try it with this very file to see what happens (note that the fold
+corresponding to the current cursor position is left open).
+The default mapping to fold the current file using the default fold
+expression (more on this below) is
+   map <unique> <silent> <Leader>f <Plug>SimpleFold_Foldsearch
+                         =========
+i.e. \f unless you changed mapleader. You can copy the above mapping to your
+.vimrc and modify it as desired.
+
+==============================================================================
+2. Options                                                 *SimpleFoldOptions*
+
+By default, secondary, nestable subfolds will be created for the supported
+filetypes (read below to see how this is controlled by the associated fold
+expressions). You can turn that off with:
+  let g:SimpleFold_use_subfolds = 0
+
+==============================================================================
+3. Fold expressions                                *SimpleFoldFoldExpressions*
+
+The default fold expression for most filetypes is
+  let g:simplefold_expr = '\v^\s*[#%"0-9]{0,4}\s*\{(\{\{|!!)'
+The expressions for the extra marker-based folding phase are:
+  let g:simplefold_marker_start = '\v\{\{\{\{'
+  let g:simplefold_marker_end = '\v\}\}\}\}'
+
+You can tailor the fold expressions to other filetypes by defining variables
+named after the filetype (scroll to the bottom of this file for further,
+actual examples):
+
+" folds start with the xxx_simplefold_expr; a line matching this expression
+" marks the end of the previous fold (if any) and the start of a new one
+   let g:ruby_simplefold_expr = 
+    \'\v(^\s*(def|class|module|attr_reader|attr_accessor|alias_method|' .
+                \   'attr|module_function' . ')\s' . 
+          \ '\v^\s*(public|private|protected)>' .
+    \ '|^\s*\w+attr_(reader|accessor)\s|^\s*[#%"0-9]{0,4}\s*\{\{\{[^{])' .
+    \ '|^\s*[A-Z]\w+\s*\=[^=]'
+
+g:xxx_simplefold_end_expr (not used in the default definitions in this file)
+can be used to mark the end of a fold without starting a new one (leaving
+all the lines between the end of the fold and the start of the next one
+unfolded).
+
+" once a line matches xxx_simplefold_expr, lines immediately before it
+" matching the following expression are also included in the fold (but not
+" shown when the fold is closed). Useful to place comments in the same fold as 
+" the definition they apply to
+   let g:ruby_simplefold_prefix = '\v^\s*(#([^{]+|\{[^{]|\{\{[^{])*)?$'
+
+" xxx_simplefold_nestable_{start,end}_expr define nestable folds (always
+" inside a top-level fold)
+
+   let g:ruby_simplefold_nestable_start_expr = 
+	\ '\v^\s*(def>|if>|unless>|while>.*(<do>)?|' . 
+               \         'until>.*(<do>)?|case>|for>|begin>)' .
+               \ '|^[^#]*.*<do>\s*(\|.*\|)?'
+   let g:ruby_simplefold_nestable_end_expr = 
+	\ '\v^\s*end'
+
+Here's the (simpler) setup for Java:
+Java support
+   let g:java_simplefold_expr = 
+		 \ '\(^\s*\(\(private\|public\|protected\|class\)\>\)\)'
+
