@@ -1,3 +1,4 @@
 --ignore-dir=coverage
 --ignore-dir=doc
+--ignore-dir=tmp
 --type-set=css=.sass,.css
