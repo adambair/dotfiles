@@ -7,6 +7,7 @@ set laststatus=2
 "let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
 set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
 set grepprg=ack
+set scrolloff=5
 
 let NERDSpaceDelims=1
 
