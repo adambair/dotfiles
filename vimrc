@@ -59,11 +59,11 @@ endif
 
 set linespace=1
 
-let g:fuzzy_ignore = "*.log;*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**"
-let g:fuzzy_matching_limit = 20
+" let g:fuzzy_ignore = "*.log;*.png;*.jpg;*.gif;vendor/**;coverage/**;tmp/**"
+" let g:fuzzy_matching_limit = 20
 
-let mapleader = ","
-map <leader>t :FuzzyFinderTextMate<CR>
+" let mapleader = ","
+" map <leader>t :FuzzyFinderTextMate<CR>
 
 map <leader>nn :NERDTreeToggle<CR>
 map <leader>mm :TlistToggle<CR>
