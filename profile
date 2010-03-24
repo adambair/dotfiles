@@ -1,7 +1,7 @@
 export HISTFILESIZE=10000
 export HISTSIZE=5000
 
-export PATH=/Users/adam/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/Users/adam/bin/j2:/opt/local/lib/postgresql83/bin:$PATH
+export PATH=/Users/adam/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/Users/adam/bin/j2:/opt/local/lib/postgresql84/bin:$PATH
 
 export ARCHFLAGS="-arch x86_64"
 export SVN_EDITOR="vim -f"
@@ -33,7 +33,7 @@ alias gsd='git-svn dcommit'
 alias gsrd='gsr && gsd'
 
 # git
-source ~/.git-completion.bash
+source ~/bin/git-completion.bash
 alias gst='git status'
 alias gla='git log --author=adam --color --stat'
 alias glp="git log --pretty=format:'(%h) %s'"
