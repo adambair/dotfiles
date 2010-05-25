@@ -18,7 +18,7 @@ export JAVA_HOME=/Library/Java/Home
 
 # RSpec Autotest
 export RSPEC=true  
-export AUTOFEATURE=true
+export AUTOFEATURE=false
 
 # twitter
 alias tw='/Users/adam/bin/twitter'
