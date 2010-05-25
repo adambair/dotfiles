@@ -1,0 +1,6 @@
+set show-line-numbers = yes
+set line-number-interval = 1
+set show-rev-graph = yes
+set show-refs = yes
+set author-width = 14
+set show-date = relativeset show-date = short
