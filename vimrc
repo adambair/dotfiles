@@ -20,7 +20,7 @@ setlocal spell spelllang=en_us
 autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc set spell
 
 map -a :call SyntaxAttr()<CR>
-map -r :ruby finder.rescan!<CR>
+map -r :CommandTFlush<CR>
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
