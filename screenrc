@@ -3,8 +3,11 @@ startup_message off
 shell -$SHELL
 
 #hardstatus on
+defscrollback 5000
 hardstatus alwayslastline
 #hardstatus string "%w%=%m/%d %c" 
+
+#bind 'c' colon screen' '
 
 # Display $USER and screen titles in a neat way :P
 caption always "%{=b dy}{ %{= dm}${USER} %{=b dy}}%={ %?%{= dc}%-Lw%?%{+b dy}(%{-b r}%n:%t%{+b dy})%?(%u)%?%{-dc}%?%{= dc}%+Lw%? %{=b dy}}" 
