@@ -21,10 +21,10 @@ export RSPEC=true
 export AUTOFEATURE=false
 
 # twitter
-alias tw='/Users/adam/bin/twitter'
+alias tw='~/bin/twitter'
 
 # presently
-alias ly='/Users/adam/bin/presently'
+alias ly='~/bin/presently'
 
 # git-svn
 alias gsm='git diff | mate'
