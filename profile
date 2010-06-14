@@ -65,7 +65,9 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(\1) $(parse_git_dirty)/"
 }
 
-export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
+# export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
+export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
+# export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
 alias m='mate .'
 # alias oa='ruby ~/workspace/personal/opie_and_anthony/opie_and_anthony_show.rb'
