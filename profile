@@ -70,6 +70,7 @@ export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 # export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
 alias m='mate .'
+alias v='mvim .'
 # alias oa='ruby ~/workspace/personal/opie_and_anthony/opie_and_anthony_show.rb'
 alias rmsvn='find . -name .svn -print0 | xargs -0 rm -rf'
 alias ls='ls -l -G -h'
