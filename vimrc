@@ -14,7 +14,8 @@ let NERDSpaceDelims=1
 syntax on
 syntax enable
 filetype plugin indent on  " Automatically detect file types.
-colorscheme monokai
+colorscheme monokai " dark, standard
+" colorscheme pyte  " light, for presenting
 
 setlocal spell spelllang=en_us
 autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc set spell
