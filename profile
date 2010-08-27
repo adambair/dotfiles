@@ -67,6 +67,7 @@ function parse_git_branch {
 
 # export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
+# export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] \n→ '
 # export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
 alias m='mate .'
@@ -91,4 +92,13 @@ export CUCUMBER_COLORS=undefined=white:pending=yellow:pending_param=yellow,bold:
 
 set -o vi
 clear
+
+
+alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb -l /opt/local/var/log/postgresql84/postgres.log start'"
+alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb stop -m fast'"
+alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl status -D /opt/local/var/db/postgresql84/defaultdb'"
+
+alias spotlight-off="sudo mdutil -a -i off && sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo mv /System/Library/CoreServices/Search.bundle/ /System/Library/CoreServices/SearchOff.bundle/ && ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
+
+alias spotlight-on="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /System/Library/CoreServices/Search.bundle/ ; sudo mdutil -a -i on; sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist;  ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
 
