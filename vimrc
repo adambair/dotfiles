@@ -75,7 +75,6 @@ map <silent> <F5> :source ~/.vimrc<CR>
 map H ^
 map L $
 
-set nobackup
 set nowritebackup
 set noswapfile
 
