@@ -6,7 +6,7 @@ export PATH=/Users/adam/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:
 export ARCHFLAGS="-arch x86_64"
 export SVN_EDITOR="vim -f"
 export GIT_EDITOR="vim -f"
-export EDITOR='vim -f'
+export EDITOR='vim'
 
 export JPY=~/bin/j2/j.py  # tells j.sh where the python script is
 . ~/bin/j2/j.sh          # provides the j() function
