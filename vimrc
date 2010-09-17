@@ -51,8 +51,9 @@ if has("gui_running")
   "GUI is running or is about to start.
   "Maximize gvim window.
   "set guifont=Monaco:h18
-  set guifont=Inconsolata-dz:h18
-  "set guifont=Inconsolata-dz:h24
+  " set guifont=Inconsolata-dz:h18
+  " set guifont=Inconsolata-dz:h26
+  set guifont=Inconsolata-dz:h22
   "set guifont=Monofur:h22
   set lines=90 columns=130
   set cursorline
