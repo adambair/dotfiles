@@ -12,7 +12,6 @@
 
 set nocompatible  " We don't want vi compatibility.
 set visualbell
-set nowrap
 set linebreak
 set autoread
 set laststatus=2
@@ -28,6 +27,20 @@ set noswapfile
 let NERDSpaceDelims=1
 let mapleader = ","
 
+let wiki = {}
+let wiki.path = '~/vimwiki/'
+let wiki.diary_index = 'daily'
+let wiki.diary_rel_path = 'daily/'
+let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
+let g:vimwiki_list = [wiki]
+
+let g:vimwiki_browsers=['open']
+let vimwiki_folding=0
+let vimwiki_use_calendar=1
+
+map <leader>wn :VimwikiDiaryNextDay<CR>
+map <leader>wp :VimwikiDiaryPrevDay<CR>
+
 syntax on
 syntax enable
 filetype plugin indent on  " Automatically detect file types.
@@ -36,7 +49,7 @@ colorscheme monokai " dark, standard
 
 " spellchecker configuration
 setlocal spell spelllang=en_us
-autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc set spell
+autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki set spell
 
 set tabstop=2
 set shiftwidth=2
@@ -83,8 +96,9 @@ if has("gui_running")
   "Maximize gvim window.
   "set guifont=Monaco:h18
   " set guifont=Inconsolata-dz:h18
+  set guifont=Inconsolata-dz:h20
   " set guifont=Inconsolata-dz:h26
-  set guifont=Inconsolata-dz:h22
+  " set guifont=Inconsolata-dz:h22
   "set guifont=Monofur:h22
   set lines=90 columns=130
 endif
@@ -126,4 +140,16 @@ nmap <leader>Y "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
 " nmap <leader>r :registers<CR>
+set clipboard=unnamed
+
+" au FocusLost * :wa " save all buffers when the active window loses focus 
+
+map ,sdate :let @z=strftime("%Y-%m-%d")<Cr>"zp
+map ,stime :let @z=strftime("%l:%M %p")<Cr>"zp
+map ,sdt   :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
+
+map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
+map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
+
+silent! call repeat#set("\<Plug>MyWonderfulMap",v:count) 
 
