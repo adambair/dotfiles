@@ -1,2 +1,2 @@
 javascript liberator.beep = function() { return false; }
-autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view|www\.captainforever\.com|www.google.com\/voice/.test(buffer.URL)
+autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view|www\.captainforever\.com|console-newark.linode.com\/ajaxterm\/|www.google.com\/voice/.test(buffer.URL)
