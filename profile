@@ -102,3 +102,6 @@ alias spotlight-off="sudo mdutil -a -i off && sudo launchctl unload -w /System/L
 
 alias spotlight-on="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /System/Library/CoreServices/Search.bundle/ ; sudo mdutil -a -i on; sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist;  ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
 
+function heftiest {
+  for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
+}
