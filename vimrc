@@ -28,7 +28,7 @@ let NERDSpaceDelims=1
 let mapleader = ","
 
 let wiki = {}
-let wiki.path = '~/vimwiki/'
+let wiki.path = '~/vimwiki'
 let wiki.diary_index = 'daily'
 let wiki.diary_rel_path = 'daily/'
 let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
@@ -92,6 +92,8 @@ if has("autocmd")
 endif
 
 if has("gui_running")
+  set fuoptions=maxvert,maxhorz
+      
   "GUI is running or is about to start.
   "Maximize gvim window.
   "set guifont=Monaco:h18
@@ -100,7 +102,7 @@ if has("gui_running")
   " set guifont=Inconsolata-dz:h26
   " set guifont=Inconsolata-dz:h22
   "set guifont=Monofur:h22
-  set lines=90 columns=130
+  " set lines=90 columns=130
 endif
 
 set linespace=1
