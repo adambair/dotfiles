@@ -66,15 +66,15 @@ function parse_git_branch {
 }
 
 # export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
-export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
+export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n: '
 # export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] \n→ '
 # export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
 alias m='mate .'
-alias v='mvim .'
+alias v='vim .'
 # alias oa='ruby ~/workspace/personal/opie_and_anthony/opie_and_anthony_show.rb'
 alias rmsvn='find . -name .svn -print0 | xargs -0 rm -rf'
-alias ls='ls -l -G -h'
+alias ls='ls -l -G -h --color'
 alias ms='mongrel_rails start'
 # alias mti='./script/server -t mti'
 # alias lt='./script/server -t lifetuner'
@@ -105,3 +105,6 @@ alias spotlight-on="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /Syst
 function heftiest {
   for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
 }
+
+
+[[ -s "/home/adam/.rvm/scripts/rvm" ]] && source "/home/adam/.rvm/scripts/rvm"

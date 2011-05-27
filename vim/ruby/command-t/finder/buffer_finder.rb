@@ -1,4 +1,4 @@
-# Copyright 2010 Wincent Colaiuta. All rights reserved.
+# Copyright 2010-2011 Wincent Colaiuta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -21,19 +21,15 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+require 'command-t/ext' # CommandT::Matcher
+require 'command-t/scanner/buffer_scanner'
+require 'command-t/finder'
+
 module CommandT
-  # C extension
-  autoload :Match,        'command-t/ext'
-  autoload :Matcher,      'command-t/ext'
-
-  # low-level modules (independent specs)
-  autoload :Base,         'command-t/base'
-  autoload :Scanner,      'command-t/scanner'
-
-  # high-level modules (VIM integration)
-  autoload :Controller,   'command-t/controller'
-  autoload :MatchWindow,  'command-t/match_window'
-  autoload :Prompt,       'command-t/prompt'
-  autoload :Settings,     'command-t/settings'
-  autoload :Stub,         'command-t/stub'
-end # module CommandT
+  class BufferFinder < Finder
+    def initialize
+      @scanner = BufferScanner.new
+      @matcher = Matcher.new @scanner, :always_show_dot_files => true
+    end
+  end # class BufferFinder
+end # CommandT

@@ -1,4 +1,4 @@
-# Copyright 2010 Wincent Colaiuta. All rights reserved.
+# Copyright 2010-2011 Wincent Colaiuta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -21,20 +21,32 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-module CommandT
-  module Scanner
-    # Common methods to be inherited by concrete subclasses.
-    class Base
-      def flush
-        @paths = nil
-      end
+require 'command-t/ext' # CommandT::Matcher
 
-      def path= str
-        if @path != str
-          @path = str
-          flush
-        end
-      end
-    end # class AbstractScanner
-  end # module Scanner
-end # module CommandT
+module CommandT
+  # Encapsulates a Scanner instance (which builds up a list of available files
+  # in a directory) and a Matcher instance (which selects from that list based
+  # on a search string).
+  #
+  # Specialized subclasses use different kinds of scanners adapted for
+  # different kinds of search (files, buffers).
+  class Finder
+    def initialize path = Dir.pwd, options = {}
+      raise RuntimeError, 'Subclass responsibility'
+    end
+
+    # Options:
+    #   :limit (integer): limit the number of returned matches
+    def sorted_matches_for str, options = {}
+      @matcher.sorted_matches_for str, options
+    end
+
+    def flush
+      @scanner.flush
+    end
+
+    def path= path
+      @scanner.path = path
+    end
+  end # class Finder
+end # CommandT
