@@ -23,6 +23,14 @@ export AUTOFEATURE=false
 # twitter
 alias tw='~/bin/twitter'
 
+# mutt; set download folder
+alias mutt='cd ~/Downloads; mutt'
+
+alias top='top -o cpu'
+
+# newsbeuter
+alias nb='newsbeuter'
+
 # presently
 alias ly='~/bin/presently'
 
@@ -91,20 +99,17 @@ alias rp='. ~/.profile'
 export CUCUMBER_COLORS=undefined=white:pending=yellow:pending_param=yellow,bold:failed=red:failed_param=red,bold:passed=green:passed_param=green,bold:skipped=cyan:skipped_param=cyan,bold:comment=white:tag=blue
 
 set -o vi
-clear
-
 
 alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb -l /opt/local/var/log/postgresql84/postgres.log start'"
 alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb stop -m fast'"
 alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl status -D /opt/local/var/db/postgresql84/defaultdb'"
 
-alias spotlight-off="sudo mdutil -a -i off && sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo mv /System/Library/CoreServices/Search.bundle/ /System/Library/CoreServices/SearchOff.bundle/ && ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
+alias spotlightoff="sudo mdutil -a -i off && sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo mv /System/Library/CoreServices/Search.bundle/ /System/Library/CoreServices/SearchOff.bundle/ && ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
 
-alias spotlight-on="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /System/Library/CoreServices/Search.bundle/ ; sudo mdutil -a -i on; sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist;  ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
+alias spotlighton="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /System/Library/CoreServices/Search.bundle/ ; sudo mdutil -a -i on; sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist;  ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
 
 function heftiest {
   for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
 }
-
 
 [[ -s "/home/adam/.rvm/scripts/rvm" ]] && source "/home/adam/.rvm/scripts/rvm"

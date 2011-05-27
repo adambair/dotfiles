@@ -2,20 +2,27 @@
 
 # Basic setup
 set mbox_type=Maildir
-set folder=$HOME/.maildb
-set spoolfile=+/GMAIL/INBOX
+set folder=$HOME/Mail
+set spoolfile=+/adambair/INBOX
+set date_format="%A, %D at %k:%M:%S %Z"
+set mime_forward=yes
+
 
 # address book and aliases
 set alias_file=~/.mutt-alias
 source ~/.mutt-alias
 set query_command= "abook --mutt-query '%s'"
-macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
 
-macro index,pager y "<save-message>=GMAIL/[Gmail].All Mail<enter>" "All Mail"
-macro index,pager d "<save-message>=GMAIL/[Gmail].Trash<enter>" "Trash"
+# Handle HTML email (also see ~/.mailcap)
+auto_view text/html
+
+# macro index,pager y "<save-message>=adambair/[Gmail].All Mail<enter>" "All Mail"
+# macro index,pager d "<save-message>=adambair/[Gmail].Trash<enter>" "Trash"
+macro index,pager y "<save-message>=adambair/[Gmail].All Mail<enter>" "All Mail"
+macro index,pager d "<save-message>=adambair/[Gmail].Trash<enter>" "Trash"
 
 # mailboxes
-source $HOME/.mutt/mailboxes
+# source $HOME/
 
 # GPG
 # source $HOME/.mutt/crypto
@@ -28,12 +35,12 @@ set envelope_from = "yes"
 # it's not running folder hooks. It just starts in a folder
 set from="adambair@gmail.com"
 set realname="Adam Bair"
-#set record="+GMAIL/Sent"
-set postponed="+GMAIL/Drafts"
+#set record="+adambair/Sent"
+set postponed="+adambair/Drafts"
 my_hdr From: Adam Bair <adambair@gmail.com>
-set sendmail="/opt/local/bin/msmtp -a gmail"
+set sendmail="/opt/local/bin/msmtp -a adambair"
 
-set signature=$HOME/.mutt/signature-gmail
+set signature=$HOME/.mutt/signatures/adambair.signature
 set sig_dashes  # A signature must always start with a "-- "
 
 #####                            #####
@@ -61,7 +68,8 @@ hdr_order From: Return-Path: \
 Reply-To: \
 Date: Subject: Importance:
 
-set editor="vim -f"
+# set editor="vim -f"
+set editor="vim -c 'set textwidth=0'"
 set header_cache="~/.mutt/headers"
 
 set mail_check=120       # check for new mail every 90 seconds
@@ -79,8 +87,11 @@ set pager_context=5  # Retain 5 lines of previous page when scrolling.
 set pager_stop = yes
 set status_on_top    # Status bar on top.
 
-set sort = 'threads'
-set sort_aux = 'last-date-received'
+# set sort = 'threads'
+# set sort_aux = 'last-date-received'
+
+set sort=threads; set sort_aux=reverse-date
+
 set tilde
 unset collapse_unread
 unset mark_old
@@ -130,31 +141,50 @@ macro pager p "<display-toggle-weed> <print-message> <display-toggle-weed>"
 
 
 # SHORTCUTS for each of the main inboxes
-macro index ig "<change-folder>=GMAIL/INBOX<enter>" "Go to GMAIL inbox"
-macro index ii "<change-folder>=INTRIDEA/INBOX<enter>" "Go to INTRIDEA inbox"
+macro index gi "<change-folder>=adambair/INBOX<enter>" "Go to adambair Inbox"
+macro index ga "<change-folder>=adambair/[Gmail].All Mail" "Go to adambair All Mail"
+macro index gs "<change-folder>=adambair/[Gmail].Sent Mail" "Go to adambair Sent Mail"
+
+# macro index ki "<change-folder>=kalopsian/INBOX<enter>" "Go to kalopsian Inbox"
+# macro index ka "<change-folder>=kalopsian/[Gmail].All Mail" "Go to kalopsian All Mail"
+# macro index ks "<change-folder>=kalopsian/[Gmail].Sent Mail" "Go to kalopsian Sent Mail"
+
+macro index ii "<change-folder>=intridea/INBOX<enter>" "Go to intridea Inbox"
+macro index ia "<change-folder>=intridea/[Gmail].All Mail" "Go to intridea All Mail"
+macro index is "<change-folder>=intridea/[Gmail].Sent Mail" "Go to intridea Sent Mail"
 
 # allow space characters in macros
 bind editor <space> noop
 
-# hooks for entering any folder in my GMAIL account
-folder-hook +GMAIL.* set from="adambair@gmail.com" 
-#folder-hook +GMAIL.* set record=+GMAIL/Sent
-folder-hook +GMAIL.* set postponed=+GMAIL/Drafts
-folder-hook +GMAIL.* my_hdr From: Adam Bair <adambair@gmail.com>
-folder-hook +GMAIL.* set signature=$HOME/.mutt/signature-gmail
-folder-hook +GMAIL.* set sendmail='"/opt/local/bin/msmtp -a gmail"'
-folder-hook +GMAIL.* 'macro index,pager y "<save-message>=GMAIL/[Gmail].All Mail<enter>" "All Mail"'
-folder-hook +GMAIL.* macro index,pager d "<save-message>=GMAIL/[Gmail].Trash<enter>" "Trash"
+# hooks for entering any folder in my adambair account
+folder-hook +adambair.* set from="adambair@gmail.com" 
+#folder-hook +adambair.* set record=+adambair/Sent
+folder-hook +adambair.* set postponed=+adambair/Drafts
+folder-hook +adambair.* my_hdr From: Adam Bair <adambair@gmail.com>
+folder-hook +adambair.* set signature=$HOME/.mutt/signatures/adambair.signature
+folder-hook +adambair.* set sendmail='"/opt/local/bin/msmtp -a adambair"'
+folder-hook +adambair.* 'macro index,pager y "<save-message>=adambair/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +adambair.* macro index,pager d "<save-message>=adambair/[Gmail].Trash<enter>" "Trash"
 
-# hooks for entering any folder in my INTRIDEA account
-folder-hook +INTRIDEA.* set from="adam@intridea.com"
-#folder-hook +INTRIDEA.* set record=+INTRIDEA/Sent
-folder-hook +INTRIDEA.* set postponed=+INTRIDEA/Drafts
-folder-hook +INTRIDEA.* my_hdr From: Adam Bair <adam@intridea.com>
-folder-hook +INTRIDEA.* set sendmail='"/opt/local/bin/msmtp -a intridea"'
-folder-hook +INTRIDEA.* set signature=$HOME/.mutt/signature-intridea
-folder-hook +INTRIDEA.* 'macro index,pager y "<save-message>=INTRIDEA/[Gmail].All Mail<enter>" "All Mail"'
-folder-hook +INTRIDEA.* macro index,pager d "<save-message>=INTRIDEA/[Gmail].Trash<enter>" "Trash"
+# hooks for entering any folder in my kalopsian account
+folder-hook +kalopsian.* set from="kalopsian@gmail.com" 
+#folder-hook +kalopsian.* set record=+kalopsian/Sent
+folder-hook +kalopsian.* set postponed=+kalopsian/Drafts
+folder-hook +kalopsian.* my_hdr From: kalopsian <kalopsian@gmail.com>
+folder-hook +kalopsian.* set signature=$HOME/.mutt/signatures/kalopsian.signature
+folder-hook +kalopsian.* set sendmail='"/opt/local/bin/msmtp -a kalopsian"'
+folder-hook +kalopsian.* 'macro index,pager y "<save-message>=kalopsian/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +kalopsian.* macro index,pager d "<save-message>=kalopsian/[Gmail].Trash<enter>" "Trash"
+
+# hooks for entering any folder in my intridea account
+folder-hook +intridea.* set from="adam@intridea.com"
+#folder-hook +intridea.* set record=+INTRIDEA/Sent
+folder-hook +intridea.* set postponed=+INTRIDEA/Drafts
+folder-hook +intridea.* my_hdr From: Adam Bair <adam@intridea.com>
+folder-hook +intridea.* set sendmail='"/opt/local/bin/msmtp -a intridea"'
+folder-hook +intridea.* set signature=$HOME/.mutt/signatures/intridea.signature
+folder-hook +intridea.* 'macro index,pager y "<save-message>=INTRIDEA/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +intridea.* macro index,pager d "<save-message>=INTRIDEA/[Gmail].Trash<enter>" "Trash"
 
 folder-hook . "push \eV"
 
