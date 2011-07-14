@@ -20,6 +20,8 @@ export JAVA_HOME=/Library/Java/Home
 export RSPEC=true  
 export AUTOFEATURE=false
 
+alias b='bundle exec $*'
+
 # twitter
 alias tw='~/bin/twitter'
 
