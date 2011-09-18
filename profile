@@ -1,7 +1,7 @@
 export HISTFILESIZE=10000
 export HISTSIZE=5000
 
-export PATH=/Users/adam/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/Users/adam/bin/j2:/opt/local/lib/postgresql84/bin:$PATH
+export PATH=/Users/adam/bin:/opt/local/lib/postgresql90/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/Users/adam/bin/j2:$PATH
 
 export ARCHFLAGS="-arch x86_64"
 export SVN_EDITOR="vim -f"
@@ -51,6 +51,7 @@ alias glpa="git log --pretty=format:'(%h) %s - %an'"
 alias gpp='git pull && git push'
 alias gph='git push heroku'
 alias gcnv='git commit -v --no-verify'
+alias gl='git log --no-merges --pretty=format:"%Cgreen%h%Creset%x09%an%x09%Cblue%ar%Creset%x09%s"'
 
 function gcnvm
 {
@@ -102,9 +103,9 @@ export CUCUMBER_COLORS=undefined=white:pending=yellow:pending_param=yellow,bold:
 
 set -o vi
 
-alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb -l /opt/local/var/log/postgresql84/postgres.log start'"
-alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl -D /opt/local/var/db/postgresql84/defaultdb stop -m fast'"
-alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql84/bin/pg_ctl status -D /opt/local/var/db/postgresql84/defaultdb'"
+alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb -l /opt/local/var/log/postgresql90/postgres.log start'"
+alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb stop -m fast'"
+alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl status -D /opt/local/var/db/postgresql90/defaultdb'"
 
 alias spotlightoff="sudo mdutil -a -i off && sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo mv /System/Library/CoreServices/Search.bundle/ /System/Library/CoreServices/SearchOff.bundle/ && ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
 
