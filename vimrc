@@ -58,7 +58,8 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set number
+" set number
+set rnu
 
 set cursorline " underline current line in console
 
@@ -158,3 +159,13 @@ map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
 
 silent! call repeat#set("\<Plug>MyWonderfulMap",v:count) 
 
+" toggle relative line numbers
+function! g:ToggleNuMode()
+  if(&rnu == 1)
+    set nu
+  else
+    set rnu
+  endif
+endfunc
+
+nnoremap <C-L> :call g:ToggleNuMode()<cr>
