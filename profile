@@ -1,40 +1,82 @@
 export HISTFILESIZE=10000
 export HISTSIZE=5000
 
-export PATH=/Users/adam/bin:/opt/local/lib/postgresql90/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/Users/adam/bin/j2:$PATH
 
-export ARCHFLAGS="-arch x86_64"
-export SVN_EDITOR="vim -f"
-export GIT_EDITOR="vim -f"
-export EDITOR='vim'
+# PATH
+export PATH=/Users/adam/bin:/usr/bin:$PATH
 
-export JPY=~/bin/j2/j.py  # tells j.sh where the python script is
-. ~/bin/j2/j.sh          # provides the j() function
+
+# Brew
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+
+# Macports
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
+
+# MySQL
+export PATH=/usr/local/mysql/bin:$PATH
+
+
+# PostgreSQL
+export PATH=/opt/local/lib/postgresql90/bin:$PATH
+
+alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb -l /opt/local/var/log/postgresql90/postgres.log start'"
+alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb stop -m fast'"
+alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl status -D /opt/local/var/db/postgresql90/defaultdb'"
+
+
+# Vim
+alias v='mvim .'
+alias vi='vim'
+
+set -o vi
+
+
+# Python quick directory navigation - watches where you cd, ranks and remembers
+#   and allows for quick retrieval.
+# 
+# Example
+#
+#   j workspace
+#   #=> /Users/happy/something/workspace
+#
+# Results 
+export JPY=~/bin/j2/j.py
+export PATH=/Users/adam/bin/j2:$PATH
 
 
 # Tomcat6 config
 export CATALINA_HOME=/Library/Tomcat6
 export JAVA_HOME=/Library/Java/Home
 
-# RSpec Autotest
-export RSPEC=true  
-export AUTOFEATURE=false
 
+# Ruby
 alias b='bundle exec $*'
+alias tl='tail -f log/development.log'
 
-# twitter
-alias tw='~/bin/twitter'
+function heftiest {
+  for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
+}
 
+
+# Mutt
 # mutt; set download folder
 alias mutt='cd ~/Downloads; mutt'
 
-alias top='top -o cpu'
 
-# newsbeuter
-alias nb='newsbeuter'
+# Subversion (svn)
+export SVN_EDITOR="vim -f"
 
-# presently
-alias ly='~/bin/presently'
+# Recursively remove all .svn folders within a project.
+#   Mostly useful when moving a project from svn to git.
+alias rmsvn='find . -name .svn -print0 | xargs -0 rm -rf'
+
+
+# Git
+source ~/bin/git-completion.bash
+
+export GIT_EDITOR="vim -f"
 
 # git-svn
 alias gsm='git diff | mate'
@@ -42,8 +84,6 @@ alias gsr='git-svn rebase'
 alias gsd='git-svn dcommit'
 alias gsrd='gsr && gsd'
 
-# git
-source ~/bin/git-completion.bash
 alias gst='git status'
 alias gla='git log --author=adam --color --stat'
 alias glp="git log --pretty=format:'(%h) %s'"
@@ -53,14 +93,12 @@ alias gph='git push heroku'
 alias gcnv='git commit -v --no-verify'
 alias gl='git log --no-merges --pretty=format:"%Cgreen%h%Creset%x09%an%x09%Cblue%ar%Creset%x09%s"'
 
-function gcnvm
-{
+function gcnvm {
   git commit -m "$*" --no-verify
 }
 
-function gsl
-{
-git-svn log -n ${1:-1} | awk '/^-+$/ { next } /^r/ { rev = $1; next } /./ { print rev, $0 }'
+function gsl {
+  git-svn log -n ${1:-1} | awk '/^-+$/ { next } /^r/ { rev = $1; next } /./ { print rev, $0 }'
 }
 
 # ⚠ ☢ ☠
@@ -76,43 +114,21 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(\1) $(parse_git_dirty)/"
 }
 
-# export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
-export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
-# export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] \n→ '
-# export PS1='\[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
-alias m='mate .'
-alias v='mvim .'
-# alias oa='ruby ~/workspace/personal/opie_and_anthony/opie_and_anthony_show.rb'
-alias rmsvn='find . -name .svn -print0 | xargs -0 rm -rf'
+# Bash
+export EDITOR='vim'
+
+alias timestamp='date +%s'
+alias tw='~/bin/twitter'
+alias top='top -o cpu'
+alias nb='newsbeuter'
 alias ls='ls -l -G -h'
-alias ms='mongrel_rails start'
-# alias mti='./script/server -t mti'
-# alias lt='./script/server -t lifetuner'
-alias tl='tail -f log/development.log'
-alias tlt='tail -f log/test.log'
-alias rc='rake spec:rcov && open coverage/index.html && rake stats'
-alias ss='./script/server'
-alias sc='./script/console'
-alias sct='./script/console test'
-alias svn-add-all="svn st | grep ? | awk '{print $2}' | xargs svn add"
-alias vi='vim'
+
+# reload profile
 alias rp='. ~/.profile'
 
-export CUCUMBER_COLORS=undefined=white:pending=yellow:pending_param=yellow,bold:failed=red:failed_param=red,bold:passed=green:passed_param=green,bold:skipped=cyan:skipped_param=cyan,bold:comment=white:tag=blue
+export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
-set -o vi
 
-alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb -l /opt/local/var/log/postgresql90/postgres.log start'"
-alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb stop -m fast'"
-alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl status -D /opt/local/var/db/postgresql90/defaultdb'"
-
-alias spotlightoff="sudo mdutil -a -i off && sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo mv /System/Library/CoreServices/Search.bundle/ /System/Library/CoreServices/SearchOff.bundle/ && ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
-
-alias spotlighton="sudo mv /System/Library/CoreServices/SearchOff.bundle/ /System/Library/CoreServices/Search.bundle/ ; sudo mdutil -a -i on; sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist;  ps aux | grep SystemUIServer | grep Library | awk {'print $2'} | xargs kill -HUP"
-
-function heftiest {
-  for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
-}
-
+# RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
