@@ -46,11 +46,6 @@ export JPY=~/bin/j2/j.py
 export PATH=/Users/adam/bin/j2:$PATH
 
 
-# Tomcat6 config
-export CATALINA_HOME=/Library/Tomcat6
-export JAVA_HOME=/Library/Java/Home
-
-
 # Ruby
 alias b='bundle exec $*'
 alias tl='tail -f log/development.log'
