@@ -1,34 +1,15 @@
-# require 'rubygems'
-# require 'utility_belt'
-
-# begin
-  # # load wirble
-  # require 'wirble'
-
-  # # start wirble (with color)
-  # Wirble.init
-  # Wirble.colorize
-# rescue LoadError => err
-  # warn "Couldn't load Wirble: #{err}"
-# end
-
-IRB.conf[:AUTO_INDENT] = true
-IRB.conf[:USE_READLINE] = true
-IRB.conf[:LOAD_MODULES] = []  unless IRB.conf.key?(:LOAD_MODULES)
-# unless IRB.conf[:LOAD_MODULES].include?('irb/completion')
-  # IRB.conf[:LOAD_MODULES] << 'irb/completion'
-# end
-
-def clear
-  system('clear')
-end
-
 # http://github.com/iain/osx_settings/blob/master/.irbrc
 # IRBRC file by Iain Hecker, http://iain.nl
 # put all this in your ~/.irbrc
 require 'rubygems'
 require 'yaml'
 require 'irb/completion'
+require 'flyrb'
+
+
+def clear
+  system('clear')
+end
 
 alias q exit
 
@@ -37,6 +18,13 @@ class Object
     (methods - Object.instance_methods).sort
   end
 end
+
+IRB.conf[:AUTO_INDENT] = true
+IRB.conf[:USE_READLINE] = true
+IRB.conf[:LOAD_MODULES] = []  unless IRB.conf.key?(:LOAD_MODULES)
+# unless IRB.conf[:LOAD_MODULES].include?('irb/completion')
+  # IRB.conf[:LOAD_MODULES] << 'irb/completion'
+# end
 
 ANSI = {}
 ANSI[:RESET] = "\e[0m"
@@ -156,4 +144,3 @@ end
 
 # Show results of all extension-loading
 puts "#{ANSI[:GRAY]}~> Console extensions:#{ANSI[:RESET]} #{$console_extensions.join(' ')}#{ANSI[:RESET]}"
-
