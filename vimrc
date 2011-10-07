@@ -24,6 +24,9 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+set undofile
+set undodir=~/tmp
+
 let NERDSpaceDelims=1
 let mapleader = ","
 
