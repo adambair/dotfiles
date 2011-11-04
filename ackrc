@@ -2,3 +2,4 @@
 --ignore-dir=doc
 --ignore-dir=tmp
 --type-set=css=.sass,.css
+--type-set=js=.js,.coffee

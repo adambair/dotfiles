@@ -10,6 +10,11 @@
 " http://github.com/nvie/vimrc/blob/master/vimrc
 "
 
+" Pathogen
+" Eases installation of runtime files and plugins
+" https://github.com/tpope/vim-pathogen
+call pathogen#infect()
+
 set nocompatible  " We don't want vi compatibility.
 set visualbell
 set linebreak

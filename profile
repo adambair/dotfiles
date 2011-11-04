@@ -1,17 +1,19 @@
 export HISTFILESIZE=10000
 export HISTSIZE=5000
 
+# Node.js
+export NODE_PATH=/usr/local/lib/node_modules
 
 # PATH
 export PATH=/Users/adam/bin:/usr/bin:$PATH
 
 
-# Brew
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-
 
 # Macports
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
+# Brew
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 
 # MySQL
@@ -42,7 +44,7 @@ set -o vi
 #   #=> /Users/happy/something/workspace
 #
 # Results 
-export JPY=~/bin/j2/j.py
+export JPY=/Users/adam/bin/j2/j.py
 export PATH=/Users/adam/bin/j2:$PATH
 
 
@@ -54,6 +56,9 @@ function heftiest {
   for file in $(find app$1/**/*.rb -type f); do wc -l $file ; done  | sort -r | head
 }
 
+# Rails
+
+alias r='rails'
 
 # Mutt
 # mutt; set download folder
@@ -70,15 +75,9 @@ alias rmsvn='find . -name .svn -print0 | xargs -0 rm -rf'
 
 # Git
 source ~/bin/git-completion.bash
-
 export GIT_EDITOR="vim -f"
 
-# git-svn
-alias gsm='git diff | mate'
-alias gsr='git-svn rebase'
-alias gsd='git-svn dcommit'
-alias gsrd='gsr && gsd'
-
+alias grm="gst | grep deleted | awk {'print \$3'} | xargs git rm"
 alias gst='git status'
 alias gla='git log --author=adam --color --stat'
 alias glp="git log --pretty=format:'(%h) %s'"
@@ -92,10 +91,6 @@ function gcnvm {
   git commit -m "$*" --no-verify
 }
 
-function gsl {
-  git-svn log -n ${1:-1} | awk '/^-+$/ { next } /^r/ { rev = $1; next } /./ { print rev, $0 }'
-}
-
 # ⚠ ☢ ☠
 function parse_git_dirty {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "⚡"
@@ -107,6 +102,16 @@ function parse_git_branch_no_formatting {
 
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(\1) $(parse_git_dirty)/"
+}
+
+# git-svn
+alias gsm='git diff | mate'
+alias gsr='git-svn rebase'
+alias gsd='git-svn dcommit'
+alias gsrd='gsr && gsd'
+
+function gsl {
+  git-svn log -n ${1:-1} | awk '/^-+$/ { next } /^r/ { rev = $1; next } /./ { print rev, $0 }'
 }
 
 
