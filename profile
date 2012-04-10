@@ -1,32 +1,29 @@
 export HISTFILESIZE=10000
 export HISTSIZE=5000
 
+export TERM=xterm-256color
+
 # Node.js
 export NODE_PATH=/usr/local/lib/node_modules
+
+# VLC
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 # PATH
 export PATH=/Users/adam/bin:/usr/bin:$PATH
 
-
-
 # Macports
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-
-# Brew
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-
+# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
 # MySQL
 export PATH=/usr/local/mysql/bin:$PATH
 
 
 # PostgreSQL
-export PATH=/opt/local/lib/postgresql90/bin:$PATH
+export PGDATA=/usr/local/var/postgres
 
-alias pgstart="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb -l /opt/local/var/log/postgresql90/postgres.log start'"
-alias pgstop="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl -D /opt/local/var/db/postgresql90/defaultdb stop -m fast'"
-alias pgstatus="sudo su postgres -c '/opt/local/lib/postgresql90/bin/pg_ctl status -D /opt/local/var/db/postgresql90/defaultdb'"
-
+# Brew
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # Vim
 alias v='mvim .'
@@ -46,6 +43,7 @@ set -o vi
 # Results 
 export JPY=/Users/adam/bin/j2/j.py
 export PATH=/Users/adam/bin/j2:$PATH
+. /Users/adam/bin/j2/j.sh
 
 
 # Ruby
@@ -132,3 +130,7 @@ export PS1='\u@\h \[\033[1;33m\]\w\[\033[0m\] $(parse_git_branch)\n→ '
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+[[ -s "/Users/adam/.rvm/scripts/rvm" ]] && source "/Users/adam/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# tmux attach
