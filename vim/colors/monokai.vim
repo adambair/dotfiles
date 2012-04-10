@@ -102,12 +102,15 @@ hi Visual                        guibg=#403D3D
 hi WarningMsg      guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu        guifg=#66D9EF guibg=#000000
 
-hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
+" hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
+hi Normal          guifg=#F8F8F2 guibg=#000000
 hi Comment         guifg=#b2ad90
 hi CursorLine                    guibg=#262825
+hi ColorColumn                   guibg=#262825
 hi CursorColumn                  guibg=#000000
 hi LineNr          guifg=#BCBCBC guibg=#232526
-hi NonText         guifg=#BCBCBC guibg=#232526
+" hi NonText         guifg=#BCBCBC guibg=#232526
+hi NonText         guifg=#BCBCBC guibg=#000000
 
 "hi rubyBeginEnd                gui=            guifg=            guibg=
 "hi rubyBoolean                 gui=            guifg=            guibg=

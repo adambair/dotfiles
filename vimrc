@@ -53,6 +53,7 @@ syntax on
 syntax enable
 filetype plugin indent on  " Automatically detect file types.
 colorscheme monokai " dark, standard
+set t_Co=256
 " colorscheme pyte  " light, for presenting
 
 " spellchecker configuration
@@ -101,6 +102,9 @@ if has("autocmd")
 endif
 
 if has("gui_running")
+  highlight ColorColumn ctermbg=7
+  set colorcolumn=80
+
   set fuoptions=maxvert,maxhorz
       
   "GUI is running or is about to start.
@@ -111,7 +115,7 @@ if has("gui_running")
   " set guifont=Inconsolata-dz:h26
   " set guifont=Inconsolata-dz:h22
   "set guifont=Monofur:h22
-  " set lines=90 columns=130
+  set lines=90 columns=130
 endif
 
 set linespace=1
@@ -174,3 +178,4 @@ function! g:ToggleNuMode()
 endfunc
 
 nnoremap <C-L> :call g:ToggleNuMode()<cr>
+
