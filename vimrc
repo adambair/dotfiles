@@ -60,6 +60,7 @@ set t_Co=256
 setlocal spell spelllang=en_us
 autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki set spell
 
+set showtabline=2
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -74,6 +75,7 @@ set ignorecase
 set smartcase
 set showmatch
 set wildmode=longest,list,full
+set wildignore+=*.swp,*.bak,*.pyc,tmp/**
 
 set smarttab
 
@@ -178,4 +180,12 @@ function! g:ToggleNuMode()
 endfunc
 
 nnoremap <C-L> :call g:ToggleNuMode()<cr>
+
+map th :tabfirst<CR>
+map tn :tabnext<CR>
+map tp :tabprev<CR>
+map tl :tablast<CR>
+map tc :tabnew<CR>
+
+nmap <leader>t :CtrlP<CR>
 
