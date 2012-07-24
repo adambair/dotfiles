@@ -87,8 +87,10 @@ endif
 hi TabLineFill                   guibg=#262825
 
 hi Statement       guifg=#F92672               gui=bold
-hi StatusLine      guifg=#455354 guibg=#262825
-hi StatusLineNC    guifg=#808080 guibg=#080808
+" hi StatusLine      guifg=#455354 guibg=#262825
+" hi StatusLineNC    guifg=#808080 guibg=#080808
+hi StatusLine      guifg=#262825 guibg=#455354
+hi StatusLineNC    guifg=#262825 guibg=#455354
 hi StorageClass    guifg=#FD971F               gui=italic
 hi Structure       guifg=#66D9EF
 hi Tag             guifg=#F92672               gui=italic

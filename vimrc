@@ -75,7 +75,13 @@ set ignorecase
 set smartcase
 set showmatch
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,tmp/**
+set wildignore+=*.swp,*.bak,*.pyc,*/tmp/*,*/log/*,*/images/*,*/public/*,*/vendor/*
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  \ 'file': '\.exe$\|\.so$\|\.dll$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
 set smarttab
 
@@ -187,7 +193,9 @@ map tp :tabprev<CR>
 map tl :tablast<CR>
 map tc :tabnew<CR>
 
-nmap <leader>t :CtrlP<CR>
+nmap <leader>t :CtrlP '/'<CR>
+nnoremap <leader><leader> <c-^>
+
 
 command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 function! QuickfixFilenames()
@@ -198,4 +206,12 @@ function! QuickfixFilenames()
   endfor
   return join(values(buffer_numbers))
 endfunction
+
+set winwidth=84
+" We have to have a winheight bigger than we want to set winminheight. But if
+" we set winheight to be huge before winminheight, the winminheight set will
+" fail.
+set winheight=5
+set winminheight=5
+set winheight=999
 
