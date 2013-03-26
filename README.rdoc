@@ -1,5 +1,5 @@
 = dotfiles
-These are some of the files I use to configure my system.
+These are some of the files I use to configure my system. THESE ARE OUT OF DATE NOW. If you want my current setup in the meantime... please msg me here or on twitter @adambair. 
 
 == installation
 See warning.
