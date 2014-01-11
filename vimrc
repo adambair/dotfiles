@@ -2,6 +2,7 @@
 " Personal preference .vimrc file
 " Maintained by Adam Bair <adambair@gmail.com>
 "
+"
 " My main editor is MacVim though this will work in standard Vim.
 " Currently disorganized, will improve. I promise.
 "
@@ -14,6 +15,17 @@
 " Eases installation of runtime files and plugins
 " https://github.com/tpope/vim-pathogen
 call pathogen#infect()
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+" Persistent undo across exits
+"================================
+au BufWritePre /tmp/* setlocal noundofile
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer
+"================================
 
 set nocompatible  " We don't want vi compatibility.
 set visualbell
@@ -31,6 +43,8 @@ set noswapfile
 
 set undofile
 set undodir=~/tmp
+
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 
 let NERDSpaceDelims=1
 let mapleader = ","
@@ -75,7 +89,7 @@ set ignorecase
 set smartcase
 set showmatch
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,*/tmp/*,*/log/*,*/images/*,*/public/*,*/vendor/*
+set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/images/*,*/public/*,*/vendor/*
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.hg$\|\.svn$',
@@ -102,12 +116,12 @@ set guioptions-=R " remove right scrollbar
 set guioptions-=b " remove bottom scrollbar
 set guioptions-=h " remove bottom scrollbar
 
-if has("autocmd")
-  autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-  autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-endif
+" if has("autocmd")
+  " autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+  " autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+  " autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+  " autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" endif
 
 if has("gui_running")
   highlight ColorColumn ctermbg=7
