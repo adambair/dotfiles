@@ -72,6 +72,7 @@ hi Question        guifg=#66D9EF
 hi Repeat          guifg=#F92672               gui=bold
 hi Search          guifg=#FFFFFF guibg=#455354
 " marks column
+
 hi SignColumn      guifg=#A6E22E guibg=#232526
 hi SpecialChar     guifg=#F92672               gui=bold
 hi SpecialComment  guifg=#465457               gui=bold
@@ -87,8 +88,6 @@ endif
 hi TabLineFill                   guibg=#262825
 
 hi Statement       guifg=#F92672               gui=bold
-" hi StatusLine      guifg=#455354 guibg=#262825
-" hi StatusLineNC    guifg=#808080 guibg=#080808
 hi StatusLine      guifg=#262825 guibg=#455354
 hi StatusLineNC    guifg=#262825 guibg=#455354
 hi StorageClass    guifg=#FD971F               gui=italic
@@ -107,90 +106,57 @@ hi Visual                        guibg=#403D3D
 hi WarningMsg      guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu        guifg=#66D9EF guibg=#000000
 
-" hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
 hi Normal          guifg=#F8F8F2 guibg=#000000
 hi Comment         guifg=#b2ad90
 hi CursorLine                    guibg=#262825
 hi ColorColumn                   guibg=#262825
 hi CursorColumn                  guibg=#000000
 hi LineNr          guifg=#BCBCBC guibg=#232526
-" hi NonText         guifg=#BCBCBC guibg=#232526
 hi NonText         guifg=#BCBCBC guibg=#000000
 
-"hi rubyBeginEnd                gui=            guifg=            guibg=
-"hi rubyBoolean                 gui=            guifg=            guibg=
-"hi rubyClassOrModule            gui=bold        guifg=
-""i rubyClassDeclaration         gui=underline   guifg=#a6e232
-"hi rubyClassVariable            gui=underline   guifg=#556B2F
-"hi rubyComment                  gui=none        guifg=#b2ad90
-"hi rubyConstant                 gui=none        guifg=#a6e232
-"hi rubyControl                  gui=bold        guifg=#4169E1
-"hi rubyCurlyBlock               gui=none        guifg=#008B8B
-"hi rubyDataDirective           gui=            guifg=            guibg=
-"hi rubyData                    gui=none        guifg=
 hi rubyDefine                   gui=none        guifg=#f42873
-"hi rubyDocumentation           gui=            guifg=            guibg=
-"hi rubyException               gui=            guifg=            guibg=
-"hi rubyExprSubst                gui=none        guifg=#FF4500
-"hi rubyFunction                 gui=bold        guifg=#a6e232
-"hi rubyGlobalVariable          gui=            guifg=            guibg=
-"hi rubyIdentifier              gui=            guifg=            guibg=
 hi rubyInclude                  guifg=#f42873
 hi rubyInstanceVariable        guifg=#d300fe
-"hi rubyIterator                 gui=bold        guifg=#ff7f50
-"hi rubyKeyword                  gui=bold        guifg=#f42873
-"hi rubyNumber                   gui=none        guifg=#af81fe
-"hi rubyPredefinedConstant      gui=            guifg=            guibg=
-"hi rubyPredefinedIdentifier    gui=            guifg=            guibg=
-"hi rubyPredefinedVariable      gui=            guifg=            guibg=
-"hi rubySharpBang               gui=            guifg=            guibg=
 hi rubyStringDelimiter          gui=bold        guifg=#1fde0c
-"hi rubyString                  gui=none        guifg=#1fde0c
 hi rubySymbol                   gui=bold        guifg=#8988e1
-"hi rubyTodo                    gui=            guifg=            guibg=
 hi rubyInterpolationDelimiter guifg=#FFFFFF
 hi rubyBlockParameter guifg=#d300fe
 hi erubyExpression guibg=#000000
 hi erubyDelimiter guibg=#000000
-"hi rubyrailsapimethod             gui=     guifg=     guibg=
-"hi rubyrailsarassociationmethod   gui=     guifg=     guibg= 
-"hi rubyrailsarcallbackmethod      gui=     guifg=     guibg= 
-"hi rubyrailsarclassmethod         gui=     guifg=     guibg= 
-"hi rubyrailsarvalidationmethod    gui=     guifg=     guibg= 
-"hi rubyrailsarmethod              gui=     guifg=     guibg= 
-"hi rubyrailsrendermethod          gui=     guifg=     guibg= 
-"hi rubyrailshelpermethod          gui=     guifg=     guibg= 
-"hi rubyrailsviewmethod            gui=     guifg=     guibg= 
-"hi rubyrailsmigrationmethod       gui=     guifg=     guibg= 
-"hi rubyrailscontrollermethod      gui=     guifg=     guibg= 
-"hi rubyrailsdeprecatedmethod      gui=     guifg=     guibg= 
-"hi rubyrailsfiltermethod          gui=     guifg=     guibg= 
-"hi rubyrailstestcontrollermethod  gui=     guifg=     guibg= 
-"hi rubyrailstestmethod            gui=     guifg=     guibg= 
-"hi rubyrailsrakemethod            gui=     guifg=     guibg= 
-"hi rubyrailsmethod                gui=     guifg=     guibg= 
-"hi rubyrailserror                 gui=     guifg=     guibg= 
-"hi rubyrailsinclude               gui=     guifg=     guibg= 
-"hi rubyRailsUserClass             guifg=#a6e232
-"hi rubyrailsusermethod            gui=     guifg=     guibg= 
-"hi erubyrailshelpermethod         gui=     guifg=     guibg= 
-"hi erubyrailsviewmethod           gui=     guifg=     guibg= 
-"hi erubyrailsrendermethod         gui=     guifg=     guibg= 
-"hi erubyrailsmethod               gui=     guifg=     guibg= 
-"hi erubyrailsusermethod           gui=     guifg=     guibg= 
-"hi railsusermethod                gui=     guifg=     guibg= 
-"hi erubyrailsuserclass            gui=     guifg=     guibg= 
-"hi yamlrailsdelimiter             gui=     guifg=     guibg= 
-"hi yamlrailsmethod                gui=     guifg=     guibg= 
-"hi yamlrailscomment               gui=     guifg=     guibg= 
-"hi yamlrailsuserclass             gui=     guifg=     guibg= 
-"hi yamlrailsusermethod            gui=     guifg=     guibg= 
-"hi javascriptrailsfunction        gui=     guifg=     guibg= 
-"hi javascriptrailsclass           gui=     guifg=     guibg= 
-"hi railsuserclass                 gui=     guifg=     guibg= 
-"hi railsmethod                    gui=     guifg=     guibg= 
-"hi railsclass                     gui=     guifg=     guibg= 
-"hi railsorderspecial              gui=     guifg=     guibg= 
-"hi railsconditionsspecial         gui=     guifg=     guibg= 
-"hi railsStringSpecial             gui=     guifg=     guibg= 
 
+" coffeeStatement
+" coffeeRepeat
+" coffeeConditional
+" coffeeException
+" coffeeKeyword
+" hi coffeeOperator guifg=#FFFFFF
+hi coffeeExtendedOp guifg=#FFFFFF
+hi coffeeSpecialOp guifg=#FFFFFF
+" coffeeBoolean
+" coffeeGlobal
+hi coffeeSpecialIdent guifg=#d300fe
+" coffeeObject
+" coffeeConstant
+" coffeeString
+" coffeeNumber
+" coffeeFloat
+" coffeeReservedError
+" coffeeObjAssign
+" coffeeComment
+" coffeeBlockComment
+" coffeeEmbed
+" coffeeRegex
+" coffeeHeregex
+" coffeeHeredoc
+" coffeeSpaceError
+" coffeeSemicolonError
+hi coffeeDotAccess guifg=#FFFFFF
+" coffeeProtoAccess
+hi coffeeCurlie guifg=#FFFFFF
+hi coffeeBracket guifg=#FFFFFF
+hi coffeeParen guifg=#FFFFFF
+hi coffeeSpecialVar guifg=#ff9925
+hi coffeeObjAssign guifg=#bcd92a
+hi coffeeAssignmentBinding guifg=#F92672
+hi coffeeInterpDelim guifg=#FFFFFF
+hi coffeeConsoleLog guisp=#FFFFFF gui=undercurl

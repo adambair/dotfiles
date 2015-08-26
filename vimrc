@@ -16,7 +16,6 @@
 " https://github.com/tpope/vim-pathogen
 call pathogen#infect()
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 " Persistent undo across exits
 "================================
@@ -27,15 +26,24 @@ set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer
 "================================
 
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
 set nocompatible  " We don't want vi compatibility.
 set visualbell
 set linebreak
 set autoread
+
+set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 set laststatus=2
 "let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
-set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%))
+set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%)))
+set statusline+=\ %{SyntaxItem()}
+
 set grepprg=ack
 set scrolloff=5
+set shell=$SHELL
 
 set nobackup
 set nowritebackup
@@ -56,12 +64,20 @@ let wiki.diary_rel_path = 'daily/'
 let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
 let g:vimwiki_list = [wiki]
 
+" set foldmethod=indent
+
 let g:vimwiki_browsers=['open']
 let vimwiki_folding=0
 let vimwiki_use_calendar=1
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
+
+
+let g:minimap_highlight='Visual'
+
+
+map gc :e <cfile><CR>
 
 syntax on
 syntax enable
@@ -73,6 +89,9 @@ set t_Co=256
 " spellchecker configuration
 setlocal spell spelllang=en_us
 autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki set spell
+autocmd BufReadPost *.yml set syntax=ansible
+autocmd FileType coffee setlocal nospell
+autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
 
 set showtabline=2
 set tabstop=2
@@ -89,13 +108,8 @@ set ignorecase
 set smartcase
 set showmatch
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/images/*,*/public/*,*/vendor/*
+set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-  \ 'file': '\.exe$\|\.so$\|\.dll$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
 
 set smarttab
 
@@ -116,30 +130,6 @@ set guioptions-=R " remove right scrollbar
 set guioptions-=b " remove bottom scrollbar
 set guioptions-=h " remove bottom scrollbar
 
-" if has("autocmd")
-  " autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-  " autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-  " autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-  " autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-" endif
-
-if has("gui_running")
-  highlight ColorColumn ctermbg=7
-  set colorcolumn=80
-
-  set fuoptions=maxvert,maxhorz
-      
-  "GUI is running or is about to start.
-  "Maximize gvim window.
-  "set guifont=Monaco:h18
-  " set guifont=Inconsolata-dz:h18
-  set guifont=Inconsolata-dz:h20
-  " set guifont=Inconsolata-dz:h26
-  " set guifont=Inconsolata-dz:h22
-  "set guifont=Monofur:h22
-  set lines=90 columns=130
-endif
-
 set linespace=1
 
 map -a :call SyntaxAttr()<CR>
@@ -147,6 +137,7 @@ map -r :CommandTFlush<CR>
 
 map <leader>nn :NERDTreeToggle<CR>
 map <leader>mm :TlistToggle<CR>
+map <leader>re :NERDTreeFind<CR>
 
 set path+=**
 map <silent> <F5> :source ~/.vimrc<CR>
@@ -207,9 +198,17 @@ map tp :tabprev<CR>
 map tl :tablast<CR>
 map tc :tabnew<CR>
 
-nmap <leader>t :CtrlP '/'<CR>
-nnoremap <leader><leader> <c-^>
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  \ 'file': '\.exe$\|\.so$\|\.dll$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
+nmap <leader>t :CtrlP '/'<CR>
+nmap <leader>r :CtrlPMixed<CR>
+
+nnoremap <leader><leader> <c-^>
 
 command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 function! QuickfixFilenames()
@@ -221,11 +220,13 @@ function! QuickfixFilenames()
   return join(values(buffer_numbers))
 endfunction
 
-set winwidth=84
-" We have to have a winheight bigger than we want to set winminheight. But if
-" we set winheight to be huge before winminheight, the winminheight set will
-" fail.
-set winheight=5
-set winminheight=5
-set winheight=999
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" set winwidth=84
+" " We have to have a winheight bigger than we want to set winminheight. But if
+" " we set winheight to be huge before winminheight, the winminheight set will
+" " fail.
+" set winheight=5
+" set winminheight=5
+" set winheight=999
 
