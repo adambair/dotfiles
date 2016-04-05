@@ -13,38 +13,39 @@ source ~/.mutt-alias
 set query_command= "abook --mutt-query '%s'"
 
 # Handle HTML email (also see ~/.mailcap)
-auto_view text/html
-
+# auto_view text/html
 
 set my_gen=index,alias,query,attach,compose,postpone,browser,pgp,smime
 
 # smtp
 set use_from = yes
 set envelope_from = "yes"
-set sig_dashes                          # A signature must always start with a "-- "
-set sendmail_wait=-1                    # Don't wait around for sendmail.
-set copy=yes                            # Whether to save sent messages
-set delete=yes                          # Do not ask when purging deleted message
-set beep_new=yes                        # Beep when new messages arrive?
-set move=no                             # Move read messages to another folder?
-set forward_quote=yes                   # Quote the email body when forwarding?
-set include=yes                         # Quote the email body when replying?
+set sig_dashes             # A signature must always start with a "-- "
+# set sig_on_top
+set sendmail_wait=-1       # Don't wait around for sendmail.
+set copy=yes               # Whether to save sent messages
+set delete=yes             # Do not ask when purging deleted message
+set beep_new=yes           # Beep when new messages arrive?
+set move=no                # Move read messages to another folder?
+set forward_quote=yes      # Quote the email body when forwarding?
+set include=yes            # Quote the email body when replying?
 
 # set editor="vim -f"
 set editor="vim -c 'set textwidth=0'"
 set header_cache="~/.mutt/headers"
 
-set mail_check=120        # check for new mail every 90 seconds
-set timeout=15            # after 15 secs of no keypresses, start checking for new mail
+set mail_check=30         # check for new mail every xx seconds
+set timeout=15            # after xx secs of no keypresses, start checking for new mail
 set reverse_name          # Reply with the address used in the TO/CC header
 set ascii_chars=yes       # Use ASCII arrows
+set send_charset="iso-8859-1:utf-8"
 set reverse_realname=yes  # Reply with the name used in FROM
 set reverse_alias=yes
 set fast_reply="yes"
 set confirmappend=no      # Confirm when appending messages to an existing mailbox?
-set pager_index_lines=4   # Show 5 message headers from your message index above an email you are reading
+set pager_index_lines=6  # Show x message headers from your message index above an email you are reading
 set smart_wrap            # Don't wrap mid-word
-set pager_context=5       # Retain 5 lines of previous page when scrolling.
+set pager_context=5       # Retain x lines of previous page when scrolling.
 set pager_stop = yes
 set status_on_top         # Status bar on top.
 
@@ -64,7 +65,7 @@ set alias_format="%4n %2f %t %-12a  %r"
 set status_format="-%r-%v--[%?M?%M/?%m msgs%?n?, %n new?%?d?, %d del?%?F?, %F flag?%?t?, %t tag?%?p?, %p postp?%?b?, %b inc?%?l?, %l?]--(%f)--%s-%>-%P-"
 set folder_format="%3C %t%N %F %-8.8u %-8.8g %8s %d %f"
 set message_format="%-.16n: %s"
-set pager_format="~~~~~~~~~ On %{%a, %d %b %Y} at [%[%H:%M]]: %s %|~"
+set pager_format="~~ %s %|~"
 set attribution='On %{%a, %d %b %Y}, %n wrote:\n'
 set forward_format = "[%s]"
 
@@ -73,12 +74,24 @@ set forward_format = "[%s]"
 # url viewing
 macro index,pager cb |urlview 'call urlview to extract URLs out of a message'
 
+macro index,pager gr "<group-reply>"
+
+# VIMERIZE THIS BIACH
+bind generic,pager j next-entry
+bind generic,pager k previous-entry
+bind pager J next-entry
+bind pager K previous-entry
+
+macro index,pager gg "<first-entry>"
+macro index,pager G  "<last-entry>"
+macro index,pager  "<previous-page>"
+macro index,pager  "<next-page>"
+
+
 # allow space characters in macros ex: [Gmail].All Mail
 bind editor <space> noop
-bind generic j next-entry
-bind generic k previous-entry
 
-# source '~/.mutt/config/sidebar'
+# CONFIGS
 source '~/.mutt/config/headers'
 source '~/.mutt/config/colors'
 source '~/.mutt/config/contacts'
@@ -87,3 +100,30 @@ source '~/.mutt/config/contacts'
 source '~/.mutt/config/adambair'
 source '~/.mutt/config/kalopsian'
 source '~/.mutt/config/openbay'
+
+# SIDEBAR
+# set up the sidebar, default not visible
+
+set sidebar_width=30
+set sidebar_visible=no
+set sidebar_delim='|'
+set sidebar_sort=yes
+
+mailboxes =adambair/INBOX
+mailboxes =openbay/INBOX
+mailboxes =kalopsian/INBOX
+
+# 'L' performs a notmuch query, showing only the results
+macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+# 'a' shows all messages again (supersedes default <alias> binding)
+macro index a "<limit>all\n" "show all messages (undo limit)"
+
+bind index cp sidebar-prev
+bind index cn sidebar-next
+bind index co sidebar-open
+bind pager cp sidebar-prev
+bind pager cn sidebar-next
+bind pager co sidebar-open
+macro index b '<enter-command>toggle sidebar_visible<enter>'
+macro pager b '<enter-command>toggle sidebar_visible<enter>'
+macro index A "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all new as read"

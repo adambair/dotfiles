@@ -11,11 +11,34 @@
 " http://github.com/nvie/vimrc/blob/master/vimrc
 "
 
+set encoding=utf8
+set backspace=indent,eol,start
+
 " Pathogen
 " Eases installation of runtime files and plugins
 " https://github.com/tpope/vim-pathogen
 call pathogen#infect()
 
+" True color support
+let &t_8f="\e[38;2;%ld;%ld;%ldm"
+let &t_8b="\e[48;2;%ld;%ld;%ldm"
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+set guicolors
+colorscheme monokai
+set t_Co=256
+
+" let &t_ZH="\e[3m"
+" let &t_ZR="\e[23m"
+
+" Highlight columns at 80 and 120 (the warning track lol)
+" You can even highlight a range of columns
+"   let &colorcolumn="80,".join(range(120,999),",")
+let &colorcolumn="80,81,120,121"
+
+
+" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
+" set guifont=Inconsolata\ for\ Powerline\ Nerd\ Font\ Complete\ Mono\ 12
 
 " Persistent undo across exits
 "================================
@@ -29,6 +52,15 @@ set undoreload=10000 "maximum number lines to save for undo on a buffer
 function! SyntaxItem()
   return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
+
+" Make scrolling and highlighters fast
+" Fixes slow scrolling in complex syntax files
+" http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting/16920294#16920294
+" https://www.reddit.com/r/vim/comments/3tk66r/vim_slow_scrolling_in_iterm2/cx77dbj
+set regexpengine=1
+set ttyfast
+set lazyredraw
+
 
 set nocompatible  " We don't want vi compatibility.
 set visualbell
@@ -55,6 +87,9 @@ set undodir=~/tmp
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 
 let NERDSpaceDelims=1
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+
 let mapleader = ","
 
 let wiki = {}
@@ -63,6 +98,7 @@ let wiki.diary_index = 'daily'
 let wiki.diary_rel_path = 'daily/'
 let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
 let g:vimwiki_list = [wiki]
+let g:vimwiki_camel_case = 0
 
 " set foldmethod=indent
 
@@ -70,25 +106,33 @@ let g:vimwiki_browsers=['open']
 let vimwiki_folding=0
 let vimwiki_use_calendar=1
 
+" Quickly open/reload vim
+nnoremap <leader>ev :e $MYVIMRC<CR>
+nnoremap <leader>er :source $MYVIMRC<CR>
+
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
 
+map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR>
+map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
 
-let g:minimap_highlight='Visual'
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
+nnoremap <C-N> :cn<CR>
+nnoremap <C-P> :cp<CR>
+
+" let g:minimap_highlight='Visual'
 
 map gc :e <cfile><CR>
 
 syntax on
 syntax enable
 filetype plugin indent on  " Automatically detect file types.
-colorscheme monokai " dark, standard
-set t_Co=256
-" colorscheme pyte  " light, for presenting
+
 
 " spellchecker configuration
 setlocal spell spelllang=en_us
-autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki set spell
+autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki,*.md set spell
 autocmd BufReadPost *.yml set syntax=ansible
 autocmd FileType coffee setlocal nospell
 autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
@@ -98,7 +142,6 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-" set number
 set nu
 
 set cursorline " underline current line in console
@@ -133,7 +176,6 @@ set guioptions-=h " remove bottom scrollbar
 set linespace=1
 
 map -a :call SyntaxAttr()<CR>
-map -r :CommandTFlush<CR>
 
 map <leader>nn :NERDTreeToggle<CR>
 map <leader>mm :TlistToggle<CR>
@@ -144,9 +186,6 @@ map <silent> <F5> :source ~/.vimrc<CR>
 
 map H ^
 map L $
-
-" Shortcuts
-noremap ; :
 
 " Quick alignment of text
 nmap <leader>al :left<CR>
@@ -170,7 +209,7 @@ nmap <leader>P "+P
 " nmap <leader>r :registers<CR>
 set clipboard=unnamed
 
-" au FocusLost * :wa " save all buffers when the active window loses focus 
+" au FocusLost * :wa " save all buffers when the active window loses focus
 
 map ,sdate :let @z=strftime("%Y-%m-%d")<Cr>"zp
 map ,stime :let @z=strftime("%l:%M %p")<Cr>"zp
@@ -178,19 +217,27 @@ map ,sdt   :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
 
 map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
 map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
+map ,sup :let @z=strftime("#standup ```\ny:\n-  \nt:\n- \nb:\n- none\n```\n\n#big3 ```\n1: \n2: \n3: \n```\n\n")<Cr>"zp
 
-silent! call repeat#set("\<Plug>MyWonderfulMap",v:count) 
+
+" silent! call repeat#set("\<Plug>MyWonderfulMap",v:count)
 
 " toggle relative line numbers
-function! g:ToggleNuMode()
-  if(&rnu == 1)
-    set nu
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+    set number
   else
-    set rnu
+    set relativenumber
   endif
 endfunc
 
-nnoremap <C-L> :call g:ToggleNuMode()<cr>
+nnoremap <C-n> :call NumberToggle()<cr>
+
+" autocmd FocusLost * :set number
+" autocmd InsertEnter * :set number
+" autocmd InsertLeave * :set relativenumber
+" autocmd CursorMoved * :set relativenumber
 
 map th :tabfirst<CR>
 map tn :tabnext<CR>
@@ -198,15 +245,6 @@ map tp :tabprev<CR>
 map tl :tablast<CR>
 map tc :tabnew<CR>
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-  \ 'file': '\.exe$\|\.so$\|\.dll$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-nmap <leader>t :CtrlP '/'<CR>
-nmap <leader>r :CtrlPMixed<CR>
 
 nnoremap <leader><leader> <c-^>
 
@@ -222,11 +260,53 @@ endfunction
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" set winwidth=84
-" " We have to have a winheight bigger than we want to set winminheight. But if
-" " we set winheight to be huge before winminheight, the winminheight set will
-" " fail.
-" set winheight=5
-" set winminheight=5
-" set winheight=999
+set statusline+=%#warningmsg#
+set statusline+=\ %{SyntasticStatuslineFlag()}
+set statusline+=%*
 
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_id_checkers = 1
+" let g:syntastic_sort_aggregated_errors = 0
+
+let g:syntastic_ruby_checkers = ['reek', 'flog', 'rubocop']
+
+let g:syntastic_mode_map = {
+    \ "mode": "passive",
+    \ "active_filetypes": [],
+    \ "passive_filetypes": [] }
+
+map <leader>s :SyntasticCheck<CR>
+
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" PLUG, trying this thing out, still using pathogen in .vim/bundle
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+call plug#end()
+
+nnoremap <leader>t :Files<CR>
+nnoremap <leader>T :Tags<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>r :History<CR>
+nnoremap <silent> <leader>f :execute 'Ag ' . input('Ag/')<CR>
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
