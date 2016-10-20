@@ -70,7 +70,11 @@ hi PreCondit       guifg=#A6E22E               gui=bold
 hi PreProc         guifg=#A6E22E
 hi Question        guifg=#66D9EF
 hi Repeat          guifg=#F92672               gui=bold
+
 hi Search          guifg=#FFFFFF guibg=#455354
+hi Search          guifg=#FFFFFF guibg=#F92672
+hi Search          guifg=#000000 guibg=#FFCC00
+
 " marks column
 hi SignColumn      guifg=#A6E22E guibg=#232526
 
@@ -102,7 +106,7 @@ hi Structure         guifg=#66D9EF
 hi Tag               guifg=#F92672               gui=italic
 hi Title             guifg=#ef5939
 " hi Todo              guifg=#FFFFFF guibg=bg      gui=bold
-hi Todo              guifg=#DDDDDD guibg=#000000 gui=bold,italic cterm=bold,italic
+hi Todo              guifg=#DDDDDD guibg=#000000 gui=bold cterm=bold
 
 hi Typedef           guifg=#66D9EF
 hi Type              guifg=#66D9EF               gui=none
@@ -115,7 +119,7 @@ hi WarningMsg        guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu          guifg=#66D9EF guibg=#000000
 
 hi Normal            guifg=#F8F8F2 guibg=#000000
-hi Comment           guifg=#b2ad90               
+hi Comment           guifg=#b2ad90               gui=italic
 hi CursorLine                      guibg=#262825 gui=none cterm=none
 hi ColorColumn                     guibg=#262825
 hi CursorColumn                    guibg=#000000
@@ -128,12 +132,17 @@ hi rubyInclude                  guifg=#f42873
 hi rubyInstanceVariable         guifg=#d300fe
 hi rubyStringDelimiter          gui=bold        guifg=#1fde0c
 hi rubySymbol                   gui=bold        guifg=#8988e1
+" hi rubySymbol                   gui=bold        guifg=#9493e4
 hi rubyInterpolationDelimiter   guifg=#FFFFFF
 hi rubyBlockParameter           guifg=#d300fe
 hi rubyAccess                   guifg=#f42873   gui=italic cterm=italic
-hi rubyInclude                  gui=italic cterm=italic
+hi rubyInclude                                  gui=italic cterm=italic
 hi erubyExpression              guibg=#000000
 hi erubyDelimiter               guibg=#000000
+" hi rubyPseudoVariable           guifg=#AE81FF   gui=italic cterm=italic
+" hi rubyRailsARAssociationMethod guifg=#A6E22E gui=italic, cterm=italic
+" hi rubyRailsARCallbackMethod    guifg=#A6E22E gui=italic, cterm=italic
+" hi rubyRailsARClassMethod       guifg=#A6E22E gui=italic, cterm=italic
 
 " CoffeeScript Stuffs
 hi coffeeExtendedOp guifg=#FFFFFF
@@ -150,3 +159,4 @@ hi coffeeInterpDelim guifg=#FFFFFF
 hi coffeeConsoleLog guisp=#FFFFFF gui=undercurl
 
 hi gitcommitSummary guifg=#FFFFFF gui=none cterm=none
+

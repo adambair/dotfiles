@@ -19,6 +19,9 @@ set backspace=indent,eol,start
 " https://github.com/tpope/vim-pathogen
 call pathogen#infect()
 
+highlight ExtraWhitespace ctermbg=red guibg=red 
+match ExtraWhitespace /\s\+$/
+
 " True color support
 let &t_8f="\e[38;2;%ld;%ld;%ldm"
 let &t_8b="\e[48;2;%ld;%ld;%ldm"
@@ -35,7 +38,6 @@ set t_Co=256
 " You can even highlight a range of columns
 "   let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="80,81,120,121"
-
 
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
 " set guifont=Inconsolata\ for\ Powerline\ Nerd\ Font\ Complete\ Mono\ 12
@@ -86,10 +88,6 @@ set undodir=~/tmp
 
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 
-let NERDSpaceDelims=1
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-
 let mapleader = ","
 
 let wiki = {}
@@ -100,21 +98,28 @@ let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
 let g:vimwiki_list = [wiki]
 let g:vimwiki_camel_case = 0
 
-" set foldmethod=indent
+" set foldenable
+set nofoldenable
+set foldlevel=1
+set foldmethod=syntax
 
 let g:vimwiki_browsers=['open']
 let vimwiki_folding=0
 let vimwiki_use_calendar=1
 
 " Quickly open/reload vim
-nnoremap <leader>ev :e $MYVIMRC<CR>
-nnoremap <leader>er :source $MYVIMRC<CR>
+nnoremap <leader>eve :e $MYVIMRC<CR>
+nnoremap <leader>evr :source $MYVIMRC<CR>
+
+nnoremap <leader>eze  :e ~/.zshrc<CR>
+nnoremap <leader>ezr :!. ~/.zshrc<CR>
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
 
 map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR>
 map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
+map <leader>go :tabnew ~/workspace/openbay-web/README.md<CR>:silent! lcd %:p:h<CR>
 
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
@@ -136,6 +141,11 @@ autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki,*.md set spell
 autocmd BufReadPost *.yml set syntax=ansible
 autocmd FileType coffee setlocal nospell
 autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
+
+autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+
+" Procfile
+autocmd BufNewFile,BufReadPost Procfile set filetype=ruby
 
 set showtabline=2
 set tabstop=2
@@ -217,7 +227,8 @@ map ,sdt   :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
 
 map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
 map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
-map ,sup :let @z=strftime("#standup ```\ny:\n-  \nt:\n- \nb:\n- none\n```\n\n#big3 ```\n1: \n2: \n3: \n```\n\n")<Cr>"zp
+map ,ssup :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
+map ,sup :let @z=strftime("#standup ```\ny:\nt:\nb: none\n```")<Cr>"zp
 
 
 " silent! call repeat#set("\<Plug>MyWonderfulMap",v:count)
@@ -244,6 +255,7 @@ map tn :tabnext<CR>
 map tp :tabprev<CR>
 map tl :tablast<CR>
 map tc :tabnew<CR>
+map tk :tabclose<CR>
 
 
 nnoremap <leader><leader> <c-^>
@@ -291,22 +303,64 @@ map <leader>s :SyntasticCheck<CR>
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'scrooloose/nerdtree'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
+
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-haml'
+
+Plug 'tmhedberg/matchit'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+
+Plug 'Konfekt/FastFold'
+Plug 'justinmk/vim-sneak'
+
+Plug 'ntpeters/vim-better-whitespace'
+
+Plug 'ck3g/vim-change-hash-syntax'
+
 
 call plug#end()
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>T :Tags<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>r :History<CR>
 nnoremap <silent> <leader>f :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>F :execute 'grep ' . input('grep: ')<CR>
+
 
 " Insert mode completion
 imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-f> <plug>(fzf-compkete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
+
+let NERDSpaceDelims=1
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+let g:NERDTreeWinSize=50
+
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+  call webdevicons#refresh()
+endif
+
+set hlsearch
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>

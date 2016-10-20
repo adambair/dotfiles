@@ -7,6 +7,8 @@ set spoolfile=+/adambair/INBOX
 set date_format="%A, %D at %k:%M:%S %Z"
 set mime_forward=yes
 
+unset markers
+
 # address book and aliases
 set alias_file=~/.mutt-alias
 source ~/.mutt-alias
@@ -100,6 +102,7 @@ source '~/.mutt/config/contacts'
 source '~/.mutt/config/adambair'
 source '~/.mutt/config/kalopsian'
 source '~/.mutt/config/openbay'
+source '~/.mutt/config/intridea'
 
 # SIDEBAR
 # set up the sidebar, default not visible
