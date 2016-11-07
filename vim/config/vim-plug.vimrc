@@ -1,3 +1,6 @@
+" Minimalist Vim Plugin Manager
+" https://github.com/junegunn/vim-plug
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'godlygeek/csapprox'

@@ -9,16 +9,9 @@
 "
 
 hi clear
-
 set background=dark
-
-if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    hi clear
-    if exists("syntax_on")
-        syntax reset
-    endif
+if exists("syntax_on")
+  syntax reset
 endif
 let g:colors_name="monokai"
 
@@ -109,7 +102,7 @@ hi WarningMsg        guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu          guifg=#66D9EF guibg=#000000
 
 hi Normal            guifg=#F8F8F2 guibg=#000000
-hi Comment           guifg=#b2ad90               gui=italic
+hi Comment           guifg=#b2ad90               gui=italic cterm=italic
 hi CursorLine                      guibg=#262825 gui=none cterm=none
 hi ColorColumn                     guibg=#262825
 hi CursorColumn                    guibg=#000000
@@ -118,7 +111,7 @@ hi NonText           guifg=#BCBCBC guibg=#000000
 
 " Ruby Stuffs
 hi rubyDefine                   gui=none        guifg=#f42873
-hi rubyInclude                  guifg=#f42873
+hi rubyInclude                  guifg=#f42873   gui=italic cterm=italic
 hi rubyInstanceVariable         guifg=#d300fe
 hi rubyStringDelimiter          gui=bold        guifg=#1fde0c
 hi rubySymbol                   gui=bold        guifg=#8988e1
@@ -129,11 +122,34 @@ hi rubyAccess                   guifg=#f42873   gui=italic cterm=italic
 hi rubyInclude                                  gui=italic cterm=italic
 hi erubyExpression              guibg=#000000
 hi erubyDelimiter               guibg=#000000
+hi rubyRailsTestSubject         guifg=#FFCC00   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#FF3F21   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#AC4311   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#CC830E   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#A37E58   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#F38A8A   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#875346   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#F7E4C6   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#8F776A   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#DFBA69   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#FF6338   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#AD7544   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#f5d932   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#ffcf00   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#AB9D94   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#c1bc27   gui=italic cterm=italic
+" hi rubyRailsTestSubject         guifg=#FFFF4C   gui=italic cterm=italic
 
 " hi rubyPseudoVariable           guifg=#AE81FF   gui=italic cterm=italic
 " hi rubyRailsARAssociationMethod guifg=#A6E22E gui=italic, cterm=italic
 " hi rubyRailsARCallbackMethod    guifg=#A6E22E gui=italic, cterm=italic
 " hi rubyRailsARClassMethod       guifg=#A6E22E gui=italic, cterm=italic
+
+hi SyntasticError         guibg=#ffffff
+" hi SyntasticWarning
+" hi SyntasticErrorSymbol
+hi SyntasticErrorLine     guibg=#ffffff
+hi SyntasticWarningLine   guibg=#654321
 
 " CoffeeScript Stuffs
 hi coffeeExtendedOp        guifg=#FFFFFF
