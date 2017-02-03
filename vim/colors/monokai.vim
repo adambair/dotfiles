@@ -65,10 +65,12 @@ hi PreProc         guifg=#A6E22E
 hi Question        guifg=#66D9EF
 hi Repeat          guifg=#F92672               gui=bold
 
-hi Search          guifg=#FFFFFF guibg=#455354
-hi Search          guifg=#FFFFFF guibg=#F92672
-hi Search          guifg=#000000 guibg=#FFCC00
-hi Search          guibg=#C4BE89
+" hi Search          guifg=#FFFFFF guibg=#455354
+" hi Search          guifg=#FFFFFF guibg=#F92672
+" hi Search          guifg=#000000 guibg=#FFCC00
+" hi Search          guifg=#000000 guibg=#DFBA69
+" hi Search          guifg=#DFBA69 guibg=black cterm=underline gui=underline term=underline
+hi Search          guifg=#FFCC00 guibg=black cterm=underline gui=underline term=underline
 
 " marks column
 hi SignColumn      guifg=#A6E22E guibg=#232526

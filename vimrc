@@ -48,7 +48,7 @@ autocmd BufNewFile,BufReadPost Procfile set filetype=ruby
 autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
 autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 autocmd BufReadPost *.yml set syntax=ansible
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" autocmd BufNewFile,BufReadPost *.md,*.wiki set filetype=markdown
 autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
 
 " }}}
@@ -56,9 +56,14 @@ autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
 
 set foldmethod=syntax   " fold based on indent level
 set foldnestmax=0       " max 10 depth
-set foldenable          " don't fold files by default on open
-nnoremap <space> za     " toggle fold
+set foldenable          " do/don't fold files by default on open
 set foldlevelstart=1    " start with fold level of 1
+
+" toggle fold
+nnoremap <space> za
+
+" close other folds
+map zo zMzv
 
 " }}}
 " Macros {{{
@@ -98,7 +103,7 @@ map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
 map <leader>go :tabnew ~/workspace/openbay-web/README.md<CR>:silent! lcd %:p:h<CR>
 
 map ,ssup   :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
-map ,sup    :let @z=strftime("#standup ```\ny:\nt:\nb: none\n```")<Cr>"zp
+map ,sup    :let @z=strftime("#standup ```\ny:\nt:\nb:\n- none\n```")<Cr>"zp
 
 " }}}
 
@@ -131,7 +136,7 @@ set nocompatible      " We don't want vi compatibility.
 set shell=$SHELL
 set nobackup
 set nowritebackup
-set swapfile
+set noswapfile
 set dir=~/tmp
 
 set history=9001      " remember more commands, OVER 9000!!!!
@@ -143,9 +148,7 @@ set wildmode=longest,list,full
 set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*
 
 " }}}
-" Plugins {{{
-
-" vim-plug / packages {{{
+" Packages / vim-plug {{{
 
 " Minimalist Vim Plugin Manager
 " https://github.com/junegunn/vim-plug
@@ -153,25 +156,33 @@ set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_
 call plug#begin('~/.vim/plugged')
 
 Plug 'godlygeek/csapprox'
-Plug 'ap/vim-css-color'       " Show css color background on css hex codes
+Plug 'ap/vim-css-color'         " Show css color background on css hex codes
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'ryanoasis/vim-devicons' " Overridden with specific icons
+Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
+Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 
+Plug 'wannesm/wmgraphviz.vim'
 Plug 'vim-ruby/vim-ruby'
 
 Plug 'mbbill/undotree'
 Plug 'taglist.vim'
-Plug 'ervandew/supertab' " Tab completion
+Plug 'SyntaxAttr.vim'
+Plug 'ervandew/supertab'        " Tab completion
 
+Plug 'tpope/vim-unimpaired'     " Pairs of handy bracket mappings
+Plug 'tpope/vim-endwise'        " Insert ends, intelligently
+Plug 'tpope/vim-surround'       " Change your surroundings
+Plug 'tpope/vim-repeat'         " Repeat command support for certain plugins
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-abolish'              " :Subvert/blog{,s}/post{,s}/g
 
 Plug 'kchmck/vim-coffee-script'
 
@@ -184,11 +195,12 @@ Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ck3g/vim-change-hash-syntax'
 
+" Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 " }}}
-
-" Plugin Configuration
+" Packages / configuration {{{
 
 " vim-supertab {{{
 
@@ -198,7 +210,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-wiki {{{
 
 let wiki                 = {}
-let wiki.path            = '~/vimwiki'
+let wiki.path            = '~/vimwiki/'
 let wiki.diary_index     = 'daily'
 let wiki.diary_rel_path  = 'daily/'
 let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
@@ -206,7 +218,6 @@ let g:vimwiki_list       = [wiki]
 let g:vimwiki_camel_case = 0
 let g:vimwiki_browsers   = ['open']
 let vimwiki_folding      = 0
-let vimwiki_use_calendar = 1
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
@@ -261,13 +272,9 @@ map <leader>nn :NERDTreeToggle<CR>
 map <leader>re :NERDTreeFind<CR>
 
 " }}}
-" vim-webdevicons {{{
-
-" after a re-source, fix syntax matching issues (concealing brackets):
-if exists('g:loaded_webdevicons')
-  call webdevicons#refresh()
-endif
-
+" Graphviz {{{
+map <silent> <leader>lv :silent GraphvizCompile<CR>:silent GraphvizShow<CR>:redraw!<CR>
+map <leader>lc :GraphvizCompile<CR>
 " }}}
 
 " }}}
@@ -305,9 +312,12 @@ set grepprg=ack " Program to use for the grep command
 set rtp+=/usr/local/opt/fzf
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
-" set hlsearch
+set hlsearch
 set incsearch
-" nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+" clears higlighting for '/' searches (:noh :nohlsearch)
+nnoremap <CR> :noh<CR><CR>
+nnoremap <silent>; :noh<CR><CR>
 
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>T :Tags<CR>
@@ -387,6 +397,10 @@ set statusline+=%#warningmsg#
 set statusline+=\ %{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+set laststatus=2
+"let statusline="%f %y%([%R%M]%)%{'!'[&ff=='".&ff."']}%{'$'[!&list]}%{'~'[&pm=='']}%=#%n %l/%L,%c%V "
+set statusline=%<%F%=\ [%M%R%H%Y]\ (%(%l,%c%)))
+set statusline+=\ %{SyntaxItem()}
 " }}}
 
 " }}}
@@ -439,7 +453,22 @@ set linespace=1
 
 " }}}
 
+" Post config hacks {{{
+
+" vim-webdevicons
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+  call webdevicons#refresh()
+endif
+
+" Italics
 " In order to have italics show up I need to re-source my config (no idea why)
 autocmd VimEnter * source $MYVIMRC
+
+" }}}
+
+" highlight non ascii characters such as ' ' instead of ' '
+syntax match nonascii "[^\x00-\x7F]"
+highlight nonascii guibg=Red ctermbg=2
 
 " vim:foldmethod=marker:foldlevel=0
