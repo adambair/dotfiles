@@ -94,7 +94,7 @@ map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
 
 " LOKAP {{{
 
-map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR>
+map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>h
 map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
 
 " }}}
@@ -156,9 +156,11 @@ set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_
 call plug#begin('~/.vim/plugged')
 
 Plug 'godlygeek/csapprox'
-Plug 'ap/vim-css-color'         " Show css color background on css hex codes
+" Plug 'ap/vim-css-color'         " Show css color background on css hex codes
+Plug 'chrisbra/Colorizer'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+" Plug 'w0rp/ale'                 " +timers +job +channel
 Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
 Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 
@@ -178,7 +180,7 @@ Plug 'tpope/vim-unimpaired'     " Pairs of handy bracket mappings
 Plug 'tpope/vim-endwise'        " Insert ends, intelligently
 Plug 'tpope/vim-surround'       " Change your surroundings
 Plug 'tpope/vim-repeat'         " Repeat command support for certain plugins
-Plug 'tpope/vim-haml'
+" Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-fugitive'
@@ -202,6 +204,12 @@ call plug#end()
 " }}}
 " Packages / configuration {{{
 
+" chrisbra/Colorizer {{{
+
+let g:colorizer_auto_filetype = 'css,html,sass,haml,scss'
+let g:colorizer_colornames    = 0
+
+" }}}
 " vim-supertab {{{
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -253,8 +261,8 @@ sign define SyntasticWarning      text=>>
 sign define SyntasticStyleError   text=
 sign define SyntasticStyleWarning text=
 
-map <leader>sc :SyntasticCheck<CR>
-map <leader>sr :SyntasticReset<CR>
+" map <leader>sc :SyntasticCheck<CR>
+" map <leader>sr :SyntasticReset<CR>
 
 "}}}
 " vim-NERDTree {{{
@@ -310,7 +318,10 @@ set smartcase   " only care about case, if I use uppercase letters
 set grepprg=ack " Program to use for the grep command
 
 set rtp+=/usr/local/opt/fzf
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+" let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+
+" Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
+let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 set hlsearch
 set incsearch
