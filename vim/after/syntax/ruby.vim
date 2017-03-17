@@ -14,3 +14,6 @@
 
 " set conceallevel=2
 " set concealcursor=nc
+
+hi    rubyInclude                  guifg=#f42873 gui=italic cterm=italic
+hi    Comment                                               cterm=italic

@@ -1,6 +1,6 @@
 " Vim color file
 "
-" TODO Author: Tomas Restrepo <tomas@winterdom.com>
+" Author: Tomas Restrepo <tomas@winterdom.com>
 " Modifications By: Adam Bair <adambair@gmail.com>
 "
 " Note: Based on the monokai theme for textmate

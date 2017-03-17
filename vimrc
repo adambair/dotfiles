@@ -147,6 +147,12 @@ set clipboard=unnamed
 set wildmode=longest,list,full
 set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*
 
+" remap increment (add) to ctrl+j/k movements
+noremap <C-K> <C-A>
+" remap decrement (subtract) to ctrl+j/k movements
+noremap <C-J> <C-X>
+
+
 " }}}
 " Packages / vim-plug {{{
 
@@ -396,8 +402,6 @@ let &colorcolumn="80,81,120,121"
 
 " Not sure why I have to specify these here, but they don't work in my
 " colorscheme file :/
-hi    rubyInclude                  guifg=#f42873 gui=italic cterm=italic
-hi    Comment                                               cterm=italic
 hi    ExtraWhitespace              ctermbg=red   guibg=red
 match ExtraWhitespace /\s\+$/
 

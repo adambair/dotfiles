@@ -177,6 +177,7 @@ hi def link VimwikiList Function
 hi def link VimwikiCheckBox VimwikiList
 hi def link VimwikiCheckBoxDone Comment
 hi def link VimwikiEmoticons Character
+hi def link VimwikiGenericTag Character
 
 hi def link VimwikiDelText Constant
 hi def link VimwikiDelTextT VimwikiDelText

@@ -136,7 +136,6 @@ vin
 ServiceAdvisorRequest
 envs
 btw
-" ■■■ Shortcuts ■■■
 taglist
 quickfix
 toolbar
@@ -176,3 +175,6 @@ FriendlyId
 backend
 hashids
 namespace
+attr
+uid
+xxxx
