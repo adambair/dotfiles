@@ -323,7 +323,7 @@ set ignorecase  " ignore case in vim searches and commands
 set smartcase   " only care about case, if I use uppercase letters
 set grepprg=ack " Program to use for the grep command
 
-set rtp+=/usr/local/opt/fzf
+set rtp+=/usr/bin/fzf
 " let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
 " Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
@@ -391,7 +391,7 @@ let &t_8b="\e[48;2;%ld;%ld;%ldm"
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-set guicolors
+set termguicolors
 
 colorscheme monokai
 
