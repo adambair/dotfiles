@@ -9,7 +9,6 @@
 "
 
 hi clear
-set background=dark
 if exists("syntax_on")
   syntax reset
 endif
@@ -41,8 +40,8 @@ hi FoldColumn      guifg=#465457 guibg=#000000
 hi Folded          guifg=#465457 guibg=#000000
 hi Function        guifg=#A6E22E
 hi Identifier      guifg=#FD971F
-hi Ignore          guifg=#808080 guibg=bg
-hi IncSearch       guifg=#C4BE89 guibg=#000000
+hi Ignore          guifg=#808081
+hi IncSearch       guifg=#C4BE90 guibg=#000000
 
 hi Keyword         guifg=#F92672               gui=italic cterm=italic
 hi Label           guifg=#E6DB74               gui=none
@@ -77,7 +76,7 @@ hi SignColumn      guifg=#A6E22E guibg=#232526
 
 hi SpecialChar     guifg=#F92672               gui=bold
 hi SpecialComment  guifg=#465457               gui=bold
-hi Special         guifg=#66D9EF guibg=bg      gui=italic
+hi Special         guifg=#66D9EF gui=italic
 hi SpecialKey      guifg=#888A85               gui=italic
 
 hi TabLine           guifg=#888888 guibg=#111111 gui=none
@@ -103,13 +102,14 @@ hi Visual                          guibg=#403D3D
 hi WarningMsg        guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu          guifg=#66D9EF guibg=#000000
 
-hi Normal            guifg=#F8F8F2 guibg=#000000
+hi Normal            guifg=#F8F8F2
+hi NonText           guifg=#BCBCBC 
+
 hi Comment           guifg=#b2ad90               gui=italic cterm=italic
 hi CursorLine                      guibg=#262825 gui=none cterm=none
 hi ColorColumn                     guibg=#262825
 hi CursorColumn                    guibg=#000000
 hi LineNr            guifg=#BCBCBC guibg=#232526
-hi NonText           guifg=#BCBCBC guibg=#000000
 
 " Ruby Stuffs
 hi rubyDefine                   gui=none        guifg=#f42873

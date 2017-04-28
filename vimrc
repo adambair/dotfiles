@@ -142,7 +142,8 @@ set dir=~/tmp
 set history=9001      " remember more commands, OVER 9000!!!!
 set path+=**
 
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard=unnamedplus
 
 set wildmode=longest,list,full
 set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*
@@ -170,8 +171,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
 Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 
+Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim'               " original
 Plug 'junegunn/vim-easy-align'
 
 Plug 'wannesm/wmgraphviz.vim'
@@ -232,6 +234,7 @@ let g:vimwiki_list       = [wiki]
 let g:vimwiki_camel_case = 0
 let g:vimwiki_browsers   = ['open']
 let vimwiki_folding      = 0
+let g:vimwiki_hl_headers = 0
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
@@ -321,13 +324,9 @@ map -a :call SyntaxAttr()<CR>
 
 set ignorecase  " ignore case in vim searches and commands
 set smartcase   " only care about case, if I use uppercase letters
-set grepprg=ack " Program to use for the grep command
-
-set rtp+=/usr/bin/fzf
-" let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
 " Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
-let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore --hidden --follow --glob '!.git/*'"
 
 set hlsearch
 set incsearch
@@ -377,7 +376,7 @@ map tk :tabclose<CR>
 " }}}
 " Tags {{{
 
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
+let Tlist_Ctags_Cmd='ctags'
 map <leader>mm :TlistToggle<CR>
 
 " }}}

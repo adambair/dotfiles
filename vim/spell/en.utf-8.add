@@ -179,3 +179,10 @@ attr
 uid
 xxxx
 ReversibleId
+pageview
+screenview
+ga
+hitType
+eventAction
+eventCategory
+eventLabel
