@@ -205,7 +205,7 @@ Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ck3g/vim-change-hash-syntax'
 
-" Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -234,7 +234,6 @@ let g:vimwiki_list       = [wiki]
 let g:vimwiki_camel_case = 0
 let g:vimwiki_browsers   = ['open']
 let vimwiki_folding      = 0
-let g:vimwiki_hl_headers = 0
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
