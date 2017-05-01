@@ -205,7 +205,8 @@ Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ck3g/vim-change-hash-syntax'
 
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'tbabej/taskwiki'
 
 call plug#end()
 
@@ -233,10 +234,12 @@ let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
 let g:vimwiki_list       = [wiki]
 let g:vimwiki_camel_case = 0
 let g:vimwiki_browsers   = ['open']
-let vimwiki_folding      = 0
+let vimwiki_folding      = '' " do not fold by default
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
+
+let g:taskwiki_disable_concealcursor='disable'
 
 "}}}
 " vim-easy-align {{{
