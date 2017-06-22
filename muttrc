@@ -105,14 +105,6 @@ source '~/.mutt/config/kalopsian'
 source '~/.mutt/config/openbay'
 source '~/.mutt/config/intridea'
 
-# SIDEBAR
-# set up the sidebar, default not visible
-
-set sidebar_width=30
-set sidebar_visible=no
-set sidebar_delim='|'
-set sidebar_sort=yes
-
 mailboxes =adambair/INBOX
 mailboxes =openbay/INBOX
 mailboxes =kalopsian/INBOX
@@ -122,12 +114,19 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 # 'a' shows all messages again (supersedes default <alias> binding)
 macro index a "<limit>all\n" "show all messages (undo limit)"
 
-bind index cp sidebar-prev
-bind index cn sidebar-next
-bind index co sidebar-open
-bind pager cp sidebar-prev
-bind pager cn sidebar-next
-bind pager co sidebar-open
-macro index b '<enter-command>toggle sidebar_visible<enter>'
-macro pager b '<enter-command>toggle sidebar_visible<enter>'
 macro index A "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all new as read"
+
+# SIDEBAR
+# set up the sidebar, default not visible
+# set sidebar_width=30
+# set sidebar_visible=no
+# set sidebar_delim='|'
+# set sidebar_sort=yes
+# bind index cp sidebar-prev
+# bind index cn sidebar-next
+# bind index co sidebar-open
+# bind pager cp sidebar-prev
+# bind pager cn sidebar-next
+# bind pager co sidebar-open
+# macro index b '<enter-command>toggle sidebar_visible<enter>'
+# macro pager b '<enter-command>toggle sidebar_visible<enter>'
