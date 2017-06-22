@@ -1,0 +1,14 @@
+ignore *        	       # this means "ignore all headers by default"
+unignore From:
+unignore To:
+# unignore Reply-To:
+unignore Mail-Followup-To:
+unignore Subject:
+unignore Date:
+unignore CC:
+unignore BCC:
+unignore BCC:
+hdr_order From: Return-Path: \
+Reply-To: \
+Date: Subject: Importance:
+

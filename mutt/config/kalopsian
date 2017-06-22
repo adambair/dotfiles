@@ -1,0 +1,13 @@
+macro index gki "<change-folder>=kalopsian/INBOX<enter>" "Go to kalopsian Inbox"
+macro index gka "<change-folder>=kalopsian/[Gmail].All Mail<enter>" "Go to kalopsian All Mail"
+macro index gks "<change-folder>=kalopsian/[Gmail].Sent Mail<enter>" "Go to kalopsian Sent Mail"
+
+folder-hook +kalopsian.* set from="kalopsian@gmail.com" 
+#folder-hook +kalopsian.* set record=+kalopsian/Sent
+folder-hook +kalopsian.* set postponed=+kalopsian/Drafts
+folder-hook +kalopsian.* my_hdr From: kalopsian <kalopsian@gmail.com>
+folder-hook +kalopsian.* set signature=~/.mutt/signatures/kalopsian.signature
+folder-hook +kalopsian.* set sendmail='"/usr/local/bin/msmtp -a kalopsian"'
+folder-hook +kalopsian.* 'macro index,pager y "<save-message>=kalopsian/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +kalopsian.* 'macro index,pager Y "<tag-prefix-cond><save-message>=openbay/[Gmail].All Mail<enter><sync-mailbox>" "All Mail"'
+folder-hook +kalopsian.* macro index,pager d "<save-message>=kalopsian/[Gmail].Trash<enter>" "Trash"

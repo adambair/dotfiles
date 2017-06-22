@@ -1,0 +1,14 @@
+macro index goi "<change-folder>=openbay/INBOX<enter>" "Go to openbay Inbox"
+macro index goa "<change-folder>=openbay/[Gmail].All Mail<enter>" "Go to openbay All Mail"
+macro index gos "<change-folder>=openbay/[Gmail].Sent Mail<enter>" "Go to openbay Sent Mail"
+
+folder-hook +openbay.* set from="adam@openbay.com" 
+#folder-hook +openbay.* set record=+openbay/Sent
+folder-hook +openbay.* set postponed=+openbay/Drafts
+folder-hook +openbay.* my_hdr From: Adam Bair <adam@openbay.com>
+folder-hook +openbay.* set signature=~/.mutt/signatures/openbay.signature
+folder-hook +openbay.* set sendmail='"/usr/local/bin/msmtp -a openbay"'
+folder-hook +openbay.* 'macro index,pager y "<save-message>=openbay/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +openbay.* 'macro index,pager Y "<tag-prefix-cond><save-message>=openbay/[Gmail].All Mail<enter><sync-mailbox>" "All Mail"'
+folder-hook +openbay.* macro index,pager d "<save-message>=openbay/[Gmail].Trash<enter>" "Trash"
+

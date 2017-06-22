@@ -1,0 +1,35 @@
+# Sidebar Settings
+# set sidebar_visible  
+# set sidebar_width	= 30
+# set sidebar_delim = "|"
+
+# Mailboxes to show in the sidebar.
+# mailboxes +gmail/INBOX \
+          # +openbay/INBOX \
+          # +kalopsian/INBOX \
+
+# Sidebar Patch --------------------------------------
+# set sidebar_delim   = '  │'
+# set sidebar_visible = yes
+# set sidebar_width   = 24
+# color sidebar_new color221 color233
+
+# Status Bar -----------------------------------------
+# set status_chars  = " *%A"
+# set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# h will take you to the folder list in the index
+# macro index h "c?t"
+
+# ctrl-n, ctrl-p to select next, prev folder
+# ctrl-o to open selected folder 
+# bind index \CP sidebar-prev 
+# bind index \CN sidebar-next 
+# bind index \CO sidebar-open 
+# bind pager \CP sidebar-prev 
+# bind pager \CN sidebar-next 
+# bind pager \CO sidebar-open 
+
+# color of sidebar folders with new mail
+# color sidebar_new yellow default 
+
