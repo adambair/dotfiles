@@ -1,4 +1,6 @@
 # Terminal colors (256) https://jonasjacek.github.io/colors
 
-color cursor			15	237
+color cursor			15	0
+color title-focus 15  0
+color title-blur  15  0
 
