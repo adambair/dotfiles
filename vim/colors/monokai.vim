@@ -117,10 +117,13 @@ hi CursorLineNr      guifg=#FFFFFF guibg=#262825 gui=none
 hi rubyDefine                   gui=none        guifg=#f42873
 hi rubyInclude                  guifg=#f42873   gui=italic cterm=italic
 hi rubyInstanceVariable         guifg=#d300fe
-hi rubyStringDelimiter          gui=none        guifg=#1fde0c
-hi rubySymbol                   gui=none        guifg=#8988e1
-" hi rubySymbol                   gui=none        guifg=#9493e4
-hi rubyInterpolationDelimiter   guifg=#FFFFFF
+hi rubyStringDelimiter          gui=bold        guifg=#1fde0c
+hi rubySymbol                   gui=bold        guifg=#8988e1
+hi rubySymbolDelimiter          gui=bold        guifg=#8988e1
+" hi rubySymbol                   gui=bold        guifg=#9493e4
+" hi rubyInterpolationDelimiter   guifg=#FFFFFF
+hi rubyInterpolationDelimiter   guifg=#b2ad90
+
 hi rubyBlockParameter           guifg=#d300fe
 hi rubyAccess                   guifg=#f42873   gui=italic cterm=italic
 hi rubyInclude                                  gui=italic cterm=italic

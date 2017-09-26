@@ -1,0 +1,12 @@
+macro index ii "<change-folder>=intridea/INBOX<enter>" "Go to intridea Inbox"
+macro index ia "<change-folder>=intridea/[Gmail].All Mail" "Go to intridea All Mail"
+macro index is "<change-folder>=intridea/[Gmail].Sent Mail" "Go to intridea Sent Mail"
+
+folder-hook +intridea.* set from="adam@intridea.com"
+#folder-hook +intridea.* set record=+INTRIDEA/Sent
+folder-hook +intridea.* set postponed=+INTRIDEA/Drafts
+folder-hook +intridea.* my_hdr From: Adam Bair <adam@intridea.com>
+folder-hook +intridea.* set sendmail='"/usr/local/bin/msmtp -a intridea"'
+folder-hook +intridea.* set signature=$HOME/.mutt/signatures/intridea.signature
+folder-hook +intridea.* 'macro index,pager y "<save-message>=INTRIDEA/[Gmail].All Mail<enter>" "All Mail"'
+folder-hook +intridea.* macro index,pager d "<save-message>=INTRIDEA/[Gmail].Trash<enter>" "Trash"
