@@ -153,6 +153,9 @@ noremap <C-K> <C-A>
 " remap decrement (subtract) to ctrl+j/k movements
 noremap <C-J> <C-X>
 
+" turn off visual bell
+autocmd GUIEnter * set vb t_vb= " for your GUI
+autocmd VimEnter * set vb t_vb=
 
 " }}}
 " Packages / vim-plug {{{
@@ -227,7 +230,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-wiki {{{
 
 let wiki                 = {}
-let wiki.path            = '~/vimwiki/'
+let wiki.path            = '~/.lokal/wiki/'
 let wiki.diary_index     = 'daily'
 let wiki.diary_rel_path  = 'daily/'
 let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
