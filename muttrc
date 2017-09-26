@@ -76,7 +76,7 @@ set forward_format = "[%s]"
 # url viewing
 macro index,pager cb |urlview 'call urlview to extract URLs out of a message'
 
-macro index,pager gr "<group-reply>"
+macro generic,index,pager g  "<group-reply>"
 
 # VIMERIZE THIS BIACH
 bind generic,pager j next-entry
@@ -86,7 +86,6 @@ bind pager K previous-entry
 
 macro index,pager gg "<first-entry>"
 macro index,pager G  "<last-entry>"
-macro index,pager g  "<group-reply>"
 macro index,pager  "<previous-page>"
 macro index,pager  "<next-page>"
 

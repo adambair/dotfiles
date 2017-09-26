@@ -165,12 +165,10 @@ autocmd VimEnter * set vb t_vb=
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'w0rp/ale'
+Plug 'romainl/idiomatic-vimrc'    " Guidelines for vim config files
 Plug 'godlygeek/csapprox'
-" Plug 'ap/vim-css-color'         " Show css color background on css hex codes
-Plug 'chrisbra/Colorizer'
 Plug 'scrooloose/nerdtree'
-" Plug 'scrooloose/syntastic'
-" Plug 'w0rp/ale'                 " +timers +job +channel
 Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
 Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 
@@ -199,7 +197,6 @@ Plug 'tpope/vim-abolish'              " :Subvert/blog{,s}/post{,s}/g
 
 Plug 'kchmck/vim-coffee-script'
 
-Plug 'tmhedberg/matchit'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
 
@@ -210,6 +207,12 @@ Plug 'ck3g/vim-change-hash-syntax'
 
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 Plug 'tbabej/taskwiki'
+Plug 'airblade/vim-gitgutter'
+Plug 'chrisbra/Colorizer'
+
+" Advanced Sort
+Plug 'inkarkat/vim-ingo-library'
+Plug 'vim-scripts/AdvancedSorters' " relies on ingo
 
 call plug#end()
 
@@ -243,6 +246,7 @@ map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
 
 let g:taskwiki_disable_concealcursor='disable'
+let g:taskwiki_sort_order='priority'
 
 "}}}
 " vim-easy-align {{{
@@ -287,6 +291,9 @@ let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let g:NERDTreeWinSize=50
 
+" Close pane on file selection
+let NERDTreeQuitOnOpen=1
+
 " Show/hide NERDTree
 map <leader>nn :NERDTreeToggle<CR>
 
@@ -297,6 +304,20 @@ map <leader>re :NERDTreeFind<CR>
 " Graphviz {{{
 map <silent> <leader>lv :silent GraphvizCompile<CR>:silent GraphvizShow<CR>:redraw!<CR>
 map <leader>lc :GraphvizCompile<CR>
+" }}}
+" vim-ale ALE ale {{{
+" let g:ale_sign_error = '✹'
+" let g:ale_sign_warning = '⚠'
+let g:ale_sign_error           = '•'
+let g:ale_sign_warning         = '•'
+let g:ale_echo_msg_error_str   = '✹ Error'
+let g:ale_echo_msg_format      = '%severity%: %linter% - %s '
+let g:ale_echo_msg_warning_str = '⚠ Warning'
+let g:ale_statusline_format    = ['E•%d', 'W•%d', 'OK']
+let g:ale_set_highlights = 0
+
+nmap <Leader>ap <Plug>(ale_previous)
+nmap <Leader>an <Plug>(ale_next)
 " }}}
 
 " }}}
@@ -431,7 +452,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set showmatch  " when a bracket is inserted, briefly jump to the matching one
+set noshowmatch  " when a bracket is inserted, briefly jump to the matching one
 
 map H ^
 map L $
@@ -489,4 +510,3 @@ autocmd VimEnter * source $MYVIMRC
 syntax match nonascii "[^\x00-\x7F]"
 highlight nonascii guibg=Red ctermbg=2
 
-" vim:foldmethod=marker:foldlevel=0
