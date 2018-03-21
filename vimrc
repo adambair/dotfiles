@@ -15,6 +15,10 @@
 " http://github.com/nvie/vimrc/blob/master/vimrc
 " https://github.com/dougblack/dotfiles/blob/master/.vimrc
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+" https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+cmap w!! w !sudo tee > /dev/null %
+
 " Buffers {{{
 
 set hidden            " hide buffers instead of closing them the current buffer
@@ -46,10 +50,12 @@ filetype plugin indent on
 
 autocmd BufNewFile,BufReadPost Procfile set filetype=ruby
 autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
-autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-autocmd BufReadPost *.yml set syntax=ansible
+" autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 " autocmd BufNewFile,BufReadPost *.md,*.wiki set filetype=markdown
 autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
+au BufRead,BufNewFile *.md,*.wiki setlocal textwidth=80
+
+autocmd BufNewFile,BufReadPost *.go setlocal foldmethod=syntax foldnestmax=1
 
 " }}}
 " Folding {{{
@@ -138,9 +144,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set dir=~/tmp
-
 set history=9001      " remember more commands, OVER 9000!!!!
-set path+=**
 
 " set clipboard=unnamed
 set clipboard=unnamedplus
@@ -181,7 +185,8 @@ Plug 'wannesm/wmgraphviz.vim'
 Plug 'vim-ruby/vim-ruby'
 
 Plug 'mbbill/undotree'
-Plug 'taglist.vim'
+" Plug 'taglist.vim'
+" Plug 'vim-scripts/taglist.vim'
 Plug 'SyntaxAttr.vim'
 Plug 'ervandew/supertab'        " Tab completion
 
@@ -192,6 +197,7 @@ Plug 'tpope/vim-repeat'         " Repeat command support for certain plugins
 " Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-markdown'
+Plug 'stephpy/vim-yaml'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-abolish'              " :Subvert/blog{,s}/post{,s}/g
 
@@ -214,10 +220,42 @@ Plug 'chrisbra/Colorizer'
 Plug 'inkarkat/vim-ingo-library'
 Plug 'vim-scripts/AdvancedSorters' " relies on ingo
 
+Plug 'easymotion/vim-easymotion'
+
+Plug 'fatih/vim-go'
+
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'majutsushi/tagbar'
+
 call plug#end()
 
 " }}}
 " Packages / configuration {{{
+
+" majutsushi/tagbar {{{
+
+let g:tagbar_left = 1
+nmap <leader>mm :TagbarOpen fjc<CR>
+
+" }}}
+
+" faith/vim-go {{{
+let g:go_fmt_command = "goimports"
+
+let g:go_highlight_types       = 1
+let g:go_highlight_fields      = 0
+let g:go_highlight_functions   = 1
+let g:go_highlight_methods     = 1
+
+let g:go_highlight_operators   = 1
+let g:go_highlight_extra_types = 1
+
+let g:go_highlight_build_constraints     = 1
+let g:go_highlight_function_calls        = 0
+" let g:go_highlight_variable_assignments  = 1
+" let g:go_highlight_variable_declarations = 1
+" }}}
 
 " chrisbra/Colorizer {{{
 
@@ -289,6 +327,7 @@ let NERDSpaceDelims=1
 
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
+let g:NERDTreeCascadeSingleChildDir = 0 " do not cascade empty dirs
 let g:NERDTreeWinSize=50
 
 " Close pane on file selection
@@ -402,8 +441,9 @@ map tk :tabclose<CR>
 " }}}
 " Tags {{{
 
-let Tlist_Ctags_Cmd='ctags'
-map <leader>mm :TlistToggle<CR>
+" go language
+" let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
+                           " \ 'v:variable;f:function'
 
 " }}}
 " Theme / Colors {{{

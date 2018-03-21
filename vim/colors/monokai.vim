@@ -173,6 +173,29 @@ hi coffeeInterpDelim       guifg=#FFFFFF
 hi coffeeConsoleLog        guisp=#FFFFFF gui=undercurl
 hi gitcommitSummary        guifg=#FFFFFF gui=none cterm=none
 
+" Vimwiki
+hi VimwikiHeader1 guifg=#f42873 gui=bold
+hi VimwikiHeader2 guifg=#A6E22E gui=bold
+hi VimwikiHeader3 guifg=#ff9925 gui=bold
+hi VimwikiHeader4 guifg=#66D9EF gui=bold
+hi VimwikiHeader5 guifg=#7070F0 gui=bold
+
+hi VimwikiListTodo guifg=#ff9925 gui=none
+
+" Golang
+" hi goStatement guifg=#f92672 gui=italic cterm=italic
+hi goDeclaration guifg=#f42873 gui=italic cterm=italic
+" hi goDeclType guifg=#AE81FF gui=italic cterm=italic
+hi goDeclType guifg=#8988e1 gui=italic cterm=italic
+" hi goType guifg=#C4BE89
+
+hi goTypeConstructor guifg=#FD971F
+hi goType guifg=#FD971F
+hi goSignedInts guifg=#FD971F
+hi goExtraType guifg=#FD971F
+" hi goFunctionCall guifg=#ffffff gui=bold cterm=bold
+
+
 if has("spell")
   hi clear SpellBad
   hi SpellBad gui=undercurl guifg=#FF0000
