@@ -190,9 +190,6 @@ source $HOME/.env/hackon-dyndns.sh
 # }}}
 # Keys / Personal / Amazon {{{
 
-export S3_KEY="AKIAIFOSOUCLZNSFMAHA"
-export S3_SECRET="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"
-
 # }}}
 # Keys / Personal / Imgur {{{
 export IMGUR_CLIENT_ID="296a786b2d367de"
