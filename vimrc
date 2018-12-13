@@ -1,3 +1,4 @@
+"
 "               88
 "               ``
 "  8b       d8  88  88,dPYba,,adPYba,   8b,dPPYba,   ,adPPYba,
@@ -15,125 +16,6 @@
 " http://github.com/nvie/vimrc/blob/master/vimrc
 " https://github.com/dougblack/dotfiles/blob/master/.vimrc
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-" https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
-cmap w!! w !sudo tee > /dev/null %
-
-" Buffers {{{
-
-set hidden            " hide buffers instead of closing them the current buffer
-                      " can be put in the background without being written.
-
-set switchbuf=useopen " reveal already opened files from the quickfix window
-                      " instead of opening new buffers
-
-" }}}
-" Fast Rendering {{{
-
-" Make scrolling and highlighters fast
-" Fixes slow scrolling in complex syntax files
-" http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting/16920294#16920294
-" https://www.reddit.com/r/vim/comments/3tk66r/vim_slow_scrolling_in_iterm2/cx77dbj
-
-set regexpengine=1
-set ttyfast
-set lazyredraw
-
-" }}}
-" Filetypes {{{
-
-set autoread
-set modelines=1       " Allow the last line/comment of a file to configure vim
-set encoding=utf8     " Allow weird characters ;)
-
-filetype plugin indent on
-
-autocmd BufNewFile,BufReadPost Procfile set filetype=ruby
-autocmd BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
-" autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-" autocmd BufNewFile,BufReadPost *.md,*.wiki set filetype=markdown
-autocmd BufNewFile,BufReadPost *.yml set foldmethod=marker
-au BufRead,BufNewFile *.md,*.wiki setlocal textwidth=80
-
-autocmd BufNewFile,BufReadPost *.go setlocal foldmethod=syntax foldnestmax=1
-
-" }}}
-" Folding {{{
-
-set foldmethod=syntax   " fold based on indent level
-set foldnestmax=0       " max 10 depth
-set foldenable          " do/don't fold files by default on open
-set foldlevelstart=1    " start with fold level of 1
-
-" toggle fold
-nnoremap <space> za
-
-" close other folds
-map zo zMzv
-
-" }}}
-" Macros {{{
-
-" Config Reloading {{{
-
-" Quickly open color config as well?
-nnoremap <leader>ece :e ~/.vim/colors/monokai.vim<CR>
-
-" Quickly open/reload vim config
-nnoremap <leader>eve :e $MYVIMRC<CR>
-nnoremap <leader>evr :source $MYVIMRC<CR>
-
-" Quickly open/reload zsh config
-nnoremap <leader>eze :e ~/.zshrc<CR>
-nnoremap <leader>ezr :!. ~/.zshrc<CR>
-
-" }}}
-" Date and Time {{{
-
-map ,sdate  :let @z=strftime("%Y-%m-%d")<Cr>"zp
-map ,stime  :let @z=strftime("%l:%M %p")<Cr>"zp
-map ,sdt    :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
-map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
-map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
-
-" }}}
-
-" LOKAP {{{
-
-map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>h
-map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
-
-" }}}
-" Openbay {{{
-
-map <leader>go :tabnew ~/workspace/openbay-web/README.md<CR>:silent! lcd %:p:h<CR>
-
-map ,ssup   :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
-map ,sup    :let @z=strftime("#standup ```\ny:\nt:\nb:\n- none\n```")<Cr>"zp
-
-" }}}
-
-" Change working directory to the directory of the current file
-nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
-
-" Quick alignment of text
-nmap <leader>al :left<CR>
-nmap <leader>ar :right<CR>
-nmap <leader>ac :center<CR>
-
-" Strip all trailing whitespace from a file, using ,w
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
-" }}}
-" Markers {{{
-
-" Swap implementations of ` and ' jump to markers
-" By default, ' jumps to the marked line, ` jumps to the marked line and
-" column, so swap them
-nnoremap ' `
-nnoremap ` '
-
-" }}}
 " Misc {{{
 
 let mapleader = ","
@@ -161,6 +43,110 @@ noremap <C-J> <C-X>
 autocmd GUIEnter * set vb t_vb= " for your GUI
 autocmd VimEnter * set vb t_vb=
 
+set hidden            " hide buffers instead of closing them the current buffer
+                      " can be put in the background without being written.
+
+set switchbuf=useopen " reveal already opened files from the quickfix window
+                      " instead of opening new buffers
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+" https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+cmap w!! w !sudo tee > /dev/null %
+
+" }}}
+" Fast Rendering {{{
+
+" Make scrolling and highlighters fast
+" Fixes slow scrolling in complex syntax files
+" http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting/16920294#16920294
+" https://www.reddit.com/r/vim/comments/3tk66r/vim_slow_scrolling_in_iterm2/cx77dbj
+
+set regexpengine=1
+set ttyfast
+set lazyredraw
+
+" }}}
+" Filetypes {{{
+
+set autoread
+set modelines=1       " Allow the last line/comment of a file to configure vim
+set encoding=utf8     " Allow weird characters ;)
+
+filetype plugin indent on
+
+au BufNewFile,BufReadPost Procfile    set filetype=ruby
+au BufNewFile,BufReadPost *.yml       set foldmethod=marker
+au BufRead,BufNewFile *.md,*.wiki     set textwidth=80
+au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
+au BufNewFile,BufReadPost *.service   set filetype=gitconfig nospell
+
+" }}}
+" Folding {{{
+
+set foldmethod=marker   " fold method
+set foldnestmax=10      " max fold depth
+" set foldenable          " do/don't fold files by default on open
+set foldlevelstart=1    " start with fold level of x
+
+" toggle fold
+nnoremap <space> za
+
+" close other folds
+map zo zMzv
+
+" }}}
+" Config Reloading {{{
+
+" Quickly open/reload vim config
+nnoremap <leader>eve :e $MYVIMRC<CR>
+nnoremap <leader>evr :source $MYVIMRC<CR>
+
+" Quickly open color config as well?
+nnoremap <leader>ece :e ~/.vim/colors/monokai.vim<CR>
+
+" Quickly open/reload zsh config
+nnoremap <leader>eze :e ~/.zshrc<CR>
+nnoremap <leader>ezr :!. ~/.zshrc<CR>
+
+" Preview Markdown with Pandoc
+" Note: relies on ~/bin/gfm.css (styles for github-flavored markdown)
+nnoremap <leader>p :!preview=/tmp/preview-$RANDOM.html && pandoc --self-contained -c $HOME/bin/gfm.css --to html % --metadata pagetitle=preview > $preview && echo "<article class=\"markdown-body entry-content\">"$(cat $preview)"</article>" > $preview && xdg-open $preview  &>/dev/null && sleep 1 && rm $preview<CR>
+
+" }}}
+" Date and Time {{{
+
+map ,sdate  :let @z=strftime("%Y-%m-%d")<Cr>"zp
+map ,stime  :let @z=strftime("%l:%M %p")<Cr>"zp
+map ,sdt    :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
+map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
+map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
+
+" }}}
+" LOKAP {{{
+
+map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>h
+map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
+
+" Change working directory to the directory of the current file
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" Quick alignment of text
+nmap <leader>al :left<CR>
+nmap <leader>ar :right<CR>
+nmap <leader>ac :center<CR>
+
+" Strip all trailing whitespace from a file, using ,w
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" }}}
+" Markers {{{
+
+" Swap implementations of ` and ' jump to markers
+" By default, ' jumps to the marked line, ` jumps to the marked line and
+" column, so swap them
+nnoremap ' `
+nnoremap ` '
+
 " }}}
 " Packages / vim-plug {{{
 
@@ -169,76 +155,72 @@ autocmd VimEnter * set vb t_vb=
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'w0rp/ale'
 Plug 'romainl/idiomatic-vimrc'    " Guidelines for vim config files
-Plug 'godlygeek/csapprox'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
-Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 
+" Linting
+Plug 'w0rp/ale'
+
+" Eyecandy
+Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
+Plug 'godlygeek/csapprox'
+Plug 'SyntaxAttr.vim'           " Displays the syntax highlighting attributes
+Plug 'airblade/vim-gitgutter'
+Plug 'chrisbra/Colorizer'
+
+" Searching
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'               " original
-Plug 'junegunn/vim-easy-align'
 
-Plug 'wannesm/wmgraphviz.vim'
-Plug 'vim-ruby/vim-ruby'
-
+" Navigation
+Plug 'scrooloose/nerdtree'
 Plug 'mbbill/undotree'
-" Plug 'taglist.vim'
-" Plug 'vim-scripts/taglist.vim'
-Plug 'SyntaxAttr.vim'
-Plug 'ervandew/supertab'        " Tab completion
 
+" Editing
+Plug 'ervandew/supertab'        " Tab completion
+Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
 Plug 'tpope/vim-unimpaired'     " Pairs of handy bracket mappings
 Plug 'tpope/vim-endwise'        " Insert ends, intelligently
 Plug 'tpope/vim-surround'       " Change your surroundings
 Plug 'tpope/vim-repeat'         " Repeat command support for certain plugins
-" Plug 'tpope/vim-haml'
+Plug 'tpope/vim-fugitive'       " Git stuff, Gblame, etc
+Plug 'tpope/vim-abolish'        " :Subvert/blog{,s}/post{,s}/g
+Plug 'junegunn/vim-easy-align'  " A simple, easy-to-use Vim alignment plugin.
+
+" Languages
+Plug 'vim-ruby/vim-ruby'
+Plug 'kchmck/vim-coffee-script'
+Plug 'fatih/vim-go'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-markdown'
 Plug 'stephpy/vim-yaml'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-abolish'              " :Subvert/blog{,s}/post{,s}/g
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'              " React
+Plug 'wannesm/wmgraphviz.vim'
 
-Plug 'kchmck/vim-coffee-script'
 
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
-
-Plug 'Konfekt/FastFold'
-
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'ck3g/vim-change-hash-syntax'
-
+" Wiki
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-Plug 'tbabej/taskwiki'
-Plug 'airblade/vim-gitgutter'
-Plug 'chrisbra/Colorizer'
 
 " Advanced Sort
 Plug 'inkarkat/vim-ingo-library'
-Plug 'vim-scripts/AdvancedSorters' " relies on ingo
+Plug 'vim-scripts/AdvancedSorters' " Multiline-aware relies on ingo
 
-Plug 'easymotion/vim-easymotion'
-
-Plug 'fatih/vim-go'
-
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-Plug 'majutsushi/tagbar'
+" Unused?
+" Plug 'easymotion/vim-easymotion'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-easytags'
+" Plug 'majutsushi/tagbar'
+" Plug 'Konfekt/FastFold'
+" Plug 'nelstrom/vim-textobj-rubyblock'
+" Plug 'kana/vim-textobj-user'
+" Plug 'ntpeters/vim-better-whitespace'
+" Plug 'ck3g/vim-change-hash-syntax'
 
 call plug#end()
 
 " }}}
 " Packages / configuration {{{
-
-" majutsushi/tagbar {{{
-
-let g:tagbar_left = 1
-nmap <leader>mm :TagbarOpen fjc<CR>
-
-" }}}
 
 " faith/vim-go {{{
 let g:go_fmt_command = "goimports"
@@ -256,7 +238,6 @@ let g:go_highlight_function_calls        = 0
 " let g:go_highlight_variable_assignments  = 1
 " let g:go_highlight_variable_declarations = 1
 " }}}
-
 " chrisbra/Colorizer {{{
 
 let g:colorizer_auto_filetype = 'css,html,sass,haml,scss'
@@ -296,31 +277,6 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-" vim-syntastic {{{
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list            = 0
-let g:syntastic_check_on_open            = 0
-let g:syntastic_check_on_wq              = 0
-let g:syntastic_aggregate_errors         = 1
-let g:syntastic_id_checkers              = 1
-let g:syntastic_sort_aggregated_errors   = 0
-let g:syntastic_ruby_checkers            = ['reek', 'flog', 'rubocop', 'brakeman']
-
-let g:syntastic_mode_map = {
-  \ "mode": "passive",
-  \ "active_filetypes": [],
-  \ "passive_filetypes": [] }
-
-sign define SyntasticError        text=>>
-sign define SyntasticWarning      text=>>
-sign define SyntasticStyleError   text=
-sign define SyntasticStyleWarning text=
-
-" map <leader>sc :SyntasticCheck<CR>
-" map <leader>sr :SyntasticReset<CR>
-
-"}}}
 " vim-NERDTree {{{
 
 let NERDSpaceDelims=1
@@ -347,6 +303,8 @@ map <leader>lc :GraphvizCompile<CR>
 " vim-ale ALE ale {{{
 " let g:ale_sign_error = '✹'
 " let g:ale_sign_warning = '⚠'
+" 
+" 
 let g:ale_sign_error           = '•'
 let g:ale_sign_warning         = '•'
 let g:ale_echo_msg_error_str   = '✹ Error'
@@ -415,11 +373,17 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " }}}
 " Spellchecker {{{
+"
+" z=  suggests spelling
+" zg  adds to dictionary
+" zug removes from dictionary
 
 " spellchecker configuration
 " setlocal spell spelllang=en_us
+set spell spelllang=en_gb 
+set spellcapcheck=
 autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki,*.md set spell
-autocmd FileType coffee setlocal nospell
+autocmd FileType coffee,go,service setlocal nospell
 
 " }}}
 " Tabs {{{
@@ -467,8 +431,12 @@ let &colorcolumn="80,81,120,121"
 
 " Not sure why I have to specify these here, but they don't work in my
 " colorscheme file :/
-hi    ExtraWhitespace              ctermbg=red   guibg=red
-match ExtraWhitespace /\s\+$/
+" hi    ExtraWhitespace              ctermbg=red   guibg=red
+" match ExtraWhitespace /\s\+$/
+
+" highlight non ascii characters such as ' ' instead of ' '
+syntax match nonascii "[^\x00-\x7F]"
+highlight nonascii guibg=Red ctermbg=2
 
 " Status Line {{{
 
@@ -512,7 +480,6 @@ set undoreload=9001 " maximum number lines to save for undo on a buffer
 " }}}
 " UI / Interface {{{
 
-
 set nu                " show line numbers
 set visualbell        " don't beep
 syntax enable         " enable syntax, keep current color settings
@@ -531,7 +498,6 @@ set scrolloff=5       " line padding between cursor and top/bottom of screen
 set linespace=1
 
 " }}}
-
 " Post config hacks {{{
 
 " vim-webdevicons
@@ -546,7 +512,4 @@ autocmd VimEnter * source $MYVIMRC
 
 " }}}
 
-" highlight non ascii characters such as ' ' instead of ' '
-syntax match nonascii "[^\x00-\x7F]"
-highlight nonascii guibg=Red ctermbg=2
-
+" # vim: fdm=marker fdls=0
