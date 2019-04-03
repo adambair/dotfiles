@@ -197,6 +197,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'              " React
 Plug 'wannesm/wmgraphviz.vim'
+Plug 'sheerun/vim-polyglot'
 
 
 " Wiki

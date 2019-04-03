@@ -6,6 +6,7 @@ export TERMINAL=alacritty
 
 # NOTE: find aur download/build functions... they seem to be missing
 
+
 # Vim {{{
 #
 export BUNDLER_EDITOR="vim"
@@ -29,7 +30,7 @@ ZSH_THEME="steeef"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse zsh-syntax-highlighting)
-plugins=(git vi-mode autojump brew bundler cloudapp gitfast git-extras npm)
+plugins=(git vi-mode autojump brew bundler cloudapp gitfast git-extras npm kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,6 +43,9 @@ source $ZSH/oh-my-zsh.sh
 cdi() {
   cd "$(nav $@)"
 }
+
+alias projector_on=". ~/.screenlayout/dual-with-portrait-and-projector.sh"
+alias projector_off=". ~/.screenlayout/dual-with-portrait.sh"
 
 # Mass rename
 #
@@ -61,6 +65,13 @@ alias grep="grep -E --color"
 alias grm="gst | grep deleted | awk {'print \$3'} | xargs git rm"
 alias weather="curl http://wttr.in"
 alias gcom="git commit -v"
+
+# Python
+
+alias p3="python3"
+alias pe="pipenv"
+alias pm="python manage.py"
+alias pmrs="python manage.py runserver"
 
 # SSH identity / github users
 alias gha="gh-adam"
@@ -202,9 +213,6 @@ export HOMEBREW_CELLAR='/usr/local/Cellar'
 export HOMEBREW_GITHUB_API_TOKEN='a681c62aa0210b90bf25e97cd4ce1d142dd5c980'
 
 # }}}
-# ENV / Ruby / RVM {{{
-
-# }}}
 # ENV / Perl / OPAM configuration {{{
 
 . /Users/adam/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -248,17 +256,13 @@ xset m 5/1 0
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # }}}
-# RVM {{{
-source $HOME/.rvm/scripts/rvm
-
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-# }}}
 
 ~/bin/welcome
 
 # vim:foldmethod=marker:foldlevel=0
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/adam/workspace/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/home/adam/workspace/lib/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/adam/workspace/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/adam/workspace/lib/google-cloud-sdk/completion.zsh.inc'; fi
