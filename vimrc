@@ -32,7 +32,7 @@ set history=9001      " remember more commands, OVER 9000!!!!
 set clipboard=unnamedplus
 
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*
+set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*,*__pycache__*
 
 " remap increment (add) to ctrl+j/k movements
 noremap <C-K> <C-A>
@@ -79,6 +79,22 @@ au BufNewFile,BufReadPost *.yml       set foldmethod=marker
 au BufRead,BufNewFile *.md,*.wiki     set textwidth=80
 au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
 au BufNewFile,BufReadPost *.service   set filetype=gitconfig nospell
+
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.py set tabstop=4
+au BufRead,BufNewFile *.py set softtabstop=4
+au BufRead,BufNewFile *.py set shiftwidth=4
+
+au BufRead,BufNewFile *.js set expandtab
+au BufRead,BufNewFile *.js set tabstop=2
+au BufRead,BufNewFile *.js set softtabstop=2
+au BufRead,BufNewFile *.js set shiftwidth=2
+
+au BufRead,BufNewFile *.html set expandtab
+au BufRead,BufNewFile *.html set tabstop=2
+au BufRead,BufNewFile *.html set softtabstop=2
+au BufRead,BufNewFile *.html set shiftwidth=2
+
 
 " }}}
 " Folding {{{
@@ -286,6 +302,7 @@ let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let g:NERDTreeCascadeSingleChildDir = 0 " do not cascade empty dirs
 let g:NERDTreeWinSize=50
+let g:NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " Close pane on file selection
 let NERDTreeQuitOnOpen=1

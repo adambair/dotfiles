@@ -1,11 +1,14 @@
 unsetopt correct_all
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/go/bin
+
 export GOPATH=$HOME/go
 export PATH=$PATH:/bin
+export PATH=$PATH:~/workspace/tmp/atom-1.36.1-amd64
 export TERMINAL=alacritty
 
 # NOTE: find aur download/build functions... they seem to be missing
 
+export BROWSER=/usr/bin/google-chrome-stable
 
 # Vim {{{
 #
