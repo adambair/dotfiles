@@ -137,6 +137,11 @@ map ,sdt    :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
 map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
 map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
 
+" Standup
+map ,sup :let @z=strftime("#standup ```\ny:\nt:\nb: none\n```")<Cr>"zp
+" map ,ssup :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
+
+
 " }}}
 " LOKAP {{{
 
