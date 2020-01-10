@@ -32,7 +32,7 @@ set history=9001      " remember more commands, OVER 9000!!!!
 set clipboard=unnamedplus
 
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*,*__pycache__*
+set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*,*__pycache__*,*_build*
 
 " remap increment (add) to ctrl+j/k movements
 noremap <C-K> <C-A>
@@ -74,26 +74,15 @@ set encoding=utf8     " Allow weird characters ;)
 
 filetype plugin indent on
 
-au BufNewFile,BufReadPost Procfile    set filetype=ruby
+au BufNewFile,BufReadPost Procfile    set filetype=ruby nospell
 au BufNewFile,BufReadPost *.yml       set foldmethod=marker
-au BufRead,BufNewFile *.md,*.wiki     set textwidth=80
+au BufRead,BufNewFile *.md,*.wiki     set textwidth=80 nospell expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
 au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
 au BufNewFile,BufReadPost *.service   set filetype=gitconfig nospell
 
-au BufRead,BufNewFile *.py set expandtab
-au BufRead,BufNewFile *.py set tabstop=4
-au BufRead,BufNewFile *.py set softtabstop=4
-au BufRead,BufNewFile *.py set shiftwidth=4
-
-au BufRead,BufNewFile *.js set expandtab
-au BufRead,BufNewFile *.js set tabstop=2
-au BufRead,BufNewFile *.js set softtabstop=2
-au BufRead,BufNewFile *.js set shiftwidth=2
-
-au BufRead,BufNewFile *.html set expandtab
-au BufRead,BufNewFile *.html set tabstop=2
-au BufRead,BufNewFile *.html set softtabstop=2
-au BufRead,BufNewFile *.html set shiftwidth=2
+au BufRead,BufNewFile *.py            set expandtab tabstop=4 softtabstop=4 shiftwidth=4 nospell
+au BufNewFile,BufReadPost *.js        set filetype=javascript expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
+au BufRead,BufNewFile *.html          set expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
 
 
 " }}}
@@ -138,11 +127,22 @@ map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
 map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
 
 " Standup
-map ,sup :let @z=strftime("#standup ```\ny:\nt:\nb: none\n```")<Cr>"zp
+map ,sup :let @z=strftime("#standup ```\ny:\n- \nt:\n- \nb: \n- none\n```")<Cr>"zp
 " map ,ssup :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
 
 
 " }}}
+
+" ctags {{{
+
+" Go to definition
+map <leader>gd <C-]>
+
+" when saving a .py file, rebuild all .py tags in the working dir
+au BufWritePost *.py, silent! !ctags -R  --kinds-python=-i **/*.py &
+
+" }}}
+
 " LOKAP {{{
 
 map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>h
@@ -218,7 +218,8 @@ Plug 'stephpy/vim-yaml'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'              " React
 Plug 'wannesm/wmgraphviz.vim'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
+Plug 'pangloss/vim-javascript'
 
 
 " Wiki
@@ -371,8 +372,22 @@ map -a :call SyntaxAttr()<CR>
 set ignorecase  " ignore case in vim searches and commands
 set smartcase   " only care about case, if I use uppercase letters
 
-" Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
-let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore --hidden --follow --glob '!.git/*'"
+" Using ripgrep for filename search
+let rg_ignore = "--hidden" .
+      \" -g '!.git/*'" . 
+      \" -g '!.venv/*'" .
+      \" -g '!*/_build/*'" .
+      \" -g '!.mypy_cache/*'" .
+      \" -g '!*.rst'" 
+let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore --follow " . rg_ignore
+
+" Using silver_searcher (ag) for filename search
+let ag_ignore = '--hidden ' .
+      \' --ignore "*_build*"' .
+      \' --ignore "*.git"' .
+      \' --ignore "*.venv/*"' .
+      \' --ignore "*.rst"'
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, ag_ignore, <bang>0)
 
 set hlsearch
 set incsearch
@@ -405,7 +420,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " setlocal spell spelllang=en_us
 set spell spelllang=en_gb 
 set spellcapcheck=
-autocmd BufNewFile,BufRead *.txt,*.html,README,*.rdoc,*.wiki,*.md set spell
+set nospell
+autocmd BufNewFile,BufRead *.txt,README,*.rdoc,*.md set spell
 autocmd FileType coffee,go,service setlocal nospell
 
 " }}}

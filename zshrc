@@ -202,6 +202,9 @@ source $HOME/.env/hackon-dyndns.sh
 # Keys / The FretBuzz {{{
 # source $HOME/.envfiles/fretbuzz.sh
 # }}}
+# Keys / Verica {{{
+source $HOME/.envfiles/verica.sh
+# }}}
 # Keys / Personal / Amazon {{{
 
 # }}}
@@ -228,7 +231,7 @@ export HOMEBREW_GITHUB_API_TOKEN='a681c62aa0210b90bf25e97cd4ce1d142dd5c980'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
-export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --glob '!.git/*'"
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --g '!.git/*' -g '!*_build/*'"
 
 # }}}
 # ENV / Github {{{
