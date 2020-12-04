@@ -32,16 +32,15 @@ window:
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
   decorations: none
+  dynamic_title: true
 
 dpi:
-  x: 109
-  y: 109
+  x: 108.79
+  y: 108.79
 
-# Display tabs using this many cells (changes require restart)
-tabspaces: 8
 
 # When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
 # Font configuration (changes require restart)
 #
@@ -65,13 +64,12 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Hackon Collection # should be "Menlo" or something on macOS.
-    # Style can be specified to pick a specific face.
-    style: inconsolata-complete
+    #family: Inconsolata # should be "Menlo" or something on macOS.
+    family: Inconsolata Nerd Font
 
   # The bold font face
   bold:
-    family: Inconsolata # should be "Menlo" or something on macOS.
+    family: Inconsolata Nerd Font # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
     style: Bold
 
@@ -82,7 +80,8 @@ font:
     style: Book Italic
 
   # Point size of the font
-  size: 11
+  size: 11.5
+
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
   # offset:
@@ -92,14 +91,14 @@ font:
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increase the x offset to move the glyph to
   # the right, increase the y offset to move the glyph upward.
-  # glyph_offset:
-    # x: 0.0
-    # y: 0.0
+  #glyph_offset:
+    #x: 0
+    #y: 0
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
   # false.
-  use_thin_strokes: true
+  # use_thin_strokes: false
 
 # Should display the render timer
 # render_timer: false
@@ -178,7 +177,7 @@ colors:
 #
 # To completely disable the visual bell, set its duration to 0.
 #
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 
@@ -225,8 +224,6 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-dynamic_title: true
-
 # hide_cursor_when_typing: false
 
 # Style of the cursor
@@ -249,6 +246,13 @@ live_config_reload: true
 #   program: /bin/bash
 #   args:
 #     - --login
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
 
 # Key bindings
 #
@@ -297,7 +301,7 @@ key_bindings:
   - { key: Insert,   mods: Shift,   action: PasteSelection               }
   - { key: Key0,     mods: Control, action: ResetFontSize                }
   - { key: Equals,   mods: Control, action: IncreaseFontSize             }
-  - { key: Subtract, mods: Control, action: DecreaseFontSize             }
+  - { key: Minus,    mods: Control, action: DecreaseFontSize             }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }

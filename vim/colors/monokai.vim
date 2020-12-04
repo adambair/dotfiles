@@ -18,30 +18,50 @@ hi Boolean         guifg=#AE81FF
 hi Character       guifg=#E6DB74
 hi Number          guifg=#AE81FF
 hi String          guifg=#1fde0c
+" hi String          guifg=#26ff00
+
+
 hi Conditional     guifg=#F92672               gui=none
 hi Constant        guifg=#AE81FF               gui=none
 hi Cursor          guifg=#000000 guibg=#F8F8F0
 hi Debug           guifg=#BCA3A3               gui=none
 hi Define          guifg=#f42873
 hi Delimiter       guifg=#8F8F8F
-hi DiffAdd                       guibg=#13354A
-hi DiffChange      guifg=#89807D guibg=#4C4745
-hi DiffDelete      guifg=#960050 guibg=#1E0010
-hi DiffAdded       guifg=#1dff0e
-hi DiffRemoved     guifg=#ec0d11
-hi DiffText                      guibg=#4C4745 gui=italic,none
+
+
+"hi DiffChange      guifg=#FD971F guibg=#4C4745
+hi DiffChange                    guibg=#211406
+hi DiffText                      guibg=#52300b
+hi DiffDelete      guifg=#FF0000 guibg=#1E0010
+hi DiffRemoved     guifg=#ec0d11 
+hi DiffAdd                       guibg=#0e2b0a
+hi DiffAdded                     guibg=#0e2b0a gui=none cterm=none
+
+
 
 hi Directory       guifg=#A6E22E               gui=none
 hi Error           guifg=#960050 guibg=#1E0010
 hi ErrorMsg        guifg=#F92672 guibg=#232526 gui=none
 hi Exception       guifg=#A6E22E               gui=none
 hi Float           guifg=#AE81FF
-hi FoldColumn      guifg=#465457 guibg=#000000
-hi Folded          guifg=#465457 guibg=#000000
-hi Function        guifg=#A6E22E
+
+"hi GitGutterAddLine          " default: links to DiffAdd
+"hi GitGutterChangeLine       " default: links to DiffChange
+"hi GitGutterDeleteLine       " default: links to DiffDelete
+"hi GitGutterChangeDeleteLine " default: links to GitGutterChangeLineDefault, i.e. DiffChange
+
+"hi Folded          guifg=#465457 guibg=#000000
+"hi FoldColumn      guifg=#A6E22E guibg=#000000
+"hi FoldColumn      guifg=#465457 guibg=#000000
+
+hi FoldColumn      guifg=#66605e guibg=#000000
+hi Folded          guifg=#66605e guibg=#000000
+
+"hi Function        guifg=#a6e22e
+hi Function        guifg=#b7ff26
+
 hi Identifier      guifg=#FD971F
 hi Ignore          guifg=#808081
-hi IncSearch       guifg=#C4BE90 guibg=#000000
 
 hi Keyword         guifg=#F92672               gui=italic cterm=italic
 hi Label           guifg=#E6DB74               gui=none
@@ -49,7 +69,8 @@ hi Macro           guifg=#C4BE89               gui=italic
 hi SpecialKey      guifg=#66D9EF               gui=italic
 
 hi MatchParen      guifg=#FFFFFF guibg=#555555 gui=none
-" hi MatchParen      guifg=#FFCC00 guibg=#000000
+ "hi MatchParen      guifg=#FFCC00 guibg=#000000
+hi MatchParen      guifg=#FFCC00 guibg=#262825
 hi ModeMsg         guifg=#E6DB74
 hi MoreMsg         guifg=#E6DB74
 hi Operator        guifg=#F92672
@@ -61,7 +82,10 @@ hi PmenuSbar                     guibg=#080808
 hi PmenuThumb      guifg=#66D9EF
 
 hi PreCondit       guifg=#A6E22E               gui=none
+
 hi PreProc         guifg=#A6E22E
+"hi PreProc         guifg=#BBBBBB gui=none cterm=none
+
 hi Question        guifg=#66D9EF
 hi Repeat          guifg=#F92672               gui=none
 
@@ -70,7 +94,8 @@ hi Repeat          guifg=#F92672               gui=none
 " hi Search          guifg=#000000 guibg=#FFCC00
 " hi Search          guifg=#000000 guibg=#DFBA69
 " hi Search          guifg=#DFBA69 guibg=black cterm=underline gui=underline term=underline
-hi Search          guifg=#FFCC00 guibg=black cterm=underline gui=underline term=underline
+hi Search          guifg=#FFCC00 guibg=#000000 cterm=underline gui=underline term=underline
+hi IncSearch       guifg=#C4BE90 guibg=#000000
 
 " marks column
 hi SignColumn      guifg=#A6E22E guibg=#232526
@@ -78,7 +103,7 @@ hi SignColumn      guifg=#A6E22E guibg=#232526
 hi SpecialChar     guifg=#F92672               gui=none
 hi SpecialComment  guifg=#465457               gui=none
 hi Special         guifg=#66D9EF gui=italic
-hi SpecialKey      guifg=#888A85               gui=italic
+"hi SpecialKey      guifg=#888A85               gui=italic
 
 hi TabLine           guifg=#888888 guibg=#111111 gui=none
 hi TabLineSel        guifg=#FFFFFF guibg=#262825 gui=none
@@ -93,8 +118,8 @@ hi Tag               guifg=#F92672               gui=italic
 hi Title             guifg=#ef5939
 hi Todo              guifg=#DDDDDD guibg=#000000 gui=none cterm=none
 
-hi Typedef           guifg=#66D9EF
-hi Type              guifg=#66D9EF               gui=none
+hi Typedef           guifg=#66D9EF               gui=none cterm=none
+hi Type              guifg=#66D9EF               gui=none cterm=none
 hi Underlined        guifg=#808080               gui=underline
 
 hi VertSplit         guifg=#262825 guibg=#080808 gui=none
@@ -104,7 +129,7 @@ hi WarningMsg        guifg=#FFFFFF guibg=#333333 gui=none
 hi WildMenu          guifg=#66D9EF guibg=#000000
 
 hi Normal            guifg=#F8F8F2
-hi NonText           guifg=#BCBCBC 
+hi NonText           guifg=#BCBCBC
 
 hi Comment           guifg=#b2ad90               gui=italic cterm=italic
 hi CursorLine                      guibg=#262825 gui=none cterm=none
@@ -113,20 +138,42 @@ hi CursorColumn                    guibg=#000000
 hi LineNr            guifg=#BCBCBC guibg=#232526
 hi CursorLineNr      guifg=#FFFFFF guibg=#262825 gui=none
 
+" Javascript
+hi jsSuper           guifg=#F92672 gui=italic cterm=italic
+hi jsReturn          guifg=#f92672 gui=none cterm=none
+hi jsBlockLabel      guifg=#8988e1 gui=none   cterm=bold
+" hi jsStorageClass    guifg=#f92672
+hi jsException    guifg=#f92672
+hi jsGlobalObjects   guifg=#ae81ff gui=bold   cterm=bold
+
+hi jsThis            guifg=#BBBBBB gui=none cterm=none
+" hi jsThis            guifg=#ae81ff gui=none cterm=none
+" hi jsThis            guifg=#d300fe
+" hi jsThis            guifg=#e771ff
+" hi jsThis            guifg=#e771ff
+
+hi jsClassProperty   guifg=#fd971f gui=bold   cterm=bold
+hi jsClassDefinition   guifg=#66D9EF gui=none   cterm=none
+" hi jsObjectKey       guifg=#8988e1 gui=none   cterm=bold
+" hi jsObjectProp      guifg=#8988e1 gui=none   cterm=bold
+hi jsBooleanFalse      guifg=#AE81FF gui=none   cterm=none
+hi jsBooleanTrue       guifg=#AE81FF gui=none   cterm=none
+
 " Ruby Stuffs
 hi rubyDefine                   gui=none        guifg=#f42873
-hi rubyInclude                  guifg=#f42873   gui=italic cterm=italic
+hi rubyInclude                  guifg=#f42873   gui=none cterm=none
 hi rubyInstanceVariable         guifg=#d300fe
-hi rubyStringDelimiter          gui=bold        guifg=#1fde0c
-hi rubySymbol                   gui=bold        guifg=#8988e1
-hi rubySymbolDelimiter          gui=bold        guifg=#8988e1
+hi link rubyStringDelimiter String
+"hi rubyStringDelimiter          gui=none        guifg=#1fde0c
+hi rubySymbol                   gui=none        guifg=#8988e1
+hi rubySymbolDelimiter          gui=none        guifg=#8988e1
 " hi rubySymbol                   gui=bold        guifg=#9493e4
 " hi rubyInterpolationDelimiter   guifg=#FFFFFF
 hi rubyInterpolationDelimiter   guifg=#b2ad90
 
+hi rubyMacro                    guifg=#f42873 gui=italic
 hi rubyBlockParameter           guifg=#d300fe
 hi rubyAccess                   guifg=#f42873   gui=italic cterm=italic
-hi rubyInclude                                  gui=italic cterm=italic
 hi erubyExpression              guibg=#000000
 hi erubyDelimiter               guibg=#000000
 hi rubyRailsTestSubject         guifg=#FFCC00   gui=italic cterm=italic
@@ -182,6 +229,31 @@ hi VimwikiHeader5 guifg=#7070F0 gui=bold
 
 hi VimwikiListTodo guifg=#ff9925 gui=none
 
+" Python
+"
+"hi pythonDocString guifg=#9c8a4d
+"hi pythonDocString guifg=#b7a66d
+"hi pythonDocString guifg=#cebd83
+"hi pythonDocString guifg=#e4d295
+"hi pythonDocString guifg=#cdbe88
+"hi pythonDocString guifg=#978c7a
+"hi pythonDocString guifg=#D1BB72
+"hi pythonDocString guifg=#8fcc58 gui=italic cterm=italic
+hi pythonDocString guifg=#b2ad90 gui=italic cterm=italic
+hi djangoTagBlock  guifg=#ffffff
+"hi pythonStrInterpRegion guifg=#b2ad90
+hi pythonStrInterpRegion guifg=#aaaaaa
+"hi pythonClassVar guifg=#AE81FF
+hi link pythonBuiltinFunc Identifier
+hi link pythonException Exception
+"hi pythonException guifg=#f42873 cterm=none
+"hi pythonBuiltinFunc guifg=#f42873
+
+hi pythonDecorator guifg=#AE81FF
+hi pythonDecoratorName guifg=#AE81FF
+hi link pythonDottedName pythonDecorator
+hi pythonImport guifg=#FD971F
+
 " Golang
 " hi goStatement guifg=#f92672 gui=italic cterm=italic
 hi goDeclaration guifg=#f42873 gui=italic cterm=italic
@@ -213,3 +285,15 @@ endif
 hi ALEErrorSign guibg=#232526
 hi ALEWarningSign guibg=#232526
 "}
+"
+
+hi conflictStart  guibg=#AE81FF
+hi conflictMiddle guibg=#E6DB74
+hi conflictEnd    guibg=#FD971F
+
+hi diffFile cterm=NONE ctermfg=DarkBlue
+hi gitcommitDiff cterm=NONE ctermfg=DarkBlue
+hi diffIndexLine cterm=NONE ctermfg=DarkBlue
+hi diffLine cterm=NONE ctermfg=DarkBlue
+
+hi NERDTreeFlags  guifg=#8F8F8F

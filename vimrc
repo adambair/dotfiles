@@ -28,11 +28,14 @@ set noswapfile
 set dir=~/tmp
 set history=9001      " remember more commands, OVER 9000!!!!
 
+set wrap linebreak nolist
+set formatoptions-=t
+
 " set clipboard=unnamed
 set clipboard=unnamedplus
 
 set wildmode=longest,list,full
-set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*,*__pycache__*,*_build*
+set wildignore+=*.swp,*.bak,*.pyc,*/log/*,*/tmp/*,*/images/*,*.pgdump,*/bundler_stubs/*,*.meta,*.unity,*.prefab,*/public/assets/*,*__pycache__*,*_build*,*/node_modules/*,*/coverage/*,*/docs_js/*,*/build/*
 
 " remap increment (add) to ctrl+j/k movements
 noremap <C-K> <C-A>
@@ -61,9 +64,11 @@ cmap w!! w !sudo tee > /dev/null %
 " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting/16920294#16920294
 " https://www.reddit.com/r/vim/comments/3tk66r/vim_slow_scrolling_in_iterm2/cx77dbj
 
-set regexpengine=1
+" set regexpengine=1
 set ttyfast
 set lazyredraw
+"
+" NOTE: This actually slows things down in later versions of vim
 
 " }}}
 " Filetypes {{{
@@ -74,27 +79,51 @@ set encoding=utf8     " Allow weird characters ;)
 
 filetype plugin indent on
 
+au BufNewFile,BufReadPost *.ini       set nospell
 au BufNewFile,BufReadPost Procfile    set filetype=ruby nospell
-au BufNewFile,BufReadPost *.yml       set foldmethod=marker
-au BufRead,BufNewFile *.md,*.wiki     set textwidth=80 nospell expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
-au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
+au BufRead,BufNewFile *.md,*.wiki     set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 spell
+au BufRead,BufNewFile *.scss,*.sass   set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2
+" au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
 au BufNewFile,BufReadPost *.service   set filetype=gitconfig nospell
 
-au BufRead,BufNewFile *.py            set expandtab tabstop=4 softtabstop=4 shiftwidth=4 nospell
-au BufNewFile,BufReadPost *.js        set filetype=javascript expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
+" au BufRead,BufNewFile *.py            set expandtab tabstop=4 softtabstop=4 shiftwidth=4 nospell
+au BufRead,BufNewFile *.json          set expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
+au BufNewFile,BufReadPost *.js,*.jsx  set filetype=javascript expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
 au BufRead,BufNewFile *.html          set expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
-
 
 " }}}
 " Folding {{{
 
-set foldmethod=marker   " fold method
+" Change format of folded text
+function! NeatFoldText()
+    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('-' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+
+    "return foldtextstart . repeat(foldchar, 104-foldtextlength) . foldtextend
+    "return foldtextstart . repeat(foldchar, 88-foldtextlength) . foldtextend
+    "return foldtextstart . repeat(foldchar, 128-foldtextlength) . foldtextend
+    return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+
+set foldtext=NeatFoldText()
 set foldnestmax=10      " max fold depth
-" set foldenable          " do/don't fold files by default on open
 set foldlevelstart=1    " start with fold level of x
+set foldenable          " do/don't fold files by default on open
+set fdc=1               " add fold indicator to status column
+
+au BufWinLeave *.* mkview
+au BufWinEnter *.* silent loadview
 
 " toggle fold
 nnoremap <space> za
+
+" create fold (visual select)
+vmap <space> zf
 
 " close other folds
 map zo zMzv
@@ -127,26 +156,34 @@ map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
 map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
 
 " Standup
-map ,sup :let @z=strftime("#standup ```\ny:\n- \nt:\n- \nb: \n- none\n```")<Cr>"zp
-" map ,ssup :let @z=strftime("#standup ```\ny:\n-\n\nt:\n-\n\nb:\n- none\n```\n\n#big3 ```\n1:\n2:\n3:\n```\n\n")<Cr>"zp
+map ,sup :let @z=strftime("== Stand-up ==\n\n(y)esterday:\n-\n\n(t)oday:\n-\n\n(b)lockers:\n-\n\n== Worklog ==\n")<Cr>"zp
 
 
 " }}}
+" Navigation {{{
 
+" next/previous definition
+map m ]m
+map M [m
+
+" maximize, equalize window views
+map <C-w>m <C-W>_
+map <C-w>M <C-W>=
+
+" }}}
 " ctags {{{
 
 " Go to definition
 map <leader>gd <C-]>
 
 " when saving a .py file, rebuild all .py tags in the working dir
-au BufWritePost *.py, silent! !ctags -R  --kinds-python=-i **/*.py &
+" au BufWritePost *.py, silent! !ctags -R --kinds-python=-i **/*.py
 
 " }}}
-
 " LOKAP {{{
 
-map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>h
-map <leader>gs :e ~/workspace/lokap/scraps.rb<CR>
+map <leader>gl :tabnew ~/workspace/lokap/README.md<CR>:silent! lcd %:p:h<CR><leader>re<CR>
+map <leader>gs :tabnew ~/workspace/lokap/scraps.rb<CR>:silent! lcd %:p:h<CR><leader>re<CR>
 
 " Change working directory to the directory of the current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -156,7 +193,7 @@ nmap <leader>al :left<CR>
 nmap <leader>ar :right<CR>
 nmap <leader>ac :center<CR>
 
-" Strip all trailing whitespace from a file, using ,w
+" Strip all trailing whitespace from a file, using ,W
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " }}}
@@ -176,17 +213,22 @@ nnoremap ` '
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'romainl/idiomatic-vimrc'    " Guidelines for vim config files
+" Plug 'romainl/idiomatic-vimrc'    " Guidelines for vim config files
 
 " Linting
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
+" Plug 'dense-analysis/ale'
+" I dunno, this one is funky
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Eyecandy
 Plug 'ryanoasis/vim-devicons'   " Overridden with specific icons
 Plug 'godlygeek/csapprox'
-Plug 'SyntaxAttr.vim'           " Displays the syntax highlighting attributes
+Plug 'vim-scripts/SyntaxAttr.vim'           " Displays the syntax highlighting attributes
 Plug 'airblade/vim-gitgutter'
-Plug 'chrisbra/Colorizer'
+
+"Plug 'chrisbra/Colorizer'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " Searching
 Plug 'mileszs/ack.vim'
@@ -196,12 +238,13 @@ Plug 'junegunn/fzf.vim'               " original
 " Navigation
 Plug 'scrooloose/nerdtree'
 Plug 'mbbill/undotree'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Editing
 Plug 'ervandew/supertab'        " Tab completion
-Plug 'scrooloose/nerdcommenter' " Excellent cross-language comment toggle
+Plug 'preservim/nerdcommenter' " Excellent cross-language comment toggle
 Plug 'tpope/vim-unimpaired'     " Pairs of handy bracket mappings
-Plug 'tpope/vim-endwise'        " Insert ends, intelligently
+"Plug 'tpope/vim-endwise'        " Insert ends, intelligently
 Plug 'tpope/vim-surround'       " Change your surroundings
 Plug 'tpope/vim-repeat'         " Repeat command support for certain plugins
 Plug 'tpope/vim-fugitive'       " Git stuff, Gblame, etc
@@ -210,16 +253,20 @@ Plug 'junegunn/vim-easy-align'  " A simple, easy-to-use Vim alignment plugin.
 
 " Languages
 Plug 'vim-ruby/vim-ruby'
-Plug 'kchmck/vim-coffee-script'
-Plug 'fatih/vim-go'
+" Plug 'kchmck/vim-coffee-script'
+" Plug 'fatih/vim-go'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-markdown'
 Plug 'stephpy/vim-yaml'
-Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'              " React
 Plug 'wannesm/wmgraphviz.vim'
+Plug 'tikhomirov/vim-glsl'
+" Plug 'vim-python/python-syntax' " Python
 " Plug 'sheerun/vim-polyglot'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
+" Plug 'yuezk/vim-js'
+" Plug 'cespare/vim-toml'
+
 
 
 " Wiki
@@ -244,7 +291,28 @@ call plug#end()
 
 " }}}
 " Packages / configuration {{{
+" {{{ vim-stay
+set viewoptions=cursor,folds,slash,unix
+" }}}
+" {{{ vim-gitgutter
+let g:gitgutter_set_sign_backgrounds = 1
+let g:gitgutter_sign_added = '++'
+let g:gitgutter_sign_removed = '--'
+let g:gitgutter_sign_modified = '~~'
+" }}}
+"{{{ vim-fugitive
 
+" git history
+nmap <leader>gh :0Glog<CR>
+" git who
+nmap <leader>gw :Gblame<CR>
+
+"}}}
+" python-syntax {{{
+
+" let g:python_highlight_all = 1
+
+" }}}
 " faith/vim-go {{{
 let g:go_fmt_command = "goimports"
 
@@ -258,15 +326,15 @@ let g:go_highlight_extra_types = 1
 
 let g:go_highlight_build_constraints     = 1
 let g:go_highlight_function_calls        = 0
-" let g:go_highlight_variable_assignments  = 1
-" let g:go_highlight_variable_declarations = 1
 " }}}
-" chrisbra/Colorizer {{{
+"{{{ vim-hexokinase
 
-let g:colorizer_auto_filetype = 'css,html,sass,haml,scss'
-let g:colorizer_colornames    = 0
+let g:Hexokinase_highlighters = [ 'backgroundfull' ]
+" Default
+" let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba,hsl,hsla,colour_names'
+let g:Hexokinase_optInPatterns = 'full_hex,rgb,rgba,hsl,hsla'
 
-" }}}
+"}}}
 " vim-supertab {{{
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -274,15 +342,17 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " }}}
 " vim-wiki {{{
 
-let wiki                 = {}
-let wiki.path            = '~/.lokal/wiki/'
-let wiki.diary_index     = 'daily'
-let wiki.diary_rel_path  = 'daily/'
-let wiki.nested_syntaxes = {'ruby': 'ruby', 'eruby': 'eruby'}
-let g:vimwiki_list       = [wiki]
-let g:vimwiki_camel_case = 0
-let g:vimwiki_browsers   = ['open']
-let vimwiki_folding      = '' " do not fold by default
+let wiki                  = {}
+let wiki.path             = '~/.lokal/wiki/'
+let wiki.diary_index      = 'daily'
+let wiki.diary_rel_path   = 'daily/'
+let wiki.nested_syntaxes  = {'ruby': 'ruby', 'eruby': 'eruby'}
+let g:vimwiki_list        = [wiki]
+let g:vimwiki_camel_case  = 0
+let g:vimwiki_url_maxsave = 0
+let g:vimwiki_global_ext  = 0
+let g:vimwiki_browsers    = ['open']
+let vimwiki_folding       = '' " do not fold by default
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
@@ -300,15 +370,26 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" vim-devicons {{{
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+
+" }}}
+" preservim/nerdcommenter {{{
+let NERDSpaceDelims = 1
+let NERDCommentEmptyLines = 1
+let NERDTrimTrailingWhitespace = 1
+let NERDDefaultAlign = 'left'
+" }}}
 " vim-NERDTree {{{
-
-let NERDSpaceDelims=1
-
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let g:NERDTreeCascadeSingleChildDir = 0 " do not cascade empty dirs
-let g:NERDTreeWinSize=50
-let g:NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:NERDTreeWinSize=40
+let g:NERDTreeIgnore = ['\.pyc$', '__pycache__', 'node_modules', 'coverage', 'docs_js']
 
 " Close pane on file selection
 let NERDTreeQuitOnOpen=1
@@ -320,7 +401,7 @@ map <leader>nn :NERDTreeToggle<CR>
 map <leader>re :NERDTreeFind<CR>
 
 " }}}
-" Graphviz {{{
+" wmgraphviz {{{
 map <silent> <leader>lv :silent GraphvizCompile<CR>:silent GraphvizShow<CR>:redraw!<CR>
 map <leader>lc :GraphvizCompile<CR>
 " }}}
@@ -335,18 +416,28 @@ let g:ale_echo_msg_error_str   = '✹ Error'
 let g:ale_echo_msg_format      = '%severity%: %linter% - %s '
 let g:ale_echo_msg_warning_str = '⚠ Warning'
 let g:ale_statusline_format    = ['E•%d', 'W•%d', 'OK']
-let g:ale_set_highlights = 0
+let g:ale_set_highlights       = 0
 
 nmap <Leader>ap <Plug>(ale_previous)
 nmap <Leader>an <Plug>(ale_next)
 " }}}
+" vim-javascript {{{
 
+let g:javascript_plugin_jsdoc = 1
+"}}}
 " }}}
 " Quickfix {{{
 
 nnoremap <C-N> :cn<CR>
 nnoremap <C-P> :cp<CR>
 
+" Add quickfix list to args for use with argdo for project-wide search/replace
+"
+"   ,f                       # search files for content
+"   Ag/ testing              # search for files containg the word 'testing'
+"   :Qargs                   # adds quickfix list to argument list
+"   :argdo %s/foo/bar/       # operate on all the files in argument list
+"
 command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 function! QuickfixFilenames()
   " Building a hash ensures we get each buffer only once
@@ -364,7 +455,8 @@ function! SyntaxItem()
   return synIDattr(synID(line("."),col("."),1),"name")
 endfunction
 
-map -a :call SyntaxAttr()<CR>
+map <leader>as :call SyntaxAttr()<CR>
+map <leader>af :echo &filetype<CR>
 
 " }}}
 " Searching {{{
@@ -374,25 +466,35 @@ set smartcase   " only care about case, if I use uppercase letters
 
 " Using ripgrep for filename search
 let rg_ignore = "--hidden" .
-      \" -g '!.git/*'" . 
+      \" -g '!.git/*'" .
       \" -g '!.venv/*'" .
-      \" -g '!*/_build/*'" .
+      \" -g '!*build/*'" .
       \" -g '!.mypy_cache/*'" .
-      \" -g '!*.rst'" 
+      \" -g '!*node_modules*'" .
+      \" -g '!*coverage*'" .
+      \" -g '!*docs_js*'" .
+      \" -g '!*.rst'" .
+      \" -g '!*static/dist/*'"
+
 let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore --follow " . rg_ignore
 
 " Using silver_searcher (ag) for filename search
 let ag_ignore = '--hidden ' .
-      \' --ignore "*_build*"' .
+      \' --ignore "*build/*"' .
       \' --ignore "*.git"' .
       \' --ignore "*.venv/*"' .
-      \' --ignore "*.rst"'
+      \' --ignore "*node_modules*"' .
+      \' --ignore "*coverage*"' .
+      \' --ignore "*docs_js*"' .
+      \' --ignore "*.rst"' .
+      \' --ignore "*static/dist/*"'
+
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, ag_ignore, <bang>0)
 
 set hlsearch
 set incsearch
 
-" clears higlighting for '/' searches (:noh :nohlsearch)
+" hitting 'enter' clears higlighting for '/' searches (:noh :nohlsearch)
 nnoremap <CR> :noh<CR><CR>
 nnoremap <silent>; :noh<CR><CR>
 
@@ -418,11 +520,12 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " spellchecker configuration
 " setlocal spell spelllang=en_us
-set spell spelllang=en_gb 
+set spell spelllang=en_gb
 set spellcapcheck=
 set nospell
 autocmd BufNewFile,BufRead *.txt,README,*.rdoc,*.md set spell
-autocmd FileType coffee,go,service setlocal nospell
+autocmd BufNewFile,BufRead *.git/COMMIT_EDITMSG set ft=gitcommit
+autocmd FileType fugitiveblame,coffee,go,service setlocal nospell
 
 " }}}
 " Tabs {{{
@@ -470,12 +573,16 @@ let &colorcolumn="80,81,120,121"
 
 " Not sure why I have to specify these here, but they don't work in my
 " colorscheme file :/
-" hi    ExtraWhitespace              ctermbg=red   guibg=red
-" match ExtraWhitespace /\s\+$/
+hi    ExtraWhitespace guifg=#000000 guibg=#8B0000 ctermbg=2
+match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinLeave * call clearmatches()
 
 " highlight non ascii characters such as ' ' instead of ' '
 syntax match nonascii "[^\x00-\x7F]"
-highlight nonascii guibg=Red ctermbg=2
+highlight nonascii guibg=#8B0000 ctermbg=2
 
 " Status Line {{{
 
@@ -541,14 +648,22 @@ set linespace=1
 
 " vim-webdevicons
 " after a re-source, fix syntax matching issues (concealing brackets):
-if exists('g:loaded_webdevicons')
-  call webdevicons#refresh()
-endif
+ if exists('g:loaded_webdevicons')
+   call webdevicons#refresh()
+ endif
+
+"https://github.com/ryanoasis/vim-devicons/wiki/Extra-Configuration
+
+syn region conflictStart start=/^<<<<<<< .*$/ end=/^\ze\(=======$\||||||||\)/
+syn region conflictMiddle start=/^||||||| .*$/ end=/^\ze=======$/
+syn region conflictEnd start=/^\(=======$\||||||| |\)/ end=/^>>>>>>> .*$/
 
 " Italics
 " In order to have italics show up I need to re-source my config (no idea why)
 autocmd VimEnter * source $MYVIMRC
 
 " }}}
+
+
 
 " # vim: fdm=marker fdls=0

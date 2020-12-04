@@ -5,10 +5,12 @@ export GOPATH=$HOME/go
 export PATH=$PATH:/bin
 export PATH=$PATH:~/workspace/tmp/atom-1.36.1-amd64
 export TERMINAL=alacritty
+export PATH="$PATH:$HOME/.rvm/bin"
 
 # NOTE: find aur download/build functions... they seem to be missing
 
-export BROWSER=/usr/bin/google-chrome-stable
+#export BROWSER=/usr/bin/google-chrome-stable
+export BROWSER=/usr/bin/firefox
 
 # Vim {{{
 #
@@ -17,6 +19,8 @@ export EDITOR="vim"
 
 bindkey -v # Use vim keybindings
 set -o vi  # Do something else with vim? == setopt, I guess.
+setopt INTERACTIVE_COMMENTS # allow comments in interactive shells
+
 #  }}}
 # ZSH {{{
 
@@ -33,7 +37,7 @@ ZSH_THEME="steeef"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse zsh-syntax-highlighting)
-plugins=(git vi-mode autojump brew bundler cloudapp gitfast git-extras npm kubectl)
+plugins=(git vi-mode autojump brew bundler gitfast git-extras npm kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -59,18 +63,33 @@ alias projector_off=". ~/.screenlayout/dual-with-portrait.sh"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+alias dt='date +%Y-%m-%d-%I-%M-%S'
+alias ep='date +%s'
+
+alias vlint="isort -y $@; black $@; flake8 $@"
 alias as='asciinema'
 alias vi='vim'
 alias open="xdg-open &>/dev/null"
-alias ls="ls -lhG --color=auto --group-directories-first"
+alias ls="ls -lhGA --color=auto --group-directories-first"
 alias grep="grep -E --color"
 # alias ls="ls -lahG --color=auto" # OSX alias
 alias grm="gst | grep deleted | awk {'print \$3'} | xargs git rm"
 alias weather="curl http://wttr.in"
 alias gcom="git commit -v"
 
-# Python
+# Verica
 
+#alias vstart="j v; verica-tmux"
+#export TEST_DATABASE_URL="postgresql://verica_user:verica_password@verica-db:5432/verica_db"
+
+# Python
+#
+
+export PYTHONDONTWRITEBYTECODE=1
+
+alias flake="flake8"
+alias pt="pytest -c /dev/null -s"
+alias ptl="pytest -c /dev/null -s -o log_cli=1 -o log_cli_level=INFO -o log_cli_format=\"%(filename)s:%(lineno)s %(levelname)s %(message)s\""
 alias p3="python3"
 alias pe="pipenv"
 alias pm="python manage.py"
@@ -89,11 +108,14 @@ alias tl="clear; tail -f log/development.log"
 alias kwf="killweb; foreman s"
 alias bimc="bi && rake db:migrate db:test:clone"
 
+alias s3="s3cmd"
+
 # taskwarrior
 # alias t='task'
 # alias tm='task modify'
 # alias tome='task project:home'
 # alias tbay='task project:openbay'
+
 
 # }}}
 
@@ -203,7 +225,7 @@ source $HOME/.env/hackon-dyndns.sh
 # source $HOME/.envfiles/fretbuzz.sh
 # }}}
 # Keys / Verica {{{
-source $HOME/.envfiles/verica.sh
+#source $HOME/.envfiles/verica.sh
 # }}}
 # Keys / Personal / Amazon {{{
 
@@ -231,7 +253,7 @@ export HOMEBREW_GITHUB_API_TOKEN='a681c62aa0210b90bf25e97cd4ce1d142dd5c980'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Using ripgrep to power fzf -- https://github.com/BurntSushi/ripgrep
-export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow --g '!.git/*' -g '!*_build/*'"
+#export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --follow -g '!.git/*' -g '!*/build/*' -g '!*/_build/*' -g '!*coverage/*' -g '!*static/dist/*'"
 
 # }}}
 # ENV / Github {{{
@@ -263,12 +285,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # }}}
 
+unsetopt auto_cd
 ~/bin/welcome
 
 # vim:foldmethod=marker:foldlevel=0
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/adam/workspace/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/home/adam/workspace/lib/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/adam/workspace/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/adam/workspace/lib/google-cloud-sdk/completion.zsh.inc'; fi
