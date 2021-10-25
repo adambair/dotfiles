@@ -17,9 +17,19 @@ let g:colors_name="monokai"
 hi Boolean         guifg=#AE81FF
 hi Character       guifg=#E6DB74
 hi Number          guifg=#AE81FF
-hi String          guifg=#1fde0c
-" hi String          guifg=#26ff00
 
+" hi String          guifg=#1fde0c
+" hi String          guifg=#26ff00
+" hi String          guifg=#b4f656
+" hi String          guifg=#93f10d
+" hi String          guifg=#39ff00
+" hi String          guifg=#74ff4d
+" hi String          guifg=#64ff00
+" hi String          guifg=#00f600
+" hi String          guifg=#5cff00
+hi String          guifg=#53e500
+" hi String          guifg=#009C70
+  " hi String          guifg=#4aff00
 
 hi Conditional     guifg=#F92672               gui=none
 hi Constant        guifg=#AE81FF               gui=none
@@ -44,6 +54,8 @@ hi Error           guifg=#960050 guibg=#1E0010
 hi ErrorMsg        guifg=#F92672 guibg=#232526 gui=none
 hi Exception       guifg=#A6E22E               gui=none
 hi Float           guifg=#AE81FF
+
+hi Conceal guibg=NONE
 
 "hi GitGutterAddLine          " default: links to DiffAdd
 "hi GitGutterChangeLine       " default: links to DiffChange
@@ -174,8 +186,10 @@ hi rubyInterpolationDelimiter   guifg=#b2ad90
 hi rubyMacro                    guifg=#f42873 gui=italic
 hi rubyBlockParameter           guifg=#d300fe
 hi rubyAccess                   guifg=#f42873   gui=italic cterm=italic
-hi erubyExpression              guibg=#000000
-hi erubyDelimiter               guibg=#000000
+hi erubyExpression              guibg=NONE
+hi erubyDelimiter               guibg=NONE
+" hi erubyExpression              guibg=#000000
+" hi erubyDelimiter               guibg=#000000
 hi rubyRailsTestSubject         guifg=#FFCC00   gui=italic cterm=italic
 " hi rubyRailsTestSubject         guifg=#FF3F21   gui=italic cterm=italic
 " hi rubyRailsTestSubject         guifg=#AC4311   gui=italic cterm=italic
@@ -221,13 +235,33 @@ hi coffeeConsoleLog        guisp=#FFFFFF gui=undercurl
 hi gitcommitSummary        guifg=#FFFFFF gui=none cterm=none
 
 " Vimwiki
-hi VimwikiHeader1 guifg=#f42873 gui=bold
-hi VimwikiHeader2 guifg=#A6E22E gui=bold
-hi VimwikiHeader3 guifg=#ff9925 gui=bold
-hi VimwikiHeader4 guifg=#66D9EF gui=bold
-hi VimwikiHeader5 guifg=#7070F0 gui=bold
+hi VimwikiHeader1  guifg=#f42873 gui=bold
+hi VimwikiHeader2  guifg=#A6E22E gui=bold
+hi VimwikiHeader3  guifg=#ff9925 gui=bold
+hi VimwikiHeader4  guifg=#66D9EF gui=bold
+hi VimwikiHeader5  guifg=#7070F0 gui=bold
 
-hi VimwikiListTodo guifg=#ff9925 gui=none
+hi VimwikiListTodo   guifg=#ff9925 gui=none
+
+hi VimwikiPre       guifg=#BCBCBC guibg=NONE
+hi VimwikiPreDelim  guifg=#FFFFFF
+
+hi VimwikiEmoji       guifg=#BCBCBC guibg=NONE
+
+" Markdown
+hi markdownH1  guifg=#f42873 gui=bold
+hi markdownH2  guifg=#A6E22E gui=bold
+hi markdownH3  guifg=#ff9925 gui=bold
+hi markdownH4  guifg=#66D9EF gui=bold
+hi markdownH5  guifg=#7070F0 gui=bold
+
+hi link markdownH1Delimiter markdownH1
+hi link markdownH2Delimiter markdownH2
+hi link markdownH3Delimiter markdownH3
+hi link markdownH4Delimiter markdownH4
+hi link markdownH5Delimiter markdownH5
+
+hi link markdownCode markdownCodeDelimiter
 
 " Python
 "
@@ -269,13 +303,13 @@ hi goExtraType guifg=#FD971F
 
 
 if has("spell")
-  hi clear SpellBad
-  hi SpellBad gui=undercurl guifg=#FF0000
+  " hi clear SpellBad
+  " hi SpellBad guifg=#F38A8A gui=underline
   " hi SpellBad cterm=none,italic ctermfg=red
-  " hi SpellBad    guisp=#FF0000 gui=undercurl
-  hi SpellCap    guisp=#7070F0 gui=undercurl
-  hi SpellLocal  guisp=#70F0F0 gui=undercurl
-  hi SpellRare   guisp=#FFFFFF gui=undercurl
+  hi SpellBad    guibg=#3D0B0B guifg=#FF0000
+  " hi SpellCap    guisp=#7070F0 gui=undercurl
+  " hi SpellLocal  guisp=#70F0F0 gui=undercurl
+  " hi SpellRare   guisp=#FFFFFF gui=undercurl
 endif
 
 """""""""""""""""""""""""""""""""""""""""""
