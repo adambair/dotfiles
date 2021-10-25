@@ -79,17 +79,20 @@ set encoding=utf8     " Allow weird characters ;)
 
 filetype plugin indent on
 
-au BufNewFile,BufReadPost *.ini       set nospell
-au BufNewFile,BufReadPost Procfile    set filetype=ruby nospell
-au BufRead,BufNewFile *.md,*.wiki     set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 spell
-au BufRead,BufNewFile *.scss,*.sass   set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2
-" au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
-au BufNewFile,BufReadPost *.service   set filetype=gitconfig nospell
+au BufNewFile,BufRead *.ini      set nospell
+au BufNewFile,BufRead Procfile   set filetype=ruby nospell
+au BufNewFile,BufRead *.wiki     set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 spell
+au BufNewFile,BufRead *.md       set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 spell
+au BufNewFile,BufRead *.scss,*.sass   set textwidth=80 expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2
+au BufNewFile,BufRead *.service  set filetype=gitconfig nospell
 
-" au BufRead,BufNewFile *.py            set expandtab tabstop=4 softtabstop=4 shiftwidth=4 nospell
-au BufRead,BufNewFile *.json          set expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
-au BufNewFile,BufReadPost *.js,*.jsx  set filetype=javascript expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
-au BufRead,BufNewFile *.html          set expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
+au BufNewFile,BufRead *.json     set expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
+au BufNewFile,BufRead *.js,*.jsx set filetype=javascript expandtab tabstop=2 softtabstop=2 shiftwidth=2 nospell
+au BufNewFile,BufRead *.html,*.erb set expandtab tabstop=2 softtabstop=2 shiftwidth=2 shiftwidth=2 nospell
+
+" au BufNewFile,BufReadPost *.go        set foldmethod=syntax foldnestmax=1
+" au BufRead,BufReadPost,BufNewFile *.py            set expandtab tabstop=4 softtabstop=4 shiftwidth=4 nospell
+
 
 " }}}
 " Folding {{{
@@ -133,7 +136,7 @@ map zo zMzv
 
 " Quickly open/reload vim config
 nnoremap <leader>eve :e $MYVIMRC<CR>
-nnoremap <leader>evr :source $MYVIMRC<CR>
+nnoremap <leader>evr :source $MYVIMRC<CR> :e<CR>
 
 " Quickly open color config as well?
 nnoremap <leader>ece :e ~/.vim/colors/monokai.vim<CR>
@@ -144,20 +147,24 @@ nnoremap <leader>ezr :!. ~/.zshrc<CR>
 
 " Preview Markdown with Pandoc
 " Note: relies on ~/bin/gfm.css (styles for github-flavored markdown)
-nnoremap <leader>p :!preview=/tmp/preview-$RANDOM.html && pandoc --self-contained -c $HOME/bin/gfm.css --to html % --metadata pagetitle=preview > $preview && echo "<article class=\"markdown-body entry-content\">"$(cat $preview)"</article>" > $preview && xdg-open $preview  &>/dev/null && sleep 1 && rm $preview<CR>
+nnoremap <leader>p :!preview=/tmp/preview-$RANDOM.html && pandoc -f markdown+hard_line_breaks --wrap=preserve --self-contained -c $HOME/bin/gfm.css --to html % --metadata pagetitle=preview > $preview && echo "<article class=\"markdown-body entry-content\">"$(cat $preview)"</article>" > $preview && xdg-open $preview  &>/dev/null && sleep 1 && rm $preview<CR>
 
 " }}}
 " Date and Time {{{
 
-map ,sdate  :let @z=strftime("%Y-%m-%d")<Cr>"zp
-map ,stime  :let @z=strftime("%l:%M %p")<Cr>"zp
-map ,sdt    :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
-map ,sfdate :let @z=strftime("= %Y-%m-%d =")<Cr>"zp
-map ,sftime :let @z=strftime("=== %l:%M %p ===")<Cr>"zp
+" map ,sdate  :let @z=strftime("%Y-%m-%d")<Cr>"zp
+" map ,stime  :let @z=strftime("%l:%M %p")<Cr>"zp
+" map ,sdt    :let @z=strftime("%Y-%m-%d %l:%M %p")<Cr>"zp
+map ,sd :let @z=strftime("%Y-%m-%d")<Cr>"zp
+map ,st :let @z=strftime("%I:%M %p")<Cr>"zp
+
+map ,sfdate :let @z=strftime("**%Y-%m-%d**")<Cr>"zp
+map ,sftime :let @z=strftime("_%I:%M %p_")<Cr>"zp
+
+" consider syntax for highlight date and timestamps in wiki journal
 
 " Standup
-map ,sup :let @z=strftime("== Stand-up ==\n\n(y)esterday:\n-\n\n(t)oday:\n-\n\n(b)lockers:\n-\n\n== Worklog ==\n")<Cr>"zp
-
+map ,sup :let @z=strftime("## Workload\n\n(y)esterday:\n-\n\n(t)oday:\n-\n\n(b)lockers:\n-\n\n(p)otentials:\n-\n\n(w)ishlist:\n-\n\n## Worklog\n")<Cr>"zp
 
 " }}}
 " Navigation {{{
@@ -232,8 +239,8 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " Searching
 Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'               " original
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Navigation
 Plug 'scrooloose/nerdtree'
@@ -342,23 +349,35 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " }}}
 " vim-wiki {{{
 
-let wiki                  = {}
-let wiki.path             = '~/.lokal/wiki/'
-let wiki.diary_index      = 'daily'
-let wiki.diary_rel_path   = 'daily/'
-let wiki.nested_syntaxes  = {'ruby': 'ruby', 'eruby': 'eruby'}
-let g:vimwiki_list        = [wiki]
+let daily_wiki                  = {}
+let daily_wiki.path             = '~/.lokal/wiki/'
+let daily_wiki.diary_index      = 'daily'
+let daily_wiki.diary_rel_path   = 'daily/'
+let daily_wiki.syntax           = 'markdown'
+let daily_wiki.nested_syntaxes  = {}
+let daily_wiki.ext              = 'md'
+
+let g:vimwiki_list        = [daily_wiki]
 let g:vimwiki_camel_case  = 0
 let g:vimwiki_url_maxsave = 0
-let g:vimwiki_global_ext  = 0
 let g:vimwiki_browsers    = ['open']
-let vimwiki_folding       = '' " do not fold by default
+let g:vimwiki_folding     = '' " do not fold by default
+let g:vimwiki_ext2syntax  = {'.md': 'markdown'}
+
+
+" let g:markdown_fenced_languages = ['ruby', 'html', 'css', 'js=javascript', 'json=javascript']
+" let g:markdown_syntax_conceal = 1
 
 map <leader>wn :VimwikiDiaryNextDay<CR>
 map <leader>wp :VimwikiDiaryPrevDay<CR>
 
 let g:taskwiki_disable_concealcursor='disable'
 let g:taskwiki_sort_order='priority'
+
+" Hrmmm
+" inoremap <C-@> <c-x><c-o>
+
+map <C-@> :VimwikiToggleListItem<CR>
 
 "}}}
 " vim-easy-align {{{
@@ -430,6 +449,7 @@ let g:javascript_plugin_jsdoc = 1
 
 nnoremap <C-N> :cn<CR>
 nnoremap <C-P> :cp<CR>
+nnoremap <leader>cw :cw<CR>
 
 " Add quickfix list to args for use with argdo for project-wide search/replace
 "
@@ -459,7 +479,7 @@ map <leader>as :call SyntaxAttr()<CR>
 map <leader>af :echo &filetype<CR>
 
 " }}}
-" Searching {{{
+" Searching / FZF {{{
 
 set ignorecase  " ignore case in vim searches and commands
 set smartcase   " only care about case, if I use uppercase letters
@@ -477,6 +497,8 @@ let rg_ignore = "--hidden" .
       \" -g '!*static/dist/*'"
 
 let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore --follow " . rg_ignore
+let g:fzf_layout = { 'down':  '40%'}
+let g:fzf_preview_window = []
 
 " Using silver_searcher (ag) for filename search
 let ag_ignore = '--hidden ' .
@@ -496,7 +518,7 @@ set incsearch
 
 " hitting 'enter' clears higlighting for '/' searches (:noh :nohlsearch)
 nnoremap <CR> :noh<CR><CR>
-nnoremap <silent>; :noh<CR><CR>
+nnoremap <silent>; :noh<CR>
 
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>T :Tags<CR>
@@ -523,9 +545,13 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 set spell spelllang=en_gb
 set spellcapcheck=
 set nospell
-autocmd BufNewFile,BufRead *.txt,README,*.rdoc,*.md set spell
-autocmd BufNewFile,BufRead *.git/COMMIT_EDITMSG set ft=gitcommit
-autocmd FileType fugitiveblame,coffee,go,service setlocal nospell
+au BufNewFile,BufRead *.txt,README,*.rdoc,*.md set spell
+au BufNewFile,BufRead *.git/COMMIT_EDITMSG set ft=gitcommit
+au FileType fugitiveblame,coffee,go,service setlocal nospell
+
+map zn ]s
+map zp [s
+map z; z=\|1<cr>\|:spellr<cr>
 
 " }}}
 " Tabs {{{

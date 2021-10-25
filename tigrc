@@ -66,4 +66,4 @@ color title-blur  15  0
 
 set mailmap = yes
 
-set main-view = date:relative author:abbreviated commit-title:yes,graph=v1,refs,overflow=80
+set main-view = date:relative author:full commit-title:yes,graph=v1,refs,overflow=80
